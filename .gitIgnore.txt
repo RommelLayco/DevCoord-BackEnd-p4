@@ -39,3 +39,4 @@ Thumbs.db
 # ignore classpath #
 #####################
 testingML/.classpath
+.metadata/
