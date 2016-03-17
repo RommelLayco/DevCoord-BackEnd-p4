@@ -7,12 +7,16 @@ public class MainClass {
 	public static void main(String[] args) {
 
 
-		CombinedFileObject fo=new CombinedFileObject();
+		PairsFileObject fo=new PairsFileObject();
+		
+	//	fo.display();
 
-		CombinedCsvToArffConverter.convert("input/combined.csv");
+		
+		PairsCSVtoARFFconverter.convert();
+		//CombinedCsvToArffConverter.convert("input/combined.csv");
 		
 		
-		MakeTree.make();
+	//	MakeTree.make("input/pairs.arff");
 		
 		
 		

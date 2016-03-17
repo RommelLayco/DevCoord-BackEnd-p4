@@ -17,13 +17,13 @@ import weka.gui.treevisualizer.TreeVisualizer;
 public class MakeTree {
 	
 	
-	public static void make(){
+	public static void make(String inputPath){
 		
 		// train classifier
 	     J48 cls = new J48();
 	     Instances data;
 		try {
-			data = new Instances(new BufferedReader(new FileReader("input/combined.arff")));
+			data = new Instances(new BufferedReader(new FileReader(inputPath)));
 			 data.setClassIndex(data.numAttributes() - 1);
 		     cls.buildClassifier(data);
 
