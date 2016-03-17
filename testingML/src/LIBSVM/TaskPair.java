@@ -105,6 +105,8 @@ public class TaskPair {
 			this.sameOS = true;
 		}
 	}
+	
+	
 	// ***************** getter methods for junit testing ***************************
 	public int getT1(){
 		return this.task1;
