@@ -36,7 +36,11 @@
 ehthumbs.db
 Thumbs.db
 
-# ignore classpath #
+# ignore classpath for libsvm and weka DT #
 #####################
 testingML/.classpath
+
+#ignore misc files #
+###################
 .metadata/
+.recommenders/
