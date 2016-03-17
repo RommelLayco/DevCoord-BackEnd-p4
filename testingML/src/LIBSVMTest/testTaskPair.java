@@ -13,7 +13,7 @@ import LIBSVM.TaskPair;
 public class testTaskPair {
 
 	/**
-	 * test to see if task pair initalized correctly
+	 * test to see if task pair initialized correctly
 	 */
 	@Test
 	public void testCreate() {
