@@ -4,6 +4,11 @@ public enum Component {
 	BUGZILLA, UI, JIRA, TASK, CORE, JAVA,
 	WIKITEXT, TRAC, FRAMEWORK, DOC, XPLANNER;
 	
+	/**
+	 * Convert string from csv into enum
+	 * @param word a string
+	 * @return component enum
+	 */
 	public static Component componentEnum(String word){
 		if(word.equals("Bugzilla")){
 			return BUGZILLA;
