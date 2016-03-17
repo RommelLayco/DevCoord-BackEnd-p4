@@ -3,6 +3,11 @@ package LIBSVM;
 public enum Platform {
 	PC, ALL, OTHER, MACINTOSH, SUN;
 
+	/**
+	 * Method to get enum from string
+	 * @param word a string
+	 * @return  platform enum
+	 */
 	public static Platform platformEnum(String word){
 		if(word.equals("PC")){
 			return PC;

@@ -9,6 +9,11 @@ public enum OS {
 	ALL, WINDOWS_XP, WINDOWS_VISTA, WINDOWS_SERVER,
 	WINDOWS7, LINUX, MAC, MAC_COCOA;
 	
+	/**
+	 * Method to get enum from string
+	 * @param word a string
+	 * @return a OS enum
+	 */
 	public static OS osEnum(String word){
 		if(word.equals("All")){
 			return ALL;
