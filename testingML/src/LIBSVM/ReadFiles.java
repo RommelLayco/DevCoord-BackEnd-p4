@@ -5,7 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 /**
  * Helper Class to read in the pairs and task files
@@ -68,8 +71,12 @@ public class ReadFiles {
 	 * Makes main method more readable
 	 * @return list of task objects
 	 */
-	public static List<Task> readTask(){
-		List<Task> tasks = new ArrayList<Task>();
+	public static Map<Integer, Task> readTask(){
+		//create a hash map to store task objects.
+		//Access time is constant
+		//Key will be the taskID
+		Map<Integer, Task> tasks = new HashMap<Integer, Task>();
+
 
 		//read in pairs files;
 		BufferedReader br = null;
@@ -88,7 +95,7 @@ public class ReadFiles {
 			while ((currentLine = br.readLine()) != null) {
 				String[] line = currentLine.split(",");
 				Task task = Task.create(line);
-				tasks.add(task);
+				tasks.put(task.getTaskID(), task);
 
 			}
 
