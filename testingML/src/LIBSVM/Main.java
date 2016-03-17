@@ -16,7 +16,8 @@ public class Main {
 		System.out.println("Size of task pairs list: " + taskPairs.size());
 		System.out.println("Size of tasks list: " + tasks.size());
 		
-		
+		ProcessData data = new ProcessData(taskPairs, tasks);
+		data.setMatching();
 		
 
 	} //end main
