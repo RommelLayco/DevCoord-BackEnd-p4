@@ -6,7 +6,37 @@ public class DescriptionEnum {
 	
 	public enum description{
 		NO,NOT,SOME,SOMEWHAT,POSSIBLE,
-		SIGNIFICANT,VERY,DEFINATELY
+		SIGNIFICANT,VERY,DEFINITELY
+	}
+	public static String getValueOf(description desc){
+		
+		switch(desc){
+		
+		case NO:
+			return "No";
+		case NOT:
+			return "Not";
+		case SOME:
+			return "Some";
+		case SOMEWHAT:
+			return "Somewhat";
+		case POSSIBLE:
+			return "Possible";
+		case SIGNIFICANT:
+			return "Significant";
+		case VERY:
+			return "Very";
+		case DEFINITELY:
+			return "Definitely";
+
+		
+
+		
+			
+		}
+		return null;
+		
+		
 		
 	}
 	
@@ -28,8 +58,8 @@ public static description parse(String input){
 		return description.SIGNIFICANT;
 	case "Very":
 		return description.VERY;
-	case "Definately":
-		return description.DEFINATELY;
+	case "Definitely":
+		return description.DEFINITELY;
 
 	
 

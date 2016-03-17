@@ -1,6 +1,6 @@
 package decisionTree;
 
-
+import decisionTree.DescriptionEnum.description;
 
 public class MainClass {
 
@@ -8,8 +8,11 @@ public class MainClass {
 
 
 		CombinedFileObject fo=new CombinedFileObject();
+
+		CombinedCsvToArffConverter.convert("input/combined.csv");
 		
-		fo.display();
+		
+		MakeTree.make();
 		
 		
 		
