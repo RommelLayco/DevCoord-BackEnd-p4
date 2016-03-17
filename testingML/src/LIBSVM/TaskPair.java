@@ -1,5 +1,11 @@
 package LIBSVM;
 
+/**
+ * Class to store task pairs into objects for further processing
+ * @author Rommel
+ *
+ */
+
 public class TaskPair {
 	
 	private int task1;
@@ -17,7 +23,11 @@ public class TaskPair {
 		this.AL = AL;
 	}
 	
-	//method to convert line into a task pair
+	/**
+	 * Helper method to create task pair object from a line in the file
+	 * @param line a string array of words
+	 * @return Taskpair object to be used for processing in the future
+	 */
 	public static TaskPair create(String[] line){
 		//convert into right type
 		int t1 = Integer.parseInt(line[0]);
@@ -32,5 +42,25 @@ public class TaskPair {
 		return tp;
 	}
 	
+	// ***************** getter methods for junit testing ***************************
+	public int getT1(){
+		return this.task1;
+	}
+	public int getT2(){
+		return this.task2;
+	}
+
+	public float getPscore(){
+		return this.proxmityScore;
+	}
+
+	public int getSLSM(){
+		return this.SLSM;
+	}
+
+	public int getAL(){
+		return this.AL;
+	}
+
 
 }
