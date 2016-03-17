@@ -1,13 +1,13 @@
-package LIBSVMTest;
+package testGetTaskPairs;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import LIBSVM.Component;
-import LIBSVM.OS;
-import LIBSVM.Platform;
-import LIBSVM.Task;
+import getTaskPairs.Component;
+import getTaskPairs.OS;
+import getTaskPairs.Platform;
+import getTaskPairs.Task;
 
 public class TestTask {
 

@@ -1,4 +1,4 @@
-package LIBSVM;
+package getTaskPairs;
 
 import java.util.List;
 import java.util.Map;

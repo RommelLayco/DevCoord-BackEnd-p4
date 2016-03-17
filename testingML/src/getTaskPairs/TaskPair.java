@@ -1,4 +1,4 @@
-package LIBSVM;
+package getTaskPairs;
 
 /**
  * Class to store task pairs into objects for further processing
@@ -16,7 +16,7 @@ public class TaskPair {
 	private boolean sameComponent;
 	private boolean samePlatform;
 	private boolean sameOS;
-	
+	private boolean critical;
 	
 	public TaskPair(int task1, int task2, float pscore, int SLSM, int AL){
 		this.task1 = task1;
@@ -27,6 +27,7 @@ public class TaskPair {
 		this.sameComponent = false;
 		this.sameOS = false;
 		this.samePlatform = false;
+		this.critical = false;
 	}
 	
 	/**
@@ -127,15 +128,19 @@ public class TaskPair {
 		return this.AL;
 	}
 
-	public boolean getSameComponent(){
+	public boolean isSameComponent(){
 		return this.sameComponent;
 	}
 
-	public boolean getSamePlatform(){
+	public boolean isSamePlatform(){
 		return this.samePlatform;
 	}
 	
-	public boolean getSameOS(){
+	public boolean isSameOS(){
+		return this.sameOS;
+	}
+	
+	public boolean isCritical(){
 		return this.sameOS;
 	}
 }

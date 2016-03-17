@@ -1,4 +1,4 @@
-package LIBSVMTest;
+package testGetTaskPairs;
 
 import static org.junit.Assert.*;
 
@@ -16,9 +16,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import LIBSVM.ProcessData;
-import LIBSVM.Task;
-import LIBSVM.TaskPair;
+import getTaskPairs.ProcessData;
+import getTaskPairs.Task;
+import getTaskPairs.TaskPair;
 
 public class TestProcessData {
 
@@ -59,16 +59,16 @@ public class TestProcessData {
 	public void test() {
 		TaskPair tp = data.getTaskPair(0);
 		
-		assertFalse(tp.getSameOS());
-		assertFalse(tp.getSameComponent());
-		assertFalse(tp.getSamePlatform());
+		assertFalse(tp.isSameOS());
+		assertFalse(tp.isSameComponent());
+		assertFalse(tp.isSamePlatform());
 		
 		data.setMatching();
 		
 		
-		assertTrue(tp.getSameOS());
-		assertTrue(tp.getSameComponent());
-		assertTrue(tp.getSamePlatform());
+		assertTrue(tp.isSameOS());
+		assertTrue(tp.isSameComponent());
+		assertTrue(tp.isSamePlatform());
 	}
 
 	

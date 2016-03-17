@@ -1,4 +1,4 @@
-package LIBSVM;
+package getTaskPairs;
 
 /**
  * Class to store tasks from the tasks file for further processing

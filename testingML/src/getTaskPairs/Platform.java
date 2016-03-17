@@ -1,4 +1,4 @@
-package LIBSVM;
+package getTaskPairs;
 
 public enum Platform {
 	PC, ALL, OTHER, MACINTOSH, SUN;

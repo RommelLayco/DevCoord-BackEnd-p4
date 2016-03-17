@@ -1,14 +1,14 @@
-package LIBSVMTest;
+package testGetTaskPairs;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import LIBSVM.Component;
-import LIBSVM.OS;
-import LIBSVM.Platform;
-import LIBSVM.Task;
-import LIBSVM.TaskPair;
+import getTaskPairs.Component;
+import getTaskPairs.OS;
+import getTaskPairs.Platform;
+import getTaskPairs.Task;
+import getTaskPairs.TaskPair;
 
 public class testTaskPair {
 
@@ -28,9 +28,10 @@ public class testTaskPair {
 		assertEquals(14.8614046f, tp.getPscore(), 0.00000002);
 		assertEquals(8, tp.getSLSM());
 		assertEquals(2, tp.getAL());
-		assertFalse(tp.getSameComponent());
-		assertFalse(tp.getSamePlatform());
-		assertFalse(tp.getSameOS());
+		assertFalse(tp.isSameComponent());
+		assertFalse(tp.isSamePlatform());
+		assertFalse(tp.isSameOS());
+		assertFalse(tp.isCritical());
 				
 	}
 
@@ -44,15 +45,15 @@ public class testTaskPair {
 		Task t1 = new Task(1, Platform.ALL, OS.ALL, Component.BUGZILLA);
 		Task t2 = new Task(2, Platform.ALL, OS.ALL, Component.BUGZILLA);
 		
-		assertFalse(tp.getSameComponent());
-		assertFalse(tp.getSamePlatform());
-		assertFalse(tp.getSameOS());
+		assertFalse(tp.isSameComponent());
+		assertFalse(tp.isSamePlatform());
+		assertFalse(tp.isSameOS());
 		
 		tp.setRest(t1, t2);
 		
-		assertTrue(tp.getSameComponent());
-		assertTrue(tp.getSameOS());
-		assertTrue(tp.getSamePlatform());
+		assertTrue(tp.isSameComponent());
+		assertTrue(tp.isSameOS());
+		assertTrue(tp.isSamePlatform());
 		
 		
 	}

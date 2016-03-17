@@ -1,4 +1,4 @@
-package LIBSVM;
+package getTaskPairs;
 
 /**
  * Enum used to check if task in same Operating System.

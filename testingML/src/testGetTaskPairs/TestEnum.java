@@ -1,12 +1,12 @@
-package LIBSVMTest;
+package testGetTaskPairs;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import LIBSVM.Component;
-import LIBSVM.OS;
-import LIBSVM.Platform;
+import getTaskPairs.Component;
+import getTaskPairs.OS;
+import getTaskPairs.Platform;
 
 public class TestEnum {
 

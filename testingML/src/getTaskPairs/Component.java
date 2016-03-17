@@ -1,4 +1,4 @@
-package LIBSVM;
+package getTaskPairs;
 
 public enum Component {
 	BUGZILLA, UI, JIRA, TASK, CORE, JAVA,
