@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import LIBSVM.Component;
 import LIBSVM.OS;
 import LIBSVM.Platform;
 
@@ -30,6 +31,23 @@ public class TestEnum {
 		assertEquals(OS.MAC, OS.osEnum("Mac OS X"));
 		assertEquals(OS.MAC_COCOA, OS.osEnum("Mac OS X - Cocoa"));
 		assertNull(OS.osEnum("dslkfl"));
+	}
+	
+	@Test
+	public void testComponent(){
+		assertEquals(Component.BUGZILLA, Component.componentEnum("Bugzilla"));
+		assertEquals(Component.UI, Component.componentEnum("UI"));
+		assertEquals(Component.JIRA, Component.componentEnum("Jira"));
+		assertEquals(Component.TASK, Component.componentEnum("Tasks"));
+		assertEquals(Component.CORE, Component.componentEnum("Core"));
+		assertEquals(Component.TRAC, Component.componentEnum("Trac"));
+		assertEquals(Component.JAVA, Component.componentEnum("Java"));
+		assertEquals(Component.WIKITEXT, Component.componentEnum("Wikitext"));
+		assertEquals(Component.FRAMEWORK, Component.componentEnum("Framework"));
+		assertEquals(Component.DOC, Component.componentEnum("Doc"));
+		assertEquals(Component.XPLANNER, Component.componentEnum("XPlanner"));
+		assertNull( Component.componentEnum("dnkjsnf"));
+		
 	}
 
 }
