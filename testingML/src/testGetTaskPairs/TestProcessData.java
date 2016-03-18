@@ -19,20 +19,25 @@ import org.junit.Test;
 import getTaskPairs.ProcessData;
 import getTaskPairs.Task;
 import getTaskPairs.TaskPair;
+import getTaskPairs.TaskPairKey;
+import getTaskPairs.ReadFiles;
 
 public class TestProcessData {
 
 	private static Map<Integer, Task> tasks;
-	private static List<TaskPair> taskPairs;
+	private static Map<TaskPairKey, TaskPair> taskPairs;
+	private static List<TaskPairKey> keys;
 	
 	private ProcessData data;
 
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		// one-time initialization code   
-				
-		tasks = populateMap();
-		taskPairs = populateList();
+		keys = new ArrayList<TaskPairKey>();
+		
+		tasks = ReadFiles.readTaskFile("testInput", "tasks.csv");
+		taskPairs = ReadFiles.readFile("testInput", "pairs.csv", keys);
+	
 		
 	}
 
@@ -49,27 +54,60 @@ public class TestProcessData {
 		data = new ProcessData(taskPairs, tasks); 
 	}
 	
+	/**
+	 * Test to see if correct task pair is pulled from map correctly
+	 */
+	@Test
+	public void testTaskPairKey(){
+		TaskPairKey key = keys.get(0);
+		int t1 = key.getID1();
+		int t2 = key.getID2();
+		
+		
+		TaskPair tp = data.getTaskPair(key);
+		assertEquals(t1, tp.getT1());
+		assertEquals(t2, tp.getT2());
+	}
+	
+	/**
+	 * Test to see if correct task pair key is in wrong order will obtain null
+	 */
+	@Test
+	public void testTaskPairKeyOrder(){
+		TaskPairKey key = keys.get(0);
+		int t1 = key.getID1();
+		int t2 = key.getID2();
+		
+		TaskPairKey key2 = new TaskPairKey(t2, t1); 
+		
+		TaskPair tp = data.getTaskPair(key);
+		TaskPair tp2 = data.getTaskPair(key2);
+		
+		assertNotNull(tp);
+		assertNull(tp2);
+		
+	}
 
 	/**
 	 * Test the set matching method.
 	 * Checks to see if it can find the task in the map
 	 * and change the taskpair matching fields to true
 	 */
-	@Test
-	public void test() {
-		TaskPair tp = data.getTaskPair(0);
-		
-		assertFalse(tp.isSameOS());
-		assertFalse(tp.isSameComponent());
-		assertFalse(tp.isSamePlatform());
-		
-		data.setMatching();
-		
-		
-		assertTrue(tp.isSameOS());
-		assertTrue(tp.isSameComponent());
-		assertTrue(tp.isSamePlatform());
-	}
+//	@Test
+//	public void test() {
+//		TaskPair tp = data.getTaskPair(0);
+//		
+//		assertFalse(tp.isSameOS());
+//		assertFalse(tp.isSameComponent());
+//		assertFalse(tp.isSamePlatform());
+//		
+//		data.setMatching();
+//		
+//		
+//		assertTrue(tp.isSameOS());
+//		assertTrue(tp.isSameComponent());
+//		assertTrue(tp.isSamePlatform());
+//	}
 
 	
 	//******************* HELPER METHODS ***********************************

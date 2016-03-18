@@ -11,10 +11,10 @@ import java.util.Map;
  */
 public class ProcessData {
 	
-	private List<TaskPair> taskPairs;
+	private Map<TaskPairKey, TaskPair> taskPairs;
 	private Map<Integer, Task> tasks;
 	
-	public ProcessData(List<TaskPair> taskPairs, Map<Integer, Task> tasks ){
+	public ProcessData(Map<TaskPairKey, TaskPair> taskPairs, Map<Integer, Task> tasks ){
 		this.taskPairs = taskPairs;
 		this.tasks = tasks;
 	}
@@ -42,8 +42,8 @@ public class ProcessData {
 	}
 	
 	// ***************** getter methods for junit testing ***************************
-	public TaskPair getTaskPair(int index){
-		return this.taskPairs.get(index);
+	public TaskPair getTaskPair(TaskPairKey key){
+		return this.taskPairs.get(key);
 	}
 	
 }
