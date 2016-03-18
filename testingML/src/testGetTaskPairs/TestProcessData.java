@@ -2,12 +2,7 @@ package testGetTaskPairs;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +27,14 @@ public class TestProcessData {
 
 	@BeforeClass
 	public static void oneTimeSetUp() {
+		List<String[]> taskLines = ReadFiles.readFile("testInput", "tasks.csv");
+		List<String[]> taskPairLines = ReadFiles.readFile("testInput", "pairs.csv");
+		
 		// one-time initialization code   
 		keys = new ArrayList<TaskPairKey>();
 		
-		tasks = ReadFiles.readTaskFile("testInput", "tasks.csv");
-		taskPairs = ReadFiles.readFile("testInput", "pairs.csv", keys);
+		tasks = ReadFiles.makeTaskMap(taskLines);
+		taskPairs = ReadFiles.makeTaskPairMap(taskPairLines, keys);
 	
 		
 	}
