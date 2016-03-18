@@ -12,6 +12,7 @@ import java.util.Map;
  */
 public class ProcessData {
 
+	//info
 	private Map<TaskPairKey, TaskPair> taskPairs;
 	private Map<Integer, Task> tasks;
 	private Map<TaskPairKey, TaskAcc> taskAccs;
