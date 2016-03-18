@@ -18,6 +18,7 @@ public class TaskPair {
 	private boolean sameOS;
 	private boolean critical;
 	
+	
 	public TaskPair(int task1, int task2, float pscore, int SLSM, int AL){
 		this.task1 = task1;
 		this.task2 = task2;
@@ -47,6 +48,17 @@ public class TaskPair {
 		TaskPair tp = new TaskPair(t1, t2, pscore, SLSM, AL);
 		
 		return tp;
+	}
+	
+	/**
+	 * Method to mark task pair as critical
+	 * if taskAcc says it is
+	 * @param taskAcc
+	 */
+	public void setCritical(TaskAcc taskAcc){
+		if(taskAcc.isCritical()){
+			this.critical = true;
+		}
 	}
 	
 	/**

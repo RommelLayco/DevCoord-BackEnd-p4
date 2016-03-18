@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import getTaskPairs.ProcessData;
 import getTaskPairs.Task;
+import getTaskPairs.TaskAcc;
 import getTaskPairs.TaskPair;
 import getTaskPairs.TaskPairKey;
 import getTaskPairs.ReadFiles;
@@ -21,7 +22,10 @@ public class TestProcessData {
 
 	private static Map<Integer, Task> tasks;
 	private static Map<TaskPairKey, TaskPair> taskPairs;
-	private static List<TaskPairKey> keys;
+	private static Map<TaskPairKey, TaskAcc> taskAccs;
+	
+	private static List<TaskPairKey> pairKeys;
+	private static List<TaskPairKey> accKeys;
 	
 	private ProcessData data;
 
@@ -29,13 +33,16 @@ public class TestProcessData {
 	public static void oneTimeSetUp() {
 		List<String[]> taskLines = ReadFiles.readFile("testInput", "tasks.csv");
 		List<String[]> taskPairLines = ReadFiles.readFile("testInput", "pairs.csv");
+		List<String[]> taskAccLines = ReadFiles.readFile("testInput", "acc.csv");
 		
 		// one-time initialization code   
-		keys = new ArrayList<TaskPairKey>();
+		pairKeys = new ArrayList<TaskPairKey>();
+		accKeys = new ArrayList<TaskPairKey>();
 		
 		tasks = ReadFiles.makeTaskMap(taskLines);
-		taskPairs = ReadFiles.makeTaskPairMap(taskPairLines, keys);
-	
+		taskPairs = ReadFiles.makeTaskPairMap(taskPairLines, pairKeys);
+		taskAccs = ReadFiles.makeTaskAccMap(taskAccLines, accKeys);
+		
 		
 	}
 
@@ -49,7 +56,7 @@ public class TestProcessData {
 	
 	@Before
 	public void createProcessDataObject(){
-		data = new ProcessData(taskPairs, tasks, keys); 
+		data = new ProcessData(taskPairs, tasks, pairKeys, taskAccs, accKeys); 
 	}
 	
 	/**
@@ -57,7 +64,7 @@ public class TestProcessData {
 	 */
 	@Test
 	public void testTaskPairKey(){
-		TaskPairKey key = keys.get(0);
+		TaskPairKey key = pairKeys.get(0);
 		int t1 = key.getID1();
 		int t2 = key.getID2();
 		
@@ -72,7 +79,7 @@ public class TestProcessData {
 	 */
 	@Test
 	public void testTaskPairKeyOrder(){
-		TaskPairKey key = keys.get(0);
+		TaskPairKey key = pairKeys.get(0);
 		int t1 = key.getID1();
 		int t2 = key.getID2();
 		
@@ -94,7 +101,7 @@ public class TestProcessData {
 	 */
 	@Test
 	public void testSetMatching() {
-		TaskPairKey key = keys.get(0);
+		TaskPairKey key = pairKeys.get(0);
 		TaskPair tp = data.getTaskPair(key);
 		
 		assertFalse(tp.isSameOS());
@@ -106,6 +113,19 @@ public class TestProcessData {
 		assertTrue(tp.isSameOS());
 		assertTrue(tp.isSameComponent());
 		assertTrue(tp.isSamePlatform());
+	}
+	
+	@Test
+	public void testSetCritical(){
+		
+		assertEquals(0, data.getTrainKeys().size());
+		assertEquals(0, data.getTestKeys().size());
+
+		
+		data.setCritical();
+		
+		assertEquals(1, data.getTrainKeys().size());
+		assertEquals(2, data.getTestKeys().size());
 	}
 
 }

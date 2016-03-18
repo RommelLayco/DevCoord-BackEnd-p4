@@ -42,6 +42,11 @@ public class TestTaskAcc {
 		TaskAcc t3 = new TaskAcc(1,2,Version.TEST,true,false, true, true);
 		TaskAcc t4 = new TaskAcc(1,2,Version.TEST,false,false, false, true);
 		
+		assertFalse(t1.isCritical());
+		assertFalse(t2.isCritical());
+		assertFalse(t3.isCritical());
+		assertFalse(t4.isCritical());
+		
 		t1.setCritical();
 		t2.setCritical();
 		t3.setCritical();
