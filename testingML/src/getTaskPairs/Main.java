@@ -22,7 +22,7 @@ public class Main {
 		List<String[]> lines2 = ReadFiles.readFile("input", "pairs_3_2.csv");
 		Map<TaskPairKey, TaskPair> taskPairs = ReadFiles.makeTaskPairMap(lines2, keys);
 		
-		List<String[]> lines3 = ReadFiles.readFile("input", "acc.csv");
+		List<String[]> lines3 = ReadFiles.readFile("input", "accuracy_coding.csv");
 		Map<TaskPairKey, TaskAcc> taskAcc = ReadFiles.makeTaskAccMap(lines3, accKeys);
 		
 		
@@ -33,8 +33,12 @@ public class Main {
 		System.out.println("Size of task acc key: " + accKeys.size());
 		System.out.println("Size of task acc list: " + taskAcc.size());
 		
-		//ProcessData data = new ProcessData(taskPairs, tasks);
-		//data.setMatching();
+		ProcessData data = new ProcessData(taskPairs, tasks, keys, taskAcc, accKeys);
+		data.setMatching();
+		data.setCritical();
+		
+		System.out.println("Number of data to train: " + data.getTrainKeys().size());
+		System.out.println("Number of data to test: " + data.getTestKeys().size());
 		
 
 	} //end main
