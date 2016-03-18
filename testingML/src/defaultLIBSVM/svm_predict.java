@@ -1,4 +1,4 @@
-package testingLIBSVM;
+package defaultLIBSVM;
 
 import libsvm.*;
 import java.io.*;
