@@ -87,7 +87,7 @@ public class ReadFiles {
 	/**
 	 * Method to process string[] and convert them in to taskPair objects 
 	 * and store in map for further processing
-	 * @param lines a list of String []
+	 * @param lines a list of String [] and a list of keys
 	 * @return map 
 	 */
 	public static Map<TaskPairKey, TaskPair> makeTaskPairMap(List<String[]> lines, List<TaskPairKey> keys){
@@ -104,7 +104,32 @@ public class ReadFiles {
 			keys.add(key);
 			taskPairMap.put(key, taskPair);
 		}
-		
+
 		return taskPairMap;
+	}
+
+	/**
+	 * Method to process string[] and convert them in to taskAcc objects 
+	 * and store in map for further processing
+	 * 
+	 * @param lines a list of String [] and a list of keys
+	 * @return map 
+	 */
+	public static Map<TaskPairKey, TaskAcc> makeTaskAccMap(List<String[]> lines, List<TaskPairKey> keys){
+		//create a hash map to store task objects.
+		//Access time is constant
+		//Key will be the taskID of both tasks
+		Map<TaskPairKey, TaskAcc> taskAccMap = new HashMap<TaskPairKey, TaskAcc>();
+
+		for(String[] line : lines){
+			TaskAcc taskAcc = TaskAcc.create(line);
+
+			//create key to store task pair
+			TaskPairKey key = new TaskPairKey(taskAcc.getT1(), taskAcc.getT2());
+			keys.add(key);
+			taskAccMap.put(key, taskAcc);
+		}
+
+		return taskAccMap;
 	}
 }
