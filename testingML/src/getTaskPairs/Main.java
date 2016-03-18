@@ -14,7 +14,7 @@ public class Main {
 		
 		//read in files
 		Map<TaskPairKey, TaskPair> taskPairs = ReadFiles.readFile("input", "pairs_3_2.csv", keys);
-		Map<Integer, Task> tasks = ReadFiles.readTask();
+		Map<Integer, Task> tasks = ReadFiles.readTaskFile("input", "tasks_3_2.csv");
 		
 		System.out.println("Size of task pairs list: " + taskPairs.size());
 		System.out.println("Size of task pairs key: " + keys.size());
