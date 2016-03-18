@@ -88,9 +88,9 @@ public class ProcessData {
 			taskPair.setCritical(taskAcc);
 
 			if(taskAcc.getVersion() == Version.TRAIN){
-				this.keysTrain.add(key);
+				this.keysTrain.add(key2);
 			} else {
-				this.keysTest.add(key);
+				this.keysTest.add(key2);
 			}
 		}	
 
@@ -98,34 +98,37 @@ public class ProcessData {
 	}
 
 
-/**
- * Helper method to find task pair key
- * @param key from taskacc
- * @return taskPairKey
- */
+	/**
+	 * Helper method to find task pair key
+	 * @param key from taskacc
+	 * @return taskPairKey
+	 */
 
-private TaskPairKey getRightKey(TaskPairKey key){
-	for(TaskPairKey tpKey : this.pairKeys){
-		if((tpKey.getID1() == key.getID1() && tpKey.getID2() == key.getID2())
-				|| tpKey.getID2() == key.getID1() && tpKey.getID1() == key.getID2()){
-			return tpKey;
+	private TaskPairKey getRightKey(TaskPairKey key){
+		for(TaskPairKey tpKey : this.pairKeys){
+			if((tpKey.getID1() == key.getID1() && tpKey.getID2() == key.getID2())
+					|| tpKey.getID2() == key.getID1() && tpKey.getID1() == key.getID2()){
+				return tpKey;
+			}
 		}
+		return null;
 	}
-	return null;
-}
 
 
-// ***************** getter methods for junit testing ***************************
-public TaskPair getTaskPair(TaskPairKey key){
-	return this.taskPairs.get(key);
-}
+	// ***************** getter methods for junit testing ***************************
+	public TaskPair getTaskPair(TaskPairKey key){
+		return this.taskPairs.get(key);
+	}
 
-public List<TaskPairKey> getTrainKeys(){
-	return this.keysTrain;
-}
+	public List<TaskPairKey> getTrainKeys(){
+		return this.keysTrain;
+	}
 
-public List<TaskPairKey> getTestKeys(){
-	return this.keysTest;
-}
+	public List<TaskPairKey> getTestKeys(){
+		return this.keysTest;
+	}
 
+	public Map<TaskPairKey, TaskPair> getTaskPairs(){
+		return this.taskPairs;
+	}
 }
