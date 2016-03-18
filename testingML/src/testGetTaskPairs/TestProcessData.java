@@ -51,7 +51,7 @@ public class TestProcessData {
 	
 	@Before
 	public void createProcessDataObject(){
-		data = new ProcessData(taskPairs, tasks); 
+		data = new ProcessData(taskPairs, tasks, keys); 
 	}
 	
 	/**
@@ -92,99 +92,23 @@ public class TestProcessData {
 	 * Test the set matching method.
 	 * Checks to see if it can find the task in the map
 	 * and change the taskpair matching fields to true
+	 * Set matching method comes from the TaskPair class
 	 */
-//	@Test
-//	public void test() {
-//		TaskPair tp = data.getTaskPair(0);
-//		
-//		assertFalse(tp.isSameOS());
-//		assertFalse(tp.isSameComponent());
-//		assertFalse(tp.isSamePlatform());
-//		
-//		data.setMatching();
-//		
-//		
-//		assertTrue(tp.isSameOS());
-//		assertTrue(tp.isSameComponent());
-//		assertTrue(tp.isSamePlatform());
-//	}
-
-	
-	//******************* HELPER METHODS ***********************************
-	public static List<TaskPair> populateList(){
-		//create a list to store task pairs
-		List<TaskPair> tps = new ArrayList<TaskPair>();
-
-		//read in pairs files;
-		BufferedReader br = null;
-
-		try {
-
-			String currentLine;
-			// get file
-			File pairs = new File("testInput"+System.getProperty("file.separator")
-			+"pairs.csv");
-
-			br = new BufferedReader(new FileReader(pairs));
-			//read first line which is titles so we can ignore.
-			currentLine = br.readLine();
-
-			while ((currentLine = br.readLine()) != null) {
-				String[] line = currentLine.split(",");
-				TaskPair tp = TaskPair.create(line);
-				tps.add(tp);
-
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null)br.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		return tps;
+	@Test
+	public void testSetMatching() {
+		TaskPairKey key = keys.get(0);
+		TaskPair tp = data.getTaskPair(key);
+		
+		assertFalse(tp.isSameOS());
+		assertFalse(tp.isSameComponent());
+		assertFalse(tp.isSamePlatform());
+		
+		data.setMatching();
+		
+		assertTrue(tp.isSameOS());
+		assertTrue(tp.isSameComponent());
+		assertTrue(tp.isSamePlatform());
 	}
 
-	public static Map<Integer, Task> populateMap(){
-		Map<Integer, Task> ts = new HashMap<Integer, Task>();
-
-
-		//read in pairs files;
-		BufferedReader br = null;
-
-		try {
-
-			String currentLine;
-			// get file
-			File pairs = new File("testInput"+System.getProperty("file.separator")
-			+"tasks.csv");
-
-			br = new BufferedReader(new FileReader(pairs));
-			//read first line which is titles so we can ignore.
-			currentLine = br.readLine();
-
-			while ((currentLine = br.readLine()) != null) {
-				String[] line = currentLine.split(",");
-				Task task = Task.create(line);
-				ts.put(task.getTaskID(), task);
-
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null)br.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		return ts;
-	}
 }
 

@@ -13,10 +13,13 @@ public class ProcessData {
 	
 	private Map<TaskPairKey, TaskPair> taskPairs;
 	private Map<Integer, Task> tasks;
+	private List<TaskPairKey> keys;
 	
-	public ProcessData(Map<TaskPairKey, TaskPair> taskPairs, Map<Integer, Task> tasks ){
+	public ProcessData(Map<TaskPairKey, TaskPair> taskPairs, Map<Integer, Task> tasks,
+			List<TaskPairKey> keys){
 		this.taskPairs = taskPairs;
 		this.tasks = tasks;
+		this.keys = keys;
 	}
 	
 	/**
@@ -27,15 +30,20 @@ public class ProcessData {
 	 * the task map
 	 */
 	public void setMatching(){
-		for(TaskPair pair : this.taskPairs){
-			//get task from map
-			Task t1 = this.tasks.get(pair.getT1());
-			Task t2 = this.tasks.get(pair.getT2());
+		for(TaskPairKey key : this.keys){
+			
+			//get task from map using the taskPairKey
+			Task t1 = this.tasks.get(key.getID1());
+			Task t2 = this.tasks.get(key.getID2());
 			
 			//check if there task are not null
 			if(t1 == null || t2 == null){
 				continue;
 			}
+			
+			//get Task Pair
+			TaskPair pair = this.taskPairs.get(key);
+			
 			//set matching fields to true
 			pair.setRest(t1, t2);
 		}
