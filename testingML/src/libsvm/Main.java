@@ -29,12 +29,17 @@ public class Main {
 		List<String[]> lines3 = ReadFiles.readFile("input", "accuracy_coding.csv");
 		Map<TaskPairKey, TaskAcc> taskAcc = ReadFiles.makeTaskAccMap(lines3, accKeys);
 		
+		
 		//process data
 		ProcessData data = new ProcessData(taskPairs, tasks, keys, taskAcc, accKeys);
+				
 		data.setMatching();
 		data.setCritical();
 		
-		//write data to files
+		WriteToFile.writeToFile(data, "output", "test.txt");
+		
+		
+		System.out.println("done");
 
 	}
 
