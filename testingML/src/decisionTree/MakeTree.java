@@ -2,9 +2,14 @@ package decisionTree;
 
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import weka.classifiers.*;
 import weka.classifiers.trees.J48;
@@ -29,7 +34,7 @@ public class MakeTree {
 
 		     // display classifier
 		     final javax.swing.JFrame jf = 
-		       new javax.swing.JFrame("Weka Classifier Tree Visualizer: J48");
+		       new javax.swing.JFrame("Weka Classifier Tree Visualizer: J48(C4.5)");
 		     jf.setSize(500,400);
 		     jf.getContentPane().setLayout(new BorderLayout());
 		     TreeVisualizer tv = new TreeVisualizer(null,
@@ -43,7 +48,11 @@ public class MakeTree {
 		     });
 
 		     jf.setVisible(true);
-		} catch (Exception e1) {
+		createReport(cls);
+		
+		}
+		
+		catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -51,5 +60,30 @@ public class MakeTree {
 		
 		
 	}
+	
+	private static void createReport(J48 cls){
+		 Writer writer = null;
+		try {
+			writer = new BufferedWriter(
+					new OutputStreamWriter(
+					new FileOutputStream(InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT))));
+					writer.write(cls.toString());
+
+					
+					writer.close();
+					
+		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
 
 }
