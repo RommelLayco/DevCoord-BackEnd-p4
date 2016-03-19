@@ -1,4 +1,4 @@
-package libsvm;
+package LIBSVM;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +18,7 @@ import getTaskPairs.TaskPairKey;
  * @author Rommel
  *
  */
-public class WriteToFile {
+public class WritetoFile {
 
 	/**
 	 * If file already exist it will be replaced
