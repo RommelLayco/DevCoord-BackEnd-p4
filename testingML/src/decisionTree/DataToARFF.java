@@ -64,6 +64,7 @@ public class DataToARFF {
 		//  writer.write("@attribute SDLMS numeric"+"\n"); //TODO
 		writer.write("@attribute SLSMS numeric"+"\n");
 		writer.write("@attribute ALS numeric"+"\n");
+		writer.write("@attribute Critical {true,false}"+"\n");
 
 
 		writer.write("\n");
@@ -73,9 +74,8 @@ public class DataToARFF {
 
 		int countOfBadData=0;
 
-		List<TaskPairKey> keys=data.getTrainKeys();
+		List<TaskPairKey> keys=data.getTestKeys();   //TODO
 		Map<TaskPairKey, TaskPair> taskPairs=data.getTaskPairs();
-
 
 
 		for (TaskPairKey taskPairKey : keys) {
@@ -84,12 +84,12 @@ public class DataToARFF {
 			float proximity=taskPairs.get(taskPairKey).getPscore();
 			int sLMS=taskPairs.get(taskPairKey).getSLSM();
 			int aLS=taskPairs.get(taskPairKey).getAL();
-
+			String critical=""+taskPairs.get(taskPairKey).isCritical();
 
 			try{
 
 				writer.write(tOne+","+tTwo+","+proximity+","
-						+ +sLMS+","+aLS);
+						+ +sLMS+","+aLS+","+critical);
 				writer.write("\n");
 
 			}
