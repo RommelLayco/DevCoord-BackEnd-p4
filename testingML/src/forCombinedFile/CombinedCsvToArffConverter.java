@@ -1,4 +1,4 @@
-package decisionTree;
+package forCombinedFile;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;

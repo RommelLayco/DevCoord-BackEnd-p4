@@ -1,5 +1,6 @@
-package decisionTree;
+package forCombinedFile;
 
+import decisionTree.DescriptionEnum;
 import decisionTree.DescriptionEnum.description;
 
 public class CombinedRow {
