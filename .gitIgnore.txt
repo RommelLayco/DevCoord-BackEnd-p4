@@ -44,3 +44,4 @@ testingML/.classpath
 ###################
 .metadata/
 .recommenders/
+testingMl/output/
