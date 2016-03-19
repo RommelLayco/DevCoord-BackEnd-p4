@@ -1,4 +1,4 @@
-package libsvm;
+package LIBSVM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class Main {
 		data.setMatching();
 		data.setCritical();
 		
-		WriteToFile.writeToFile(data, "output", "test.txt");
+		WritetoFile.writeToFile(data, "output", "test.txt");
 		
 		
 		System.out.println("done");
