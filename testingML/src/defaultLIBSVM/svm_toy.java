@@ -1,9 +1,11 @@
 package defaultLIBSVM;
 
-import libsvm.*;
 import java.applet.*;
 import java.awt.*;
 import java.util.*;
+
+import libsvm.*;
+
 import java.awt.event.*;
 import java.io.*;
 

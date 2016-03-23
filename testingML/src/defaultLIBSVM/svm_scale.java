@@ -1,8 +1,10 @@
 package defaultLIBSVM;
 
-import libsvm.*;
 import java.io.*;
 import java.util.*;
+
+import libsvm.*;
+
 import java.text.DecimalFormat;
 
 class svm_scale
