@@ -20,6 +20,8 @@ import getTaskPairs.TaskPairKey;
  */
 public class WritetoFile {
 
+
+
 	/**
 	 * If file already exist it will be replaced
 	 * 
@@ -27,29 +29,38 @@ public class WritetoFile {
 	 * @param folderName
 	 * @param fileName name file
 	 */
-	public static void writeToFile(ProcessData data, String folderName, String fileName){
+	public static void writeToFile(ProcessData data, String folderName, String fileName, boolean train){
 
-		
-		
+
+
 		// get file
 		File f = new File(folderName +System.getProperty("file.separator")
 		+ fileName);
 
-		
+
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(f), "utf-8"))) {
-			
-			
-			
-			for(TaskPairKey key : data.getTestKeys()){
-				
-				TaskPair tp = data.getTaskPairs().get(key);
-				
-				String line = createLine(tp);
-				writer.write(line);
+
+
+			if(train){
+				for(TaskPairKey key : data.getTrainKeys()){
+
+					TaskPair tp = data.getTaskPairs().get(key);
+
+					String line = createLine(tp);
+					writer.write(line);
+				}
+			} else {
+				for(TaskPairKey key : data.getTestKeys()){
+
+					TaskPair tp = data.getTaskPairs().get(key);
+
+					String line = createLine(tp);
+					writer.write(line);
+				}
 			}
-			
-			
+
+
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,7 +72,9 @@ public class WritetoFile {
 			e.printStackTrace();
 		}
 	}
-	
+
+
+
 	/**
 	 * Helper method to format line;
 	 * @param TaskPair tp
@@ -69,7 +82,7 @@ public class WritetoFile {
 	 */
 	private static String createLine(TaskPair tp){
 		String line = "";
-		
+
 		int critical = convertBoolToInt(tp.isCritical());
 		float pscore = tp.getPscore();
 		int SLSM = tp.getSLSM();
@@ -77,7 +90,7 @@ public class WritetoFile {
 		int component = convertBoolToInt(tp.isSameComponent());
 		int platform = convertBoolToInt(tp.isSamePlatform());
 		int os = convertBoolToInt(tp.isSameOS());
-		
+
 		//create line
 		line = line + critical + " 1:" + pscore;
 		line = line + " 2:" + SLSM;
@@ -85,10 +98,10 @@ public class WritetoFile {
 		line = line + " 4:" + component;
 		line = line + " 5:" + platform;
 		line = line + " 6:" + os +"\n";
-		
+
 		return line;
 	}
-	
+
 	/**
 	 * Helper method to convert boolean to int
 	 * @param b

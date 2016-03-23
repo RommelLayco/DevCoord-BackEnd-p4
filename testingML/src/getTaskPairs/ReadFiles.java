@@ -107,6 +107,21 @@ public class ReadFiles {
 
 		return taskPairMap;
 	}
+	
+	public static Map<TaskPairKey, TaskPair> addTasksPairs(List<String[]> lines, List<TaskPairKey> keys,
+			Map<TaskPairKey, TaskPair> taskPairs){
+		
+		for(String[] line : lines){
+			TaskPair taskPair = TaskPair.createAll(line);
+
+			//create key to store task pair
+			TaskPairKey key = new TaskPairKey(taskPair.getT1(), taskPair.getT2());
+			keys.add(key);
+			taskPairs.put(key, taskPair);
+		}
+		
+		return taskPairs;
+	}
 
 	/**
 	 * Method to process string[] and convert them in to taskAcc objects 
