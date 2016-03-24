@@ -1,51 +1,46 @@
 package LIBSVM;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import getTaskPairs.ProcessData;
+import getTaskPairs.ReadFiles;
+import getTaskPairs.Task;
+import getTaskPairs.TaskAcc;
+import getTaskPairs.TaskPair;
+import getTaskPairs.TaskPairKey;
 
 public class Main {
 
 	public static void main(String[] args) {
-		//create a list to store task pairs
-		List<TaskPair> taskpairs = new ArrayList<TaskPair>();
+		//List of taskPair keys
+		List<TaskPairKey> keys = new ArrayList<TaskPairKey>();
 		
-		//read in pairs files;
-		BufferedReader br = null;
-
-		try {
-
-			String currentLine;
-			// get file
-			File pairs = new File("input"+System.getProperty("file.separator")
-			+"pairs_3_2.csv");
-
-			br = new BufferedReader(new FileReader(pairs));
-			//read first line which is titles so we can ignore.
-			currentLine = br.readLine();
-
-			while ((currentLine = br.readLine()) != null) {
-				String[] line = currentLine.split(",");
-				TaskPair tp = TaskPair.create(line);
-				taskpairs.add(tp);
+		//List of taskAcc keys
+		List<TaskPairKey> accKeys = new ArrayList<TaskPairKey>();
+		
+		List<String[]> lines = ReadFiles.readFile("input", "tasks_3_2.csv");
+		Map<Integer, Task> tasks = ReadFiles.makeTaskMap(lines);
+		
+		List<String[]> lines2 = ReadFiles.readFile("input", "pairs_3_2.csv");
+		Map<TaskPairKey, TaskPair> taskPairs = ReadFiles.makeTaskPairMap(lines2, keys);
+		
+		List<String[]> lines3 = ReadFiles.readFile("input", "accuracy_coding.csv");
+		Map<TaskPairKey, TaskAcc> taskAcc = ReadFiles.makeTaskAccMap(lines3, accKeys);
+		
+		
+		//process data
+		ProcessData data = new ProcessData(taskPairs, tasks, keys, taskAcc, accKeys);
 				
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null)br.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
+		data.setMatching();
+		data.setCritical();
 		
-		System.out.println("Size of task pairs list: " + taskpairs.size());
+		WritetoFile.writeToFile(data, "output", "test.txt");
+		
+		
+		System.out.println("done");
 
-	} //end main
+	}
+
 }
