@@ -1,4 +1,4 @@
-package LIBSVM;
+package libsvm;
 
 import java.io.IOException;
 import java.util.ArrayList;
