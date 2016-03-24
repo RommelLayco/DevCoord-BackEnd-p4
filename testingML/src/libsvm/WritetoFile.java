@@ -31,8 +31,6 @@ public class WriteToFile {
 	 */
 	public static void writeToFile(ProcessData data, String folderName, String fileName, boolean train){
 
-
-
 		// get file
 		File f = new File(folderName +System.getProperty("file.separator")
 		+ fileName);
@@ -73,6 +71,46 @@ public class WriteToFile {
 		}
 	}
 
+	public static void writeNoDRH(ProcessData data, String folderName, String fileName, boolean train){
+		// get file
+		File f = new File(folderName +System.getProperty("file.separator")
+		+ fileName);
+
+
+		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(f), "utf-8"))) {
+
+
+			if(train){
+				for(TaskPairKey key : data.getTrainKeys()){
+
+					TaskPair tp = data.getTaskPairs().get(key);
+
+					String line = createShortLine(tp);
+					writer.write(line);
+				}
+			} else {
+				for(TaskPairKey key : data.getTestKeys()){
+
+					TaskPair tp = data.getTaskPairs().get(key);
+
+					String line = createLine(tp);
+					writer.write(line);
+				}
+			}
+
+
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 	/**
@@ -95,6 +133,29 @@ public class WriteToFile {
 		line = line + critical + " 1:" + pscore;
 		line = line + " 2:" + SLSM;
 		line = line + " 3:" + AL;
+		line = line + " 4:" + component;
+		line = line + " 5:" + platform;
+		line = line + " 6:" + os +"\n";
+
+		return line;
+	}
+
+	/**
+	 * Helper method to format line without DRH features.
+	 * @param tp
+	 * @return
+	 */
+	private static String createShortLine(TaskPair tp){
+		String line = "";
+
+		int critical = convertBoolToInt(tp.isCritical());
+		float pscore = tp.getPscore();
+		int component = convertBoolToInt(tp.isSameComponent());
+		int platform = convertBoolToInt(tp.isSamePlatform());
+		int os = convertBoolToInt(tp.isSameOS());
+
+		//create line
+		line = line + critical + " 1:" + pscore;
 		line = line + " 4:" + component;
 		line = line + " 5:" + platform;
 		line = line + " 6:" + os +"\n";
