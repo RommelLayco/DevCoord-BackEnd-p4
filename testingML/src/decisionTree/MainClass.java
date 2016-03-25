@@ -50,13 +50,11 @@ public class MainClass {
 				
 		/**Rommel's*/	
 				
-		//		System.out.println("Size of Size of task pairs list after setmatch and setcritical:"+data.get);
 		
 				
 				DataToARFF.convert(data, InputEnum.PAIRS_3_2);
 		
-	//	PairsCSVtoARFFconverter.convert();
-		//CombinedCsvToArffConverter.convert("input/combined.csv");
+
 		
 		
 		MakeTree.make(InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output));

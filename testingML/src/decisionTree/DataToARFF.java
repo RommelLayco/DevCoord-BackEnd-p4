@@ -1,11 +1,9 @@
 package decisionTree;
 
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +11,6 @@ import java.util.Map;
 import getTaskPairs.ProcessData;
 import getTaskPairs.TaskPair;
 import getTaskPairs.TaskPairKey;
-import weka.gui.ConverterFileChooser;
 
 public class DataToARFF {
 
@@ -37,12 +34,6 @@ public class DataToARFF {
 		}
 
 
-
-
-
-
-
-
 		System.out.println("Arff file made");
 	}
 
@@ -64,57 +55,28 @@ public class DataToARFF {
 
 		writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output)), "utf-8"));
-		writer.write("@relation pairsTask"+"\n"+"\n"+"\n");
+	
 
-
-
-
-
-		writer.write("@attribute Proximity numeric"+"\n");
-
-		writer.write("@attribute SLSMS numeric"+"\n");
-		writer.write("@attribute ALS numeric"+"\n");
-		writer.write("@attribute Critical {true,false}"+"\n");
-
-
-		writer.write("\n");
-
+		writer.write(getLabels(true));
 		writer.write("@data"+"\n");
 
 
 		int countOfBadData=0;
 
 		List<TaskPairKey> keys=data.getTrainKeys();   //TODO
-		Map<TaskPairKey, TaskPair> taskPairs=data.getTaskPairs();
+		
 
 
 		for (TaskPairKey taskPairKey : keys) {
-			
-			float proximity=taskPairs.get(taskPairKey).getPscore();
-			int sLMS=taskPairs.get(taskPairKey).getSLSM();
-			int aLS=taskPairs.get(taskPairKey).getAL();
-			String critical=""+taskPairs.get(taskPairKey).isCritical();
-
 			try{
-
-
-				
-				writer.write(proximity+","
-						+ +sLMS+","+aLS+","+critical);
+				writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data, true));
 				writer.write("\n");
 
 			}
 			catch(NullPointerException n){
 
 				countOfBadData+=1;
-
-
-
-
 			}
-
-
-
 
 		}
 
@@ -122,9 +84,6 @@ public class DataToARFF {
 
 
 		System.out.println("number of bad entries:"+countOfBadData);
-
-
-		
 		
 		
 	}
@@ -132,49 +91,20 @@ public class DataToARFF {
 	protected static void makeTestArff(ProcessData data,boolean withDRH) throws IOException{
 		
 		Writer writer = null;
-
-
-
-
-		writer = new BufferedWriter(new OutputStreamWriter(
+	writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output)), "utf-8"));
-		writer.write("@relation pairsTask"+"\n"+"\n"+"\n");
 
-
-
-
-
-		writer.write("@attribute Proximity numeric"+"\n");
-
-		writer.write("@attribute SLSMS numeric"+"\n");
-		writer.write("@attribute ALS numeric"+"\n");
-		writer.write("@attribute Critical {true,false}"+"\n");
-
-
-		writer.write("\n");
-
+		writer.write(getLabels(true));
 		writer.write("@data"+"\n");
-
 
 		int countOfBadData=0;
 
-		List<TaskPairKey> keys=data.getTestKeys();   //TODO
-		Map<TaskPairKey, TaskPair> taskPairs=data.getTaskPairs();
-
+		List<TaskPairKey> keys=data.getTestKeys();  
 
 		for (TaskPairKey taskPairKey : keys) {
 			
-			float proximity=taskPairs.get(taskPairKey).getPscore();
-			int sLMS=taskPairs.get(taskPairKey).getSLSM();
-			int aLS=taskPairs.get(taskPairKey).getAL();
-			String critical=""+taskPairs.get(taskPairKey).isCritical();
-
 			try{
-
-
-				
-				writer.write(proximity+","
-						+ +sLMS+","+aLS+","+critical);
+			writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data, true));
 				writer.write("\n");
 
 			}
@@ -182,28 +112,43 @@ public class DataToARFF {
 
 				countOfBadData+=1;
 
-
-
-
 			}
-
-
-
 
 		}
 
 		writer.close();
-
-
 		System.out.println("number of bad entries:"+countOfBadData);
-
-
-		
-		
-		
+	
 	}
 
 
+	protected static String getLabels(boolean withDRH){
+		
+		String toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
+		"@attribute Proximity numeric"+"\n"+
+				"@attribute SLSMS numeric"+"\n"+
+		"@attribute ALS numeric"+"\n"+
+"@attribute Critical {true,false}"+"\n"+"\n";
+		return toReturn;
+		
+		
+	}
+	
+	protected static String getStringOfTheFollowingTaskPairKey(TaskPairKey taskPairKey,ProcessData processData,boolean withDRH){
+		Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
+		float proximity=taskPairs.get(taskPairKey).getPscore();
+		int sLMS=taskPairs.get(taskPairKey).getSLSM();
+		int aLS=taskPairs.get(taskPairKey).getAL();
+		String critical=""+taskPairs.get(taskPairKey).isCritical();
+		
+		return proximity+","
+				+ +sLMS+","+aLS+","+critical;
+		
+		
+	}
+	
+	
+	
 	private static void convertTasks(ProcessData data){
 
 		/**
