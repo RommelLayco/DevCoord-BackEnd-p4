@@ -1,5 +1,7 @@
 package decisionTree;
-
+/**
+ * Enums to store the paths to various input and output files.
+ * */
 public enum InputEnum {
 
 	ACCURACY_CODING,PAIRS_3_2,PAIRS_3_2_Train_Output_DRH,PAIRS_3_2_Train_Output_NODRH,

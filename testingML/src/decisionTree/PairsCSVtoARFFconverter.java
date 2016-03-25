@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-
+/**
+ * Used for making an ARFF file out of the Pairs_3.2.csv file.
+ * (Currently not used)
+ * */
 public class PairsCSVtoARFFconverter {
 
 	 public static void convert() {
@@ -26,8 +29,7 @@ try {
     writer.write("@relation pairsTask"+"\n"+"\n"+"\n");
     
     
-//    writer.write("@attribute TaskOne numeric"+"\n");
-//    writer.write("@attribute TaskTwo numeric"+"\n");
+
     
 
     writer.write("@attribute Proximity numeric"+"\n");
@@ -47,9 +49,7 @@ try {
 
 	try{
     	
-//		writer.write(entry.taskOne+","+entry.taskTwo+","+entry.proximity+","
-//				+ +entry.sDLMs+","+entry.sLSMs+","+entry.aLs);
-//		writer.write("\n");
+
 		
 		writer.write(entry.proximity+","
 				+ +entry.sDLMs+","+entry.sLSMs+","+entry.aLs);

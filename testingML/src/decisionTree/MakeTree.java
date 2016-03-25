@@ -17,11 +17,17 @@ import weka.core.Instances;
 import weka.gui.treevisualizer.PlaceNode2;
 import weka.gui.treevisualizer.TreeVisualizer;
 /**
- * Credit:http://stackoverflow.com/questions/9175116/visualizing-weka-classification-tree
+ * This class is used to to make a decision tree out of a set of train data,
+ * classify the test set,create a visual representation of the train decision tree and create 
+ * a text report about the test set classification.
+ * Credit for tree visualising:http://stackoverflow.com/questions/9175116/visualizing-weka-classification-tree
  * */
 public class MakeTree {
 	
-	
+	/**
+	 * Used to to make a decision tree out of a set of train data,
+	 * classify the test set,create a visual representation of the train decision tree.
+	 **/
 	public static void make(boolean dRH){
 		String trainString;
 		String testString;
@@ -49,10 +55,8 @@ public class MakeTree {
 		     
 		     Evaluation eval = new Evaluation(train);
 		     eval.evaluateModel(cls, test);
-		   //  System.out.println(eval.toSummaryString("\nResults\n======\n", true));
+
 		     
-		     
-		     // display classifier
 		     final javax.swing.JFrame jf = 
 		       new javax.swing.JFrame("Weka Classifier Tree Visualizer: J48(C4.5) "+trainString);
 		     jf.setSize(500,400);
@@ -80,7 +84,9 @@ public class MakeTree {
 		
 		
 	}
-	
+	/**
+	 * Used to create  a text report about the test set classification.
+	 *  */
 	private static void createReport(J48 cls,Evaluation evaluation,boolean DRH){
 		
 		 Writer writer = null;

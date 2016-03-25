@@ -5,7 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * Used to make an object out of the pairs file.
+ * (not currently used)
+ * */
 public class PairsFileObject {
 protected ArrayList<PairsRow> entries;
 	

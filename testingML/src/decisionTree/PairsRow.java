@@ -1,7 +1,10 @@
 package decisionTree;
 
 
-
+/**
+ * Used to hold a row of Pair of tasks.
+ * (not currently used)
+ * */
 public class PairsRow {
 
 	int taskOne;

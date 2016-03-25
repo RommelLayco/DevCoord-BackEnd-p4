@@ -11,16 +11,17 @@ import java.util.Map;
 import getTaskPairs.ProcessData;
 import getTaskPairs.TaskPair;
 import getTaskPairs.TaskPairKey;
-
+/**
+ * Used for conversion of CSV files provided to ARFF files(Weka readable)
+ * 
+ * */
 public class DataToARFF {
-
+	/**
+	 * This method Calls the respective methods to convert the CSV file stated in arguments,
+	 * to an arff file.
+	 * */
 	public static void convert(ProcessData data,InputEnum inputEnum,boolean withDRH){
-
-
-
 		try {
-
-
 			switch(inputEnum){
 			case PAIRS_3_2:{makeArff(data, withDRH,true);
 			makeArff(data, withDRH,false);};
@@ -39,19 +40,22 @@ public class DataToARFF {
 	}
 
 
-	
+	/**
+	 * Used to create ARFF file from the Pairs csv file.
+	 * It also acquired other attributes from the ProcessData object like OS,component etc.
+	 * */
 	protected static void makeArff(ProcessData data,boolean withDRH,boolean train) throws IOException{
 		Writer writer = null;
 
 		String inputString;
-		
+
 		if (withDRH) {
 			if (train) {
 				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_DRH);
 			} else {
 				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_DRH);
 			}
-			
+
 		} else {
 			if (train) {
 				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
@@ -63,7 +67,7 @@ public class DataToARFF {
 
 		writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(inputString), "utf-8"));
-	
+
 
 		writer.write(getLabels(withDRH));
 		writer.write("@data"+"\n");
@@ -77,10 +81,6 @@ public class DataToARFF {
 		} else {
 			keys=data.getTestKeys();
 		}
-		   //TODO
-		
-
-
 		for (TaskPairKey taskPairKey : keys) {
 			try{
 				writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data, withDRH));
@@ -98,21 +98,24 @@ public class DataToARFF {
 
 
 		System.out.println("number of bad entries:"+countOfBadData);
-		
-		
+
+
 	}
-	
 
 
 
+	/**
+	 * Helper method- creates a label which is written in the arff file,depending on the arguments,
+	 * it includes or excludes DRH attributes from the label.
+	 * **/
 	protected static String getLabels(boolean withDRH){
 		String toReturn;
 		if (withDRH) {
 			toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
 					"@attribute Proximity numeric"+"\n"+
-							"@attribute SLSMS numeric"+"\n"+
+					"@attribute SLSMS numeric"+"\n"+
 					"@attribute ALS numeric"+"\n"+
-			"@attribute Critical {true,false}"+"\n"+""
+					"@attribute Critical {true,false}"+"\n"+""
 					+ "@attribute Component {true,false}"+"\n"
 					+ "@attribute Platform {true,false}"+"\n"
 					+ "@attribute OS {true,false}"+"\n"
@@ -121,21 +124,26 @@ public class DataToARFF {
 
 			toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
 					"@attribute Proximity numeric"+"\n"+
-							
+
 			"@attribute Critical {true,false}"+"\n"+""
-					+ "@attribute Component {true,false}"+"\n"
-					+ "@attribute Platform {true,false}"+"\n"
-					+ "@attribute OS {true,false}"+"\n"
-					+ "\n";
-			
+			+ "@attribute Component {true,false}"+"\n"
+			+ "@attribute Platform {true,false}"+"\n"
+			+ "@attribute OS {true,false}"+"\n"
+			+ "\n";
+
 		}
-		
+
 
 		return toReturn;
-		
-		
+
+
 	}
-	
+
+	/**
+	 * Helper method-creates a string that contains information about a pair of task.
+	 * this string is returned,which is then written directly into the arff file(not be this method). 
+	 * 
+	 * */
 	protected static String getStringOfTheFollowingTaskPairKey(TaskPairKey taskPairKey,ProcessData processData,boolean withDRH){
 		Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
 		float proximity=taskPairs.get(taskPairKey).getPscore();
@@ -143,29 +151,29 @@ public class DataToARFF {
 		boolean component=taskPairs.get(taskPairKey).isSameComponent();
 		boolean platform=taskPairs.get(taskPairKey).isSamePlatform();
 		boolean oS=taskPairs.get(taskPairKey).isSameOS();
-		
+
 		if (withDRH) {
 			int sLMS=taskPairs.get(taskPairKey).getSLSM();
 			int aLS=taskPairs.get(taskPairKey).getAL();
-			
+
 			return proximity+","
 			+ +sLMS+","+aLS+","+critical+","+component+","+platform+","+oS;
-	
+
 		} else {
-			
+
 			return proximity+","
 					+ critical+","+component+","+platform+","+oS;
-			
+
 
 		}
-		
-		
-		
-		
+
+
+
+
 	}
-	
-	
-	
+
+
+
 	private static void convertTasks(ProcessData data){
 
 		/**
