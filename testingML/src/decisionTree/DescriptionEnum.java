@@ -1,5 +1,7 @@
 package decisionTree;
-
+/**
+ * Enum to store the description used by coders in the  accuracy file.
+ * */
 public class DescriptionEnum {
 	
 	

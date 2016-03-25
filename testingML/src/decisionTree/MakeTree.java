@@ -17,24 +17,48 @@ import weka.core.Instances;
 import weka.gui.treevisualizer.PlaceNode2;
 import weka.gui.treevisualizer.TreeVisualizer;
 /**
- * Credit:http://stackoverflow.com/questions/9175116/visualizing-weka-classification-tree
+ * This class is used to to make a decision tree out of a set of train data,
+ * classify the test set,create a visual representation of the train decision tree and create 
+ * a text report about the test set classification.
+ * Credit for tree visualising:http://stackoverflow.com/questions/9175116/visualizing-weka-classification-tree
  * */
 public class MakeTree {
 	
-	
-	public static void make(String inputPath){
+	/**
+	 * Used to to make a decision tree out of a set of train data,
+	 * classify the test set,create a visual representation of the train decision tree.
+	 **/
+	public static void make(boolean dRH){
+		String trainString;
+		String testString;
+		if (dRH) {
+			trainString=InputEnum.toString(InputEnum.PAIRS_3_2_Train_Output_DRH);
+			testString=InputEnum.toString(InputEnum.PAIRS_3_2_Test_Output_DRH);
+			
+		} else {
+			trainString=InputEnum.toString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
+			testString=InputEnum.toString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
+		}
 		
 		// train classifier
 	     J48 cls = new J48();
-	     Instances data;
+	     Instances train;
+	     Instances test;
+	     
 		try {
-			data = new Instances(new BufferedReader(new FileReader(inputPath)));
-			 data.setClassIndex(data.numAttributes() - 1);
-		     cls.buildClassifier(data);
+			train = new Instances(new BufferedReader(new FileReader(trainString)));
+			train.setClassIndex(train.numAttributes() - 4);
+			
+			test = new Instances(new BufferedReader(new FileReader(testString)));
+			test.setClassIndex(test.numAttributes() - 4);
+		     cls.buildClassifier(train);
+		     
+		     Evaluation eval = new Evaluation(train);
+		     eval.evaluateModel(cls, test);
 
-		     // display classifier
+		     
 		     final javax.swing.JFrame jf = 
-		       new javax.swing.JFrame("Weka Classifier Tree Visualizer: J48(C4.5)");
+		       new javax.swing.JFrame("Weka Classifier Tree Visualizer: J48(C4.5) "+trainString);
 		     jf.setSize(500,400);
 		     jf.getContentPane().setLayout(new BorderLayout());
 		     TreeVisualizer tv = new TreeVisualizer(null,
@@ -48,7 +72,7 @@ public class MakeTree {
 		     });
 
 		     jf.setVisible(true);
-		createReport(cls);
+		createReport(cls,eval,dRH);
 		
 		}
 		
@@ -60,14 +84,26 @@ public class MakeTree {
 		
 		
 	}
-	
-	private static void createReport(J48 cls){
+	/**
+	 * Used to create  a text report about the test set classification.
+	 *  */
+	private static void createReport(J48 cls,Evaluation evaluation,boolean DRH){
+		
 		 Writer writer = null;
+		 String output;
+		 
+		 if (DRH) {
+			output=InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT_DRH);
+			
+		} else {
+			output=InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT_NODRH);
+			
+		}
 		try {
 			writer = new BufferedWriter(
 					new OutputStreamWriter(
-					new FileOutputStream(InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT))));
-					writer.write(cls.toString());
+					new FileOutputStream(output)));
+					writer.write(cls.toString()+"\n"+evaluation.toSummaryString("\nResults\n======\n", true));
 
 					
 					writer.close();
