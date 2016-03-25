@@ -22,12 +22,12 @@ try {
 	
 	
     writer = new BufferedWriter(new OutputStreamWriter(
-          new FileOutputStream("input/pairs.arff"), "utf-8"));
+          new FileOutputStream(InputEnum.outputToString(InputEnum.PAIRS_3_2)), "utf-8"));
     writer.write("@relation pairsTask"+"\n"+"\n"+"\n");
     
     
-    writer.write("@attribute TaskOne numeric"+"\n");
-    writer.write("@attribute TaskTwo numeric"+"\n");
+//    writer.write("@attribute TaskOne numeric"+"\n");
+//    writer.write("@attribute TaskTwo numeric"+"\n");
     
 
     writer.write("@attribute Proximity numeric"+"\n");
@@ -47,7 +47,11 @@ try {
 
 	try{
     	
-		writer.write(entry.taskOne+","+entry.taskTwo+","+entry.proximity+","
+//		writer.write(entry.taskOne+","+entry.taskTwo+","+entry.proximity+","
+//				+ +entry.sDLMs+","+entry.sLSMs+","+entry.aLs);
+//		writer.write("\n");
+		
+		writer.write(entry.proximity+","
 				+ +entry.sDLMs+","+entry.sLSMs+","+entry.aLs);
 		writer.write("\n");
 		

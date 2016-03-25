@@ -56,12 +56,11 @@ public class DataToARFF {
 		writer.write("@relation pairsTask"+"\n"+"\n"+"\n");
 
 
-		writer.write("@attribute TaskOne numeric"+"\n");
-		writer.write("@attribute TaskTwo numeric"+"\n");
+
 
 
 		writer.write("@attribute Proximity numeric"+"\n");
-		//  writer.write("@attribute SDLMS numeric"+"\n"); //TODO
+
 		writer.write("@attribute SLSMS numeric"+"\n");
 		writer.write("@attribute ALS numeric"+"\n");
 		writer.write("@attribute Critical {true,false}"+"\n");
@@ -79,8 +78,7 @@ public class DataToARFF {
 
 
 		for (TaskPairKey taskPairKey : keys) {
-			int tOne=taskPairs.get(taskPairKey).getT1();
-			int tTwo=taskPairs.get(taskPairKey).getT1();
+
 			float proximity=taskPairs.get(taskPairKey).getPscore();
 			int sLMS=taskPairs.get(taskPairKey).getSLSM();
 			int aLS=taskPairs.get(taskPairKey).getAL();
@@ -88,7 +86,9 @@ public class DataToARFF {
 
 			try{
 
-				writer.write(tOne+","+tTwo+","+proximity+","
+
+				
+				writer.write(proximity+","
 						+ +sLMS+","+aLS+","+critical);
 				writer.write("\n");
 
