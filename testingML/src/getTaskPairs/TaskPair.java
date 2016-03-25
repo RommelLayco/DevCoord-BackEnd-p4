@@ -50,6 +50,23 @@ public class TaskPair {
 		return tp;
 	}
 	
+	public static TaskPair createAll(String[] line){
+		int t1 = Integer.parseInt(line[0]);
+		int t2 = Integer.parseInt(line[1]);
+		float pscore = Float.parseFloat(line[5]);
+		int SLSM = Integer.parseInt(line[6]);
+		int AL = Integer.parseInt(line[7]);
+		
+		TaskPair tp = new TaskPair(t1, t2, pscore, SLSM, AL);
+			
+		tp.sameComponent = getBool(line[2]);
+		tp.samePlatform = getBool(line[3]);
+		tp.sameOS = getBool(line[4]);
+		
+		
+		return tp;
+	}
+	
 	/**
 	 * Method to mark task pair as critical
 	 * if taskAcc says it is
@@ -153,6 +170,14 @@ public class TaskPair {
 	}
 	
 	public boolean isCritical(){
-		return this.sameOS;
+		return this.critical;
+	}
+	
+	public static boolean getBool(String word){
+		if(word.equals("TRUE")){
+			return true;
+		} else{
+			return false;
+		}
 	}
 }

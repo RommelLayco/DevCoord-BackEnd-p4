@@ -1,9 +1,7 @@
-package defaultLIBSVM;
+package libsvm;
 
 import java.io.*;
 import java.util.*;
-
-import libsvm.*;
 
 class svm_predict {
 	private static svm_print_interface svm_print_null = new svm_print_interface()
@@ -130,7 +128,7 @@ class svm_predict {
 		System.exit(1);
 	}
 
-	public static void main(String argv[]) throws IOException
+	public static void runPredict(String argv[]) throws IOException
 	{
 		int i, predict_probability=0;
         	svm_print_string = svm_print_stdout;

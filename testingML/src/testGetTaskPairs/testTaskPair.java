@@ -34,6 +34,24 @@ public class testTaskPair {
 		assertFalse(tp.isCritical());
 				
 	}
+	
+	@Test
+	public void testCreateAll(){
+		String[] line = {"257825", "260963", "TRUE", "FALSE", "TRUE", "0.015592162", "1", "0"};
+
+		TaskPair tp = TaskPair.createAll(line);
+		
+		assertEquals(257825, tp.getT1());
+		assertEquals(260963, tp.getT2());
+		assertEquals(0.015592162, tp.getPscore(), 0.00000002);
+		assertEquals(1, tp.getSLSM());
+		assertEquals(0, tp.getAL());
+		assertTrue(tp.isSameComponent());
+		assertFalse(tp.isSamePlatform());
+		assertTrue(tp.isSameOS());
+	    assertFalse(tp.isCritical());
+	    
+	}
 
 	/**
 	 * Test to see if other fields change

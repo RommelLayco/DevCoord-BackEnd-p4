@@ -1,9 +1,14 @@
-package defaultLIBSVM;
+package libsvm;
 
 import java.io.*;
 import java.util.*;
 
-import libsvm.*;
+import libsvm.svm;
+import libsvm.svm_model;
+import libsvm.svm_node;
+import libsvm.svm_parameter;
+import libsvm.svm_print_interface;
+import libsvm.svm_problem;
 
 class svm_train {
 	private svm_parameter param;		// set by parse_command_line
@@ -115,7 +120,7 @@ class svm_train {
 		}
 	}
 
-	public static void main(String argv[]) throws IOException
+	public static void runTrain(String argv[]) throws IOException
 	{
 		svm_train t = new svm_train();
 		t.run(argv);
