@@ -32,7 +32,8 @@ public class MainClass {
 				List<String[]> lines3 = ReadFiles.readFile("input", "accuracy_coding.csv");
 				Map<TaskPairKey, TaskAcc> taskAcc = ReadFiles.makeTaskAccMap(lines3, accKeys);
 				
-				
+				List<String[]> lines4 =  ReadFiles.readFile("input", "tasks_3_1.csv");
+				taskPairs = ReadFiles.addTasksPairs(lines4, keys, taskPairs);
 				
 				System.out.println("Size of task pairs list: " + taskPairs.size());
 				System.out.println("Size of task pairs key: " + keys.size());
@@ -58,7 +59,7 @@ public class MainClass {
 		//CombinedCsvToArffConverter.convert("input/combined.csv");
 		
 		
-		MakeTree.make(InputEnum.outputToString(InputEnum.PAIRS_3_2));
+		MakeTree.make(InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output));
 		
 		
 		
