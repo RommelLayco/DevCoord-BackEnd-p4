@@ -22,14 +22,23 @@ import weka.gui.treevisualizer.TreeVisualizer;
 public class MakeTree {
 	
 	
-	public static void make(String inputPath){
+	public static void make(boolean dRH){
+		String inputString;
+		
+		if (dRH) {
+			inputString=InputEnum.toString(InputEnum.PAIRS_3_2_Train_Output_DRH);
+		} else {
+			inputString=InputEnum.toString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
+
+		}
 		
 		// train classifier
 	     J48 cls = new J48();
 	     Instances data;
 		try {
-			data = new Instances(new BufferedReader(new FileReader(inputPath)));
+			data = new Instances(new BufferedReader(new FileReader(inputString)));
 			 data.setClassIndex(data.numAttributes() - 1);
+			
 		     cls.buildClassifier(data);
 
 		     // display classifier

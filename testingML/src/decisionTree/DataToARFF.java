@@ -14,7 +14,7 @@ import getTaskPairs.TaskPairKey;
 
 public class DataToARFF {
 
-	public static void convert(ProcessData data,InputEnum inputEnum){
+	public static void convert(ProcessData data,InputEnum inputEnum,boolean withDRH){
 
 
 
@@ -22,7 +22,8 @@ public class DataToARFF {
 
 
 			switch(inputEnum){
-			case PAIRS_3_2:convertPairs(data);
+			case PAIRS_3_2:{makeArff(data, withDRH,true);
+			makeArff(data, withDRH,false);};
 			case ACCURACY_CODING:convertAccuracy(data);
 			case TASKS_3_2:convertTasks(data);
 			}
@@ -38,38 +39,51 @@ public class DataToARFF {
 	}
 
 
-	private static void convertPairs(ProcessData data) throws IOException{
 	
-		makeTrainArff(data, true);
-		makeTestArff(data, true);
-
-
-
-	}
-	
-	protected static void makeTrainArff(ProcessData data,boolean withDRH) throws IOException{
+	protected static void makeArff(ProcessData data,boolean withDRH,boolean train) throws IOException{
 		Writer writer = null;
 
-
+		String inputString;
+		
+		if (withDRH) {
+			if (train) {
+				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_DRH);
+			} else {
+				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_DRH);
+			}
+			
+		} else {
+			if (train) {
+				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
+			} else {
+				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
+			}	
+		}
 
 
 		writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output)), "utf-8"));
+				new FileOutputStream(inputString), "utf-8"));
 	
 
-		writer.write(getLabels(true));
+		writer.write(getLabels(withDRH));
 		writer.write("@data"+"\n");
 
 
 		int countOfBadData=0;
 
-		List<TaskPairKey> keys=data.getTrainKeys();   //TODO
+		List<TaskPairKey> keys;
+		if (train) {
+			keys=data.getTrainKeys();
+		} else {
+			keys=data.getTestKeys();
+		}
+		   //TODO
 		
 
 
 		for (TaskPairKey taskPairKey : keys) {
 			try{
-				writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data, true));
+				writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data, withDRH));
 				writer.write("\n");
 
 			}
@@ -88,47 +102,35 @@ public class DataToARFF {
 		
 	}
 	
-	protected static void makeTestArff(ProcessData data,boolean withDRH) throws IOException{
-		
-		Writer writer = null;
-	writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output)), "utf-8"));
 
-		writer.write(getLabels(true));
-		writer.write("@data"+"\n");
-
-		int countOfBadData=0;
-
-		List<TaskPairKey> keys=data.getTestKeys();  
-
-		for (TaskPairKey taskPairKey : keys) {
-			
-			try{
-			writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data, true));
-				writer.write("\n");
-
-			}
-			catch(NullPointerException n){
-
-				countOfBadData+=1;
-
-			}
-
-		}
-
-		writer.close();
-		System.out.println("number of bad entries:"+countOfBadData);
-	
-	}
 
 
 	protected static String getLabels(boolean withDRH){
+		String toReturn;
+		if (withDRH) {
+			toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
+					"@attribute Proximity numeric"+"\n"+
+							"@attribute SLSMS numeric"+"\n"+
+					"@attribute ALS numeric"+"\n"+
+			"@attribute Critical {true,false}"+"\n"+""
+					+ "@attribute Component {true,false}"+"\n"
+					+ "@attribute Platform {true,false}"+"\n"
+					+ "@attribute OS {true,false}"+"\n"
+					+ "\n";
+		} else {
+
+			toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
+					"@attribute Proximity numeric"+"\n"+
+							
+			"@attribute Critical {true,false}"+"\n"+""
+					+ "@attribute Component {true,false}"+"\n"
+					+ "@attribute Platform {true,false}"+"\n"
+					+ "@attribute OS {true,false}"+"\n"
+					+ "\n";
+			
+		}
 		
-		String toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
-		"@attribute Proximity numeric"+"\n"+
-				"@attribute SLSMS numeric"+"\n"+
-		"@attribute ALS numeric"+"\n"+
-"@attribute Critical {true,false}"+"\n"+"\n";
+
 		return toReturn;
 		
 		
@@ -137,12 +139,27 @@ public class DataToARFF {
 	protected static String getStringOfTheFollowingTaskPairKey(TaskPairKey taskPairKey,ProcessData processData,boolean withDRH){
 		Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
 		float proximity=taskPairs.get(taskPairKey).getPscore();
-		int sLMS=taskPairs.get(taskPairKey).getSLSM();
-		int aLS=taskPairs.get(taskPairKey).getAL();
 		String critical=""+taskPairs.get(taskPairKey).isCritical();
+		boolean component=taskPairs.get(taskPairKey).isSameComponent();
+		boolean platform=taskPairs.get(taskPairKey).isSamePlatform();
+		boolean oS=taskPairs.get(taskPairKey).isSameOS();
 		
-		return proximity+","
-				+ +sLMS+","+aLS+","+critical;
+		if (withDRH) {
+			int sLMS=taskPairs.get(taskPairKey).getSLSM();
+			int aLS=taskPairs.get(taskPairKey).getAL();
+			
+			return proximity+","
+			+ +sLMS+","+aLS+","+critical+","+component+","+platform+","+oS;
+	
+		} else {
+			
+			return proximity+","
+					+ critical+","+component+","+platform+","+oS;
+			
+
+		}
+		
+		
 		
 		
 	}

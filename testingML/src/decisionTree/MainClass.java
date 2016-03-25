@@ -51,13 +51,7 @@ public class MainClass {
 		/**Rommel's*/	
 				
 		
-				
-				DataToARFF.convert(data, InputEnum.PAIRS_3_2);
-		
-
-		
-		
-		MakeTree.make(InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output));
+				makeARFFAndTree(true,data);
 		
 		
 		
@@ -65,4 +59,15 @@ public class MainClass {
 		
 		
 	}
+	private static void makeARFFAndTree(boolean DRH,ProcessData data){
+		
+		
+		DataToARFF.convert(data, InputEnum.PAIRS_3_2,DRH);
+		MakeTree.make(DRH);
+	
+
+		
+		
+	}
+	
 }
