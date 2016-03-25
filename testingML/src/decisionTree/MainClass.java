@@ -35,23 +35,16 @@ public class MainClass {
 				List<String[]> lines4 =  ReadFiles.readFile("input", "tasks_3_1.csv");
 				taskPairs = ReadFiles.addTasksPairs(lines4, keys, taskPairs);
 				
-				System.out.println("Size of task pairs list: " + taskPairs.size());
-				System.out.println("Size of task pairs key: " + keys.size());
-				System.out.println("Size of tasks list: " + tasks.size());
-				System.out.println("Size of task acc key: " + accKeys.size());
-				System.out.println("Size of task acc list: " + taskAcc.size());
-				
+					
 				ProcessData data = new ProcessData(taskPairs, tasks, keys, taskAcc, accKeys);
 				data.setMatching();
 				data.setCritical();
-				
-				System.out.println("Number of data to train: " + data.getTrainKeys().size());
-				System.out.println("Number of data to test: " + data.getTestKeys().size());
-				
+								
 		/**Rommel's*/	
 				
 		
 				makeARFFAndTree(true,data);
+				makeARFFAndTree(false,data);
 		
 		
 		
