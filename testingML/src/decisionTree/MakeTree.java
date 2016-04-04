@@ -28,7 +28,7 @@ public class MakeTree {
 	 * Used to to make a decision tree out of a set of train data,
 	 * classify the test set,create a visual representation of the train decision tree.
 	 **/
-	public static void make(boolean dRH){
+	public static void make(boolean dRH,boolean unpruned){
 		String trainString;
 		String testString;
 		if (dRH) {
@@ -49,8 +49,16 @@ public class MakeTree {
 			train = new Instances(new BufferedReader(new FileReader(trainString)));
 			train.setClassIndex(train.numAttributes() - 4);
 			
+			
 			test = new Instances(new BufferedReader(new FileReader(testString)));
 			test.setClassIndex(test.numAttributes() - 4);
+			
+
+
+			
+			cls.setUnpruned(unpruned);
+			
+			
 		     cls.buildClassifier(train);
 		     
 		     Evaluation eval = new Evaluation(train);
@@ -58,7 +66,7 @@ public class MakeTree {
 
 		     
 		     final javax.swing.JFrame jf = 
-		       new javax.swing.JFrame("Weka Classifier Tree Visualizer: J48(C4.5) "+trainString);
+		       new javax.swing.JFrame("Weka Classifier Tree Visualizer: J48(C4.5) "+trainString+" Unpruned="+unpruned);
 		     jf.setSize(500,400);
 		     jf.getContentPane().setLayout(new BorderLayout());
 		     TreeVisualizer tv = new TreeVisualizer(null,
@@ -72,7 +80,7 @@ public class MakeTree {
 		     });
 
 		     jf.setVisible(true);
-		createReport(cls,eval,dRH);
+		createReport(cls,eval,dRH,unpruned);
 		
 		}
 		
@@ -87,16 +95,28 @@ public class MakeTree {
 	/**
 	 * Used to create  a text report about the test set classification.
 	 *  */
-	private static void createReport(J48 cls,Evaluation evaluation,boolean DRH){
+	private static void createReport(J48 cls,Evaluation evaluation,boolean DRH,boolean unpruned){
 		
 		 Writer writer = null;
 		 String output;
 		 
 		 if (DRH) {
-			output=InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT_DRH);
+			 if (unpruned) {
+					output=InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT_DRH_UNPRUNED);
+				
+			} else {
+
+				output=InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT_DRH_PRUNED);
+			}
 			
 		} else {
-			output=InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT_NODRH);
+			if (unpruned) {
+				output=InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT_NODRH_UNPRUNED);
+				
+			} else {
+				output=InputEnum.outputToString(InputEnum.WEKA_DECISION_TREE_REPORT_NODRH_PRUNED);
+
+			}
 			
 		}
 		try {

@@ -46,9 +46,18 @@ public class MainClass {
 
 
 		/**With DRH*/
-		makeARFFAndTree(true,data);
+			/**UNPRUNED*/
+				makeARFFAndTree(true,data,true);
+			/**PRUNED*/
+				makeARFFAndTree(true,data,false);
+
+		
 		/**With Without*/
-		makeARFFAndTree(false,data);
+				/**UNPRUNED*/
+				makeARFFAndTree(false,data,true);
+
+				/**PRUNED*/
+				makeARFFAndTree(false,data,false);
 
 
 
@@ -60,11 +69,11 @@ public class MainClass {
 	 * Calls convert method to make arff files from csvs,
 	 * and Make method to create a tree and make a report for the test set classification.
 	 * */
-	private static void makeARFFAndTree(boolean DRH,ProcessData data){
+	private static void makeARFFAndTree(boolean DRH,ProcessData data,boolean unpruned){
 
 
 		DataToARFF.convert(data, InputEnum.PAIRS_3_2,DRH);
-		MakeTree.make(DRH);
+		MakeTree.make(DRH,unpruned);
 
 
 
