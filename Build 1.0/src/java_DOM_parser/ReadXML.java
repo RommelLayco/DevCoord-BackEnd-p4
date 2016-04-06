@@ -59,9 +59,9 @@ public class ReadXML {
 	 * @param doc
 	 * @return Map of the task objects. Key is the task id.
 	 */
-	public static Map<Integer,Task> createTaskObjects(Document doc){
+	public static Map<String,Task> createTaskObjects(Document doc){
 		//create map to store task objects
-		Map<Integer, Task> tasks = new HashMap<Integer, Task>();
+		Map<String, Task> tasks = new HashMap<String, Task>();
 		
 		NodeList taskList = doc.getElementsByTagName("Task");
 		
@@ -81,9 +81,9 @@ public class ReadXML {
 				
 				//create task object
 				Task taskObject = new Task(ID, handle, label);
-				
+				System.out.println(handle);
 				//store in the map - key = taskID.
-				tasks.put(ID, taskObject);
+				tasks.put(handle, taskObject);
 				
 			}
 		}
@@ -92,5 +92,6 @@ public class ReadXML {
 		
 		return tasks;
 	}
+	
 	
 }

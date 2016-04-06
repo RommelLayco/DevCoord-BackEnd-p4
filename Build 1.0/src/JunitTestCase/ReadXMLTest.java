@@ -27,10 +27,10 @@ public class ReadXMLTest {
 	 */
 	@Test
 	public void taskObjectCreation() {
-		Map<Integer, Task> map = ReadXML.createTaskObjects(taskList);
-		Task t1 = map.get(1);
-		Task t2 = map.get(2);
-		
+		Map<String, Task> map = ReadXML.createTaskObjects(taskList);
+		Task t1 = map.get("local-1");
+		Task t2 = map.get("local-2");
+				
 		assertEquals(1, t1.getTaskID());
 		assertEquals("TaskOne", t1.getLabel());
 		assertEquals("local-1", t1.getHandle());
