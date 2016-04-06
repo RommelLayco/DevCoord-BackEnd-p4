@@ -9,16 +9,20 @@ import org.junit.Test;
 
 import org.w3c.dom.Document;
 
+import PromixtyCalc.JavaFile;
 import PromixtyCalc.Task;
 import java_DOM_parser.ReadXML;
+import java_DOM_parser.WrongXML;
 
 public class ReadXMLTest {
 
 	static Document taskList;
+	static Document context1;
 	
 	@BeforeClass
 	public static void ReadXMLFiles(){
 		taskList = ReadXML.readInput("TestXMLfiles/tasklist.xml");
+		context1 = ReadXML.readInput("TestXMLfiles/context/local-1.xml");
 	}
 	
 	/**
@@ -27,7 +31,13 @@ public class ReadXMLTest {
 	 */
 	@Test
 	public void taskObjectCreation() {
-		Map<String, Task> map = ReadXML.createTaskObjects(taskList);
+		Map<String, Task> map = null;
+		try {
+			map = ReadXML.createTaskObjects(taskList);
+		} catch (WrongXML e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Task t1 = map.get("local-1");
 		Task t2 = map.get("local-2");
 				
@@ -41,4 +51,34 @@ public class ReadXMLTest {
 		
 	}
 
+	@Test
+	public void taskContextSetting(){
+		Map<String, Task> map = null;
+		try {
+			map = ReadXML.createTaskObjects(taskList);
+			Task t1 = map.get("local-1");
+			assertEquals(0, t1.getJavaFiles().size());
+			
+			map = ReadXML.setContextOfTaskObject(context1, map);
+			
+			
+			assertEquals(2, t1.getJavaFiles().size());
+			
+			Map<String,JavaFile> fileMap = t1.getJavaFiles();
+			JavaFile f1 = fileMap.get("=Build 1.0/src&lt;TestClass{Class1.java");
+			JavaFile f2 = fileMap.get("=Build 1.0/src&lt;TestClass{Class2.java");
+			
+			assertTrue(f1.isSelected());
+			assertTrue(f1.isEdited());
+			assertTrue(f2.isSelected());
+			assertFalse(f2.isEdited());
+			
+			
+			
+		} catch (WrongXML e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

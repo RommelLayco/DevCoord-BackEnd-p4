@@ -14,6 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import PromixtyCalc.JavaFile;
 import PromixtyCalc.Task;
 
 /**
@@ -59,7 +60,7 @@ public class ReadXML {
 	 * @param doc
 	 * @return Map of the task objects. Key is the task id.
 	 */
-	public static Map<String,Task> createTaskObjects(Document doc){
+	public static Map<String,Task> createTaskObjects(Document doc) throws WrongXML{
 		//create map to store task objects
 		Map<String, Task> tasks = new HashMap<String, Task>();
 		
@@ -85,6 +86,8 @@ public class ReadXML {
 				//store in the map - key = taskID.
 				tasks.put(handle, taskObject);
 				
+			} else {
+				throw new WrongXML("Read the wrong xml file. Should have found an element called Task");
 			}
 		}
 		
@@ -93,5 +96,136 @@ public class ReadXML {
 		return tasks;
 	}
 	
+	/**
+	 * Method that looks at the context of a task
+	 * and changes the java file boolean fields edit and select
+	 * if the file has been consulted - "select" or changed - "edit"
+	 
+	 *Only creates java file object for a file that contain a class.
+	 *If structure handle has method name, it is truncated.
 	
+	 * @param doc of the xml document that was read
+	 * @param map containg all the task.
+	 * @return
+	 * @throws WrongXML
+	 */
+	public static Map<String,Task> setContextOfTaskObject(Document doc,
+			Map<String,Task> map) throws WrongXML{
+		
+		//get task object that we will check for additions and selections.
+		NodeList interactionList = doc.getElementsByTagName("InteractionHistory");
+		
+		if( interactionList.getLength() > 1){
+			throw new WrongXML("Read the wrong xml file. Should have only 1 element called InteractionHistory");
+		}
+		
+		Node n = interactionList.item(0);
+		
+		if(n.getNodeType() == Node.ELEMENT_NODE){
+			Element element = (Element) n;
+			String id = element.getAttribute("Id");
+			
+			//get task object from handle
+			Task taskObject = map.get(id);
+			Map<String, JavaFile> javaFiles = taskObject.getJavaFiles();
+			
+			//look through children nodes for edit and select.
+			NodeList eventList = element.getChildNodes();
+			for(int i = 0; i < eventList.getLength(); i++){
+				Node eventNode = eventList.item(i);
+				
+				if(eventNode.getNodeType() == Node.ELEMENT_NODE){
+					Element event = (Element) eventNode;
+					
+					//get name of the java file class
+					String name = event.getAttribute("StructureHandle");
+					String kind = event.getAttribute("Kind");
+					
+					//do more processing it is a class that is affected.
+					name = checkName(name);
+					
+					if(name != null && (kind.equals("selection") || kind.equals("edit"))){
+						//check if it already defined
+						JavaFile file = javaFiles.get(name);
+						
+						// create java file object and store in map
+						if(file == null){ 
+							file = createJavaFile(name, kind);
+							javaFiles.put(name, file);
+						}
+						
+						//set field
+						file = setType(file, kind);
+						
+						
+						
+					}
+					
+				}
+			}
+		}
+		
+		
+		return map;
+		
+	}
+	
+	/**
+	 * Helper method to convert structure handle into the class
+	 * name it the structure handle has a method.
+	 * 
+	 * Also check is the structure handle has the class name
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private static String checkName(String name){
+		
+		String[] check = name.split("\\{");
+		
+		if( check.length > 1){ //has a class
+			//check if it has method attach
+			check = name.split("\\[");
+			
+			if(check.length > 1) { //has a method affected
+				return check[0];
+			} else{
+				return name;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Helper method to create a new java file depend on the kind we get.
+	 * @param name
+	 * @param kind
+	 * @return
+	 */
+	private static JavaFile createJavaFile(String name, String kind){
+		
+		if(kind.equals("selection")){
+			return new JavaFile(name, true, false);
+		} else{
+			return new JavaFile(name, false, true);
+		}
+	}
+	
+	/**
+	 * Helper method to change either the edit or selection
+	 * boolean field of a javafile object to true.
+	 * 
+	 * That is the file has been used is some way.
+	 * @return
+	 */
+	private static JavaFile setType(JavaFile file, String kind){
+		
+		if(kind.equals("edit")){
+			file.setEdit(true);
+		} else {
+			file.setSelected(true);
+		}
+		
+		return file;
+	}
 }
