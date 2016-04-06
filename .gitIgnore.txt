@@ -39,6 +39,7 @@ Thumbs.db
 # ignore classpath for libsvm and weka DT #
 #####################
 testingML/.classpath
+Build\ 1.0/.classpath
 
 #ignore misc files #
 ###################
