@@ -1,16 +1,24 @@
 package java_DOM_parser;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import PromixtyCalc.Task;
 
 /**
  * Class used to read in the xml files.
+ * And process the data to poulate the fields of a task object.
  * @author Rommel
  *
  */
@@ -44,4 +52,45 @@ public class ReadXML {
 		
 	}
 
+	
+	/**
+	 * Method process the doc nodes of the xml file
+	 * and creates task objects. 
+	 * @param doc
+	 * @return Map of the task objects. Key is the task id.
+	 */
+	public static Map<Integer,Task> createTaskObjects(Document doc){
+		//create map to store task objects
+		Map<Integer, Task> tasks = new HashMap<Integer, Task>();
+		
+		NodeList taskList = doc.getElementsByTagName("Task");
+		
+		//get
+		for(int i = 0; i < taskList.getLength(); i++){
+			Node taskXML = taskList.item(i);
+			
+			if(taskXML.getNodeType() == Node.ELEMENT_NODE){
+				Element taskElement = (Element) taskXML;
+				
+				//get values need to create task object
+				String id = taskElement.getAttribute("TaskId");
+				int ID = Integer.parseInt(id);
+				
+				String handle = taskElement.getAttribute("Handle");
+				String label = taskElement.getAttribute("Label");
+				
+				//create task object
+				Task taskObject = new Task(ID, handle, label);
+				
+				//store in the map - key = taskID.
+				tasks.put(ID, taskObject);
+				
+			}
+		}
+		
+		
+		
+		return tasks;
+	}
+	
 }
