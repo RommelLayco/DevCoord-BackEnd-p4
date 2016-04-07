@@ -5,12 +5,15 @@ import java.util.Map;
 import org.w3c.dom.Document;
 
 import PromixtyCalc.Task;
+import java_DOM_parser.Kind;
 import java_DOM_parser.ReadXML;
 import java_DOM_parser.WrongXML;
 
 public class MainRunner {
 	
 	public static void main(String[] args){
+		
+		
 		Document doc = ReadXML.readInput("xmlfiles/tasklist.xml");
 	
 		try {

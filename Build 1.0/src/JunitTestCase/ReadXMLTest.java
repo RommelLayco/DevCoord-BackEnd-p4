@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 
 import PromixtyCalc.JavaFile;
 import PromixtyCalc.Task;
+import java_DOM_parser.Kind;
 import java_DOM_parser.ReadXML;
 import java_DOM_parser.WrongXML;
 
@@ -80,5 +81,23 @@ public class ReadXMLTest {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	/**
+	 * Test that String is converted to the
+	 * corret enum
+	 */
+	@Test
+	public void kindEnumTest(){
+		String selection = "selection";
+		String Selection = "SELection";
+		String edit = "edit";
+		String Edit = "EdIT";
+		
+		assertEquals(Kind.SELECTION, Kind.fromString(selection));
+		assertEquals(Kind.SELECTION, Kind.fromString(Selection));
+		assertEquals(Kind.EDIT, Kind.fromString(edit));
+		assertEquals(Kind.EDIT, Kind.fromString(Edit));
+
 	}
 }
