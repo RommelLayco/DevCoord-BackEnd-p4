@@ -15,9 +15,10 @@ public class MainRunner {
 		
 		
 		Document doc = ReadXML.readInput("xmlfiles/tasklist.xml");
+		Map<String,Task> tasks;
 	
 		try {
-			Map<String,Task> tasks = ReadXML.createTaskObjects(doc);
+			tasks = ReadXML.createTaskObjects(doc);
 			
 			for(int i = 1; i <= 2; i++){
 				doc = ReadXML.readInput("xmlfiles/context/local-"+ i + 
@@ -31,6 +32,8 @@ public class MainRunner {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//do promixty calculation here
 	}
 
 }
