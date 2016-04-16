@@ -1,8 +1,22 @@
 package PromixtyCalc;
 
+/**
+ * Class that stores whether a java file that is 
+ * associated with a task has been viewed("select") or
+ * modified ("edit")
+ * @author Rommel
+ *
+ */
 public class JavaFile {
 	
+	/**
+	 * Name of the java file
+	 */
 	private String name;
+	
+	/**
+	 * booleans used to calculate the proximity score in taskPair
+	 */
 	private boolean select;
 	private boolean edit;
 	

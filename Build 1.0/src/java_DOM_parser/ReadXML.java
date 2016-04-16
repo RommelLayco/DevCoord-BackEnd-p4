@@ -28,7 +28,7 @@ public class ReadXML {
 	/**
 	 * 
 	 * @param filepath - of the xml file to read
-	 * @return a Document onbject we can process further to get elements by tags
+	 * @return a Document object we can process further to get elements by tags
 	 */
 	public static Document readInput(String filepath){
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -55,10 +55,10 @@ public class ReadXML {
 
 
 	/**
-	 * Method process the doc nodes of the xml file
+	 * Method process the document nodes of the xml file
 	 * and creates task objects. 
 	 * @param doc
-	 * @return Map of the task objects. Key is the task id.
+	 * @return Map of the task objects. Key is the task handle.
 	 */
 	public static Map<String,Task> createTaskObjects(Document doc) throws WrongXML{
 		//create map to store task objects
