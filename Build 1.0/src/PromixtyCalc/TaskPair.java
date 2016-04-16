@@ -43,6 +43,7 @@ public class TaskPair {
 		this.calcPotentialScore(files1, files2);
 		this.calcActualScore(files1, files2);
 		
+		
 		this.proximityScore = this.actualScore / this.potentialScore;
 	}
 	
@@ -152,25 +153,8 @@ public class TaskPair {
 				return 0;
 			}
 
-		} else if(file1 != null){ //therefore file 2 is null
-
-			if(file1.isEdited()){
-				return 0.79;
-			} else if(file1.isSelected()){
-				return 0.59;
-			} else {
-				return 0;
-			}
-
-		} else{ //file2 is not null and file 1 is null
-
-			if(file2.isEdited()){
-				return 0.79;
-			} else if (file2.isSelected()){
-				return 0.59;
-			} else{
-				return 0;
-			}
+		} else {
+			return 0; //files does not exist in both task working set
 		}
 	}
 	

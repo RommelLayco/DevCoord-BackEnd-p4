@@ -123,8 +123,8 @@ public class TaskPairTest {
 		
 		
 		tp.calcProximityScore(t1.getJavaFiles(), t2.getJavaFiles());
-		assertEquals(0.74213836478, tp.getProximityScore() , 0.00001);
-		System.out.println(tp.getProximityScore());
+		assertEquals(0.49685534591, tp.getProximityScore() , 0.00001);
+		
 		
 		
 		
