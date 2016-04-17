@@ -2,8 +2,12 @@ package Main;
 
 import java.util.Map;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.w3c.dom.Document;
 
+import JunitTestCase.FakeClass;
 import PromixtyCalc.Task;
 import java_DOM_parser.Kind;
 import java_DOM_parser.ReadXML;
@@ -34,6 +38,21 @@ public class MainRunner {
 		}
 		
 		//do promixty calculation here
+		
+		
+		//push results into database
+		SessionFactory sessionFactory =  new Configuration().configure().buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		session.beginTransaction();
+
+		// this would save the Student_Info object into the database
+		FakeClass fakeTask = new FakeClass(1,"faketask");
+		session.save(fakeTask);
+		
+		session.getTransaction().commit();
+		session.close();
+		sessionFactory.close();
 	}
 
 }
