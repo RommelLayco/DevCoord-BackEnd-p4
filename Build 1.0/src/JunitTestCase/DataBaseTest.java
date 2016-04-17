@@ -12,9 +12,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import PromixtyCalc.Task;
 import java_DOM_parser.ReadXML;
 import java_DOM_parser.WrongXML;
+import nz.ac.auckland.proximity.Context_Structure;
+import nz.ac.auckland.proximity.Task;
 
 
 
@@ -66,16 +67,17 @@ public class DataBaseTest {
 	@Test
 	public void testTaskObject(){
 		Task t1 = new Task(0, "test-task", "Rommel's Task");
+		t1.addContextStructure("hello", new Context_Structure("hello", true, false));
 		session.save(t1);
 	}
 	
-	@Test
-	public void testPushAllTask(){
-		
-		for(Task t : task.values()){
-			session.save(t);
-		}
-	}
+//	@Test
+//	public void testPushAllTask(){
+//		
+//		for(Task t : task.values()){
+//			session.save(t);
+//		}
+//	}
 
 
 	@After

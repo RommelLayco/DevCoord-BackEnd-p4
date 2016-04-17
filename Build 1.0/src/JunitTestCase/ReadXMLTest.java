@@ -9,11 +9,11 @@ import org.junit.Test;
 
 import org.w3c.dom.Document;
 
-import PromixtyCalc.JavaFile;
-import PromixtyCalc.Task;
 import java_DOM_parser.Kind;
 import java_DOM_parser.ReadXML;
 import java_DOM_parser.WrongXML;
+import nz.ac.auckland.proximity.Context_Structure;
+import nz.ac.auckland.proximity.Task;
 
 public class ReadXMLTest {
 
@@ -58,16 +58,16 @@ public class ReadXMLTest {
 		try {
 			map = ReadXML.createTaskObjects(taskList);
 			Task t1 = map.get("local-1");
-			assertEquals(0, t1.getJavaFiles().size());
+			assertEquals(0, t1.getContextStructures().size());
 			
 			map = ReadXML.setContextOfTaskObject(context1, map);
 			
 			
-			assertEquals(2, t1.getJavaFiles().size());
+			assertEquals(2, t1.getContextStructures().size());
 			
-			Map<String,JavaFile> fileMap = t1.getJavaFiles();
-			JavaFile f1 = fileMap.get("=Build 1.0/src&lt;TestClass{Class1.java");
-			JavaFile f2 = fileMap.get("=Build 1.0/src&lt;TestClass{Class2.java");
+			Map<String,Context_Structure> fileMap = t1.getContextStructures();
+			Context_Structure f1 = fileMap.get("=Build 1.0/src&lt;TestClass{Class1.java");
+			Context_Structure f2 = fileMap.get("=Build 1.0/src&lt;TestClass{Class2.java");
 			
 			assertTrue(f1.isSelected());
 			assertTrue(f1.isEdited());

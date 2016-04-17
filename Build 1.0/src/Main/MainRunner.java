@@ -8,10 +8,10 @@ import org.hibernate.cfg.Configuration;
 import org.w3c.dom.Document;
 
 import JunitTestCase.FakeClass;
-import PromixtyCalc.Task;
 import java_DOM_parser.Kind;
 import java_DOM_parser.ReadXML;
 import java_DOM_parser.WrongXML;
+import nz.ac.auckland.proximity.Task;
 
 public class MainRunner {
 	

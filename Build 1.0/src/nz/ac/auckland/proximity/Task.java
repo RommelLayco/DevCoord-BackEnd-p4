@@ -1,4 +1,4 @@
-package PromixtyCalc;
+package nz.ac.auckland.proximity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,15 +47,15 @@ public class Task {
 	 * Key is the name of the java file
 	 */
 	@ElementCollection
-	@CollectionTable(name="STRUCTURE_CONTEXTS")
+	@CollectionTable(name="CONTEXTS_STRUCTURE")
 	@MapKeyColumn(name="STRUCTURE_NAME")
-	private Map<String, JavaFile> javaFiles;
+	private Map<String, Context_Structure> contextStructure;
 	
 	public Task(int taskID, String handle, String label){
 		this.taskID = taskID;
 		this.handle = handle;
 		this.label = label;
-		this.javaFiles = new HashMap<String, JavaFile>();
+		this.contextStructure = new HashMap<String, Context_Structure>();
 	}
 	
 	public int getTaskID(){
@@ -70,12 +70,12 @@ public class Task {
 		return this.label;
 	}
 	
-	public void addJavaFile(String filepath, JavaFile file){
-		this.javaFiles.put(filepath, file);
+	public void addContextStructure(String filepath, Context_Structure structure){
+		this.contextStructure.put(filepath, structure);
 	}
 	
-	public Map<String, JavaFile> getJavaFiles(){
-		return this.javaFiles;
+	public Map<String, Context_Structure> getContextStructures(){
+		return this.contextStructure;
 	}
 
 }

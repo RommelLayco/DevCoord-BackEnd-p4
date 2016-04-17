@@ -1,4 +1,4 @@
-package PromixtyCalc;
+package nz.ac.auckland.proximity;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,8 +36,8 @@ public class TaskPair {
 	 * @param files1
 	 * @param files2
 	 */
-	public void calcProximityScore(Map<String, JavaFile> files1,
-			Map<String, JavaFile> files2){
+	public void calcProximityScore(Map<String, Context_Structure> files1,
+			Map<String, Context_Structure> files2){
 		
 		//calculate the actual and potential scores
 		this.calcPotentialScore(files1, files2);
@@ -53,16 +53,16 @@ public class TaskPair {
 	 * @param files1
 	 * @param files2
 	 */
-	private void calcPotentialScore(Map<String, JavaFile> files1, 
-			Map<String, JavaFile> files2){
+	private void calcPotentialScore(Map<String, Context_Structure> files1, 
+			Map<String, Context_Structure> files2){
 
 		double potentialScore = 0;
 		Iterator<String> keys = combineKeys(files1, files2);
 
 		while(keys.hasNext()){
 			String key = keys.next(); //get the two java files
-			JavaFile file1 = files1.get(key);
-			JavaFile file2 = files2.get(key);
+			Context_Structure file1 = files1.get(key);
+			Context_Structure file2 = files2.get(key);
 			potentialScore += potentialScore(file1, file2);
 		}
 
@@ -76,16 +76,16 @@ public class TaskPair {
 	 * @param files1
 	 * @param files2
 	 */
-	private void calcActualScore(Map<String, JavaFile> files1, 
-			Map<String, JavaFile> files2){
+	private void calcActualScore(Map<String, Context_Structure> files1, 
+			Map<String, Context_Structure> files2){
 
 		double actualScore = 0;
 		Iterator<String> keys = combineKeys(files1, files2);
 
 		while(keys.hasNext()){
 			String key = keys.next(); //get the two java files
-			JavaFile file1 = files1.get(key);
-			JavaFile file2 = files2.get(key);
+			Context_Structure file1 = files1.get(key);
+			Context_Structure file2 = files2.get(key);
 			actualScore += actualScore(file1, file2);
 		}
 
@@ -100,7 +100,7 @@ public class TaskPair {
 	 * @param file2
 	 * @return either 1, or 0.59 or 0
 	 */
-	private static double potentialScore(JavaFile file1, JavaFile file2){
+	private static double potentialScore(Context_Structure file1, Context_Structure file2){
 
 		if(file1 != null && file2 != null){
 
@@ -140,7 +140,7 @@ public class TaskPair {
 	 * @param file2
 	 * @return
 	 */
-	private static double actualScore(JavaFile file1, JavaFile file2){
+	private static double actualScore(Context_Structure file1, Context_Structure file2){
 		if(file1 != null && file2 != null){
 
 			if(file1.isEdited() && file2.isEdited()){
@@ -165,8 +165,8 @@ public class TaskPair {
 	 * @param files2
 	 * @return a single set of keys for both maps
 	 */
-	private static Iterator<String> combineKeys(Map<String, JavaFile> files1, 
-			Map<String, JavaFile> files2){
+	private static Iterator<String> combineKeys(Map<String, Context_Structure> files1, 
+			Map<String, Context_Structure> files2){
 
 		Set<String> set1 = files1.keySet();
 		Set<String> set2 = files2.keySet();

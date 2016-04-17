@@ -14,8 +14,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import PromixtyCalc.JavaFile;
-import PromixtyCalc.Task;
+import nz.ac.auckland.proximity.Context_Structure;
+import nz.ac.auckland.proximity.Task;
 
 /**
  * Class used to read in the xml files.
@@ -127,7 +127,7 @@ public class ReadXML {
 
 			//get task object from handle
 			Task taskObject = map.get(id);
-			Map<String, JavaFile> javaFiles = taskObject.getJavaFiles();
+			Map<String, Context_Structure> javaFiles = taskObject.getContextStructures();
 
 			//look through children nodes for edit and select.
 			NodeList eventList = element.getChildNodes();
@@ -149,7 +149,7 @@ public class ReadXML {
 
 					if(name != null && kind !=null){
 						//check if it already defined
-						JavaFile file = javaFiles.get(name);
+						Context_Structure file = javaFiles.get(name);
 
 						// create java file object and store in map
 						if(file == null){ 
@@ -205,14 +205,14 @@ public class ReadXML {
 	 * @param kind
 	 * @return
 	 */
-	private static JavaFile createJavaFile(String name, Kind kind){
+	private static Context_Structure createJavaFile(String name, Kind kind){
 
 		switch(kind){
 		case SELECTION:
-			return new JavaFile(name, true, false);
+			return new Context_Structure(name, true, false);
 
 		case EDIT:
-			return new JavaFile(name, false, true);
+			return new Context_Structure(name, false, true);
 
 		default:
 			System.err.println("There is an extra enum");
@@ -228,7 +228,7 @@ public class ReadXML {
 	 * That is the file has been used is some way.
 	 * @return
 	 */
-	private static JavaFile setType(JavaFile file, Kind kind){
+	private static Context_Structure setType(Context_Structure file, Kind kind){
 
 		switch(kind){
 		case SELECTION:

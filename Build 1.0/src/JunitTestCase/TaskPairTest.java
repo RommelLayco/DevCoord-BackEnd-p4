@@ -12,11 +12,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import PromixtyCalc.JavaFile;
-import PromixtyCalc.Task;
-import PromixtyCalc.TaskPair;
 import java_DOM_parser.ReadXML;
 import java_DOM_parser.WrongXML;
+import nz.ac.auckland.proximity.Context_Structure;
+import nz.ac.auckland.proximity.Task;
+import nz.ac.auckland.proximity.TaskPair;
 
 public class TaskPairTest {
 
@@ -109,9 +109,9 @@ public class TaskPairTest {
 		TaskPair tp = new TaskPair(t1.getTaskID(), t2.getTaskID(),
 				t1.getHandle(), t2.getHandle());
 		
-		JavaFile t1f1 = t1.getJavaFiles().get("=Build 1.0/src&lt;TestClass{Class1.java");
-		JavaFile t1f2 = t1.getJavaFiles().get("=Build 1.0/src&lt;TestClass{Class2.java");
-		JavaFile t2f1 = t2.getJavaFiles().get("=Build 1.0/src&lt;TestClass{Class1.java");
+		Context_Structure t1f1 = t1.getContextStructures().get("=Build 1.0/src&lt;TestClass{Class1.java");
+		Context_Structure t1f2 = t1.getContextStructures().get("=Build 1.0/src&lt;TestClass{Class2.java");
+		Context_Structure t2f1 = t2.getContextStructures().get("=Build 1.0/src&lt;TestClass{Class1.java");
 		
 		assertTrue(t1f1.isEdited());
 		
@@ -122,7 +122,7 @@ public class TaskPairTest {
 		assertFalse(t2f1.isEdited());
 		
 		
-		tp.calcProximityScore(t1.getJavaFiles(), t2.getJavaFiles());
+		tp.calcProximityScore(t1.getContextStructures(), t2.getContextStructures());
 		assertEquals(0.49685534591, tp.getProximityScore() , 0.00001);
 		
 		
