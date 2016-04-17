@@ -24,7 +24,7 @@ public class Task {
 	 * Task id created by mylyn.
 	 */
 	@Id
-	private int taskID;
+	private Integer taskID;
 	
 	/**
 	 * Handle is the identifier used in the context xml
@@ -49,6 +49,13 @@ public class Task {
 	@CollectionTable(name="CONTEXT_STRUCTURES")
 	@MapKeyColumn(name="STRUCTURE_NAME")
 	private Map<String, Context_Structure> contextStructure;
+	
+	/**
+	 * Default constructor required by hibernate
+	 */
+	public Task(){
+		
+	}
 	
 	public Task(int taskID, String handle, String label){
 		this.taskID = taskID;

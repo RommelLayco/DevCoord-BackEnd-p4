@@ -28,6 +28,8 @@
  
         <!-- Mention here all the model classes along with their package name -->
  		<mapping class="nz.ac.auckland.proximity.Task"></mapping>
+ 		<mapping class="nz.ac.auckland.proximity.TaskPair"></mapping>	
+ 		<!--  <mapping class="nz.ac.auckland.proximity.TaskPair"></mapping> -->
  		 
     </session-factory>
 </hibernate-configuration>
