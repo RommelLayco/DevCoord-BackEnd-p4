@@ -32,11 +32,31 @@ import org.eclipse.ui.part.ViewPart;
 		// System.out.println(wb.toString());
 	
 	for (IViewPart iViewPart : iViewParts) {
-		
+		//  iViewParts.getClass().getName().equals(TaskListView.class.getName());
+		  label.setText(label.getText()+System.getProperty("line.separator")+"Name Of View:"+iViewPart.getTitle());
+		   label.setText(label.getText()+"     Adapter class null:"+iViewPart.getClass().getName());
+		  
 		   if (iViewPart.getTitle().equals("Task List")) {
-			   label.setText(label.getText()+"      "+iViewPart.getTitle());
-			
+			   label.setText(label.getText()+"     IT is Tasklist:");
+			 //  label.setText("  Class is:"+iViewParts.getClass().getName());
+			   
+				
+			   
+			   
+			   
+			 
+			   
+						   
+		 //  TaskListView view=(TaskListView)iViewPart;
+			   
+		  // label.setText(label.getText()+"Is TaskViewLIst:");
+			   
+			   
 		}
+		   
+		   
+		   
+		   
 		   
 //		   iViewPart.get
 
