@@ -24,7 +24,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 
 @Entity
-@Table(name = "TASK_PAIRS") 
+@Table(name = "TASK_PAIRS",
+		uniqueConstraints = {@UniqueConstraint(columnNames = {"task_pair_1", "task_pair_2"})}) 
 public class TaskPair {
 
 	@Id @GeneratedValue

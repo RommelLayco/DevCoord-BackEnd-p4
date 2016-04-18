@@ -67,10 +67,11 @@ public class Database {
 	public void TestCompositeKeyOfTaskPair(){
 		Task t1 = new Task(-1, "comp-key1", "testing Composite Key");
 		Task t2 = new Task(-2, "comp-key2", "testing Composite Key");
+		Task t3 = new Task(-3, "comp-key3", "allow t1 and t3 when t1 and t2 already exisit");
 		
 		
 		TaskPair tp = new TaskPair(t1, t2);
-		TaskPair tp2 = new TaskPair(t2,t1);
+		TaskPair tp2 = new TaskPair(t3,t1);
 		session.save(tp);
 		try{
 			session.save(tp2);
