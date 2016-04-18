@@ -24,13 +24,24 @@ import org.eclipse.mylyn.internal.bugzilla.core.BugzillaClient;
 import org.eclipse.mylyn.internal.bugzilla.core.BugzillaCorePlugin;
 import org.eclipse.mylyn.internal.bugzilla.core.BugzillaRepositoryConnector;
 import org.eclipse.mylyn.internal.discovery.core.model.ConnectorDescriptorKind;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.views.*;
 public class MainRunner {
 
 	public static void main(String[] args) {
+		   IWorkbench wb = PlatformUI.getWorkbench();
+		   IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
+		 
+
+		   // on new versions it may need to be changed to:
+		   IWorkbenchPage page = win.getActivePage();
 		
-		
+		   
+		   
+		   
 		System.out.println(PlatformUI.isWorkbenchRunning());
 		System.out.println(PlatformUI.getWorkbench().getActiveWorkbenchWindow().toString());
 		
