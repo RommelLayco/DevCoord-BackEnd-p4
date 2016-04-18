@@ -1,4 +1,5 @@
 import devcoordplugin.Activator;
+
 import devcoordplugin.handlers.SampleHandler;
 
 import java.nio.file.attribute.UserDefinedFileAttributeView;
@@ -23,9 +24,16 @@ import org.eclipse.mylyn.internal.bugzilla.core.BugzillaClient;
 import org.eclipse.mylyn.internal.bugzilla.core.BugzillaCorePlugin;
 import org.eclipse.mylyn.internal.bugzilla.core.BugzillaRepositoryConnector;
 import org.eclipse.mylyn.internal.discovery.core.model.ConnectorDescriptorKind;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.*;
 public class MainRunner {
 
 	public static void main(String[] args) {
+		
+		
+		System.out.println(PlatformUI.isWorkbenchRunning());
+		System.out.println(PlatformUI.getWorkbench().getActiveWorkbenchWindow().toString());
+		
 
 TaskRepository repositoryOne=new TaskRepository("local", "local");
 System.out.println(repositoryOne.toString());
