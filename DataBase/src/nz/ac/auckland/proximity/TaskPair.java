@@ -18,6 +18,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+
+
 @Entity
 @Table(name = "TASK_PAIRS") 
 public class TaskPair {
@@ -213,13 +218,51 @@ public class TaskPair {
 	public double getProximityScore(){
 		return this.proximityScore;
 	}
-	
+
 	public int getID1(){
 		return this.task1.getTaskID();
 	}
-	
+
 	public int getID2(){
 		return this.task2.getTaskID();
 	}
-	
+
+	//need to override equals and hash for maps and sets
+	/**
+	 * Method to override hashcode  just like se325 project
+	 */
+	@Override
+	public int hashCode( ) {
+		return new HashCodeBuilder( 17, 31 ).
+				append(taskPairID).
+				append(task1).
+				append(task2).
+				append(proximityScore).
+				append(potentialScore).
+				append(actualScore).
+				toHashCode( );
+	}
+
+	/**
+	 * Method to override equals just like se325 project
+	 */
+	@Override
+	public boolean equals( Object obj ) {
+		if (! ( obj instanceof TaskPair ) )
+			return false;
+		if ( obj == this )
+			return true;
+		
+		TaskPair rhs = (TaskPair) obj;
+		return new EqualsBuilder( ).
+				append( taskPairID, rhs.taskPairID ).
+				append( task1, rhs.task1 ).
+				append( task2, rhs.task2 ).
+				append( proximityScore, rhs.proximityScore ).
+				append( potentialScore, rhs.potentialScore ).
+				append( actualScore, rhs.actualScore ).
+				isEquals( );
+	}
 }
+
+

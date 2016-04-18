@@ -3,6 +3,8 @@ package nz.ac.auckland.proximity;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Type;
 
 @Embeddable
@@ -64,5 +66,35 @@ public class Context_Structure {
 
 	public void setEdit(boolean var){
 		this.edit = var;
+	}
+	
+	/**
+	 * Method to override hashcode  just like se325 project
+	 */
+	@Override
+	public int hashCode( ) {
+		return new HashCodeBuilder( 17, 31 ).
+				append(name).
+				append(edit).
+				append(select).
+				toHashCode( );
+	}
+
+	/**
+	 * Method to override equals just like se325 project
+	 */
+	@Override
+	public boolean equals( Object obj ) {
+		if (! ( obj instanceof TaskPair ) )
+			return false;
+		if ( obj == this )
+			return true;
+		
+		Context_Structure rhs = (Context_Structure) obj;
+		return new EqualsBuilder( ).
+				append( name, rhs.name ).
+				append( edit, rhs.edit ).
+				append( select, rhs.select ).
+				isEquals( );
 	}
 }

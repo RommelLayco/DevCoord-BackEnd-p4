@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Class that stores information about a
  * task needed to calculate promixty score
@@ -83,5 +86,38 @@ public class Task {
 	public Map<String, Context_Structure> getContextStructures(){
 		return this.contextStructure;
 	}
+	
+	//need to override equals and hash for maps and sets
+		/**
+		 * Method to override hashcode  just like se325 project
+		 */
+		@Override
+		public int hashCode( ) {
+			return new HashCodeBuilder( 17, 31 ).
+					append(taskID).
+					append(handle).
+					append(label).
+					append(contextStructure).
+					toHashCode( );
+		}
+
+		/**
+		 * Method to override equals just like se325 project
+		 */
+		@Override
+		public boolean equals( Object obj ) {
+			if (! ( obj instanceof TaskPair ) )
+				return false;
+			if ( obj == this )
+				return true;
+			
+			Task rhs = (Task) obj;
+			return new EqualsBuilder( ).
+					append( taskID, rhs.taskID ).
+					append( handle, rhs.handle ).
+					append( label, rhs.label ).
+					append( contextStructure, rhs.contextStructure ).
+					isEquals( );
+		}
 
 }
