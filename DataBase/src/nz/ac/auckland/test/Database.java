@@ -92,6 +92,15 @@ public class Database {
 		TaskPair tp = new TaskPair(t1, t2);
 		tp.calcProximityScore();
 		session.save(tp);
+		
+		//make sure the two task are pushed to database as well
+		Task taskFromDatabase1 = session.get(Task.class, t1.getTaskID());
+		//Task taskFromDatabase2 = session.get(Task.class, t2.getTaskID());
+		
+		assertEquals(t1.getTaskID(), taskFromDatabase1.getTaskID());
+		assertEquals(t1.getLabel(), taskFromDatabase1.getLabel());
+		assertEquals(t1.getHandle(), taskFromDatabase1.getHandle());
+		
 			
 	}
 
@@ -112,7 +121,12 @@ public class Database {
 	public void testPushTaskMap(){
 		
 		for(Task t1 : task.values()){
-			session.save(t1);
+			//check if it exisit in the database
+			Task t = session.get(Task.class, t1.getTaskID());
+			
+			if(t == null){
+			session.persist(t1);
+			}
 		}
 	}
 

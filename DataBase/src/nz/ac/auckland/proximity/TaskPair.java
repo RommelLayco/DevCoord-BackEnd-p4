@@ -215,6 +215,10 @@ public class TaskPair {
 
 	}
 
+	public Integer getID(){
+		return this.taskPairID;
+	}
+	
 	public double getProximityScore(){
 		return this.proximityScore;
 	}
