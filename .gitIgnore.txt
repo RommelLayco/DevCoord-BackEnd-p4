@@ -40,6 +40,7 @@ Thumbs.db
 #####################
 testingML/.classpath
 Build\ 1.0/.classpath
+Database/.classpath
 
 #ignore misc files #
 ###################
