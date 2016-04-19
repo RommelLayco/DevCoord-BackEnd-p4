@@ -2,8 +2,7 @@
 
    import org.eclipse.swt.widgets.Composite;
    import org.eclipse.swt.widgets.Label;
-import org.eclipse.mylyn.internal.tasks.core.TaskList;
-import org.eclipse.mylyn.internal.tasks.ui.views.TaskListView;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
