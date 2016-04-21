@@ -5,11 +5,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.graphics.Image;
+
+import java.util.Collection;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
+import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
+import org.eclipse.mylyn.tasks.core.ITask;
 
 
 /**
@@ -30,18 +34,18 @@ import org.eclipse.swt.SWT;
  * <p>
  */
 
+@SuppressWarnings("restriction")
 public class SampleView extends ViewPart {
-
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "plugintwoproject.views.SampleView";
+	public static final String ID = "projtwo.views.SampleView";
 
 	private TableViewer viewer;
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
-
+	//private final InteractionEventLogger logger;
 	/*
 	 * The content provider class is responsible for
 	 * providing objects to the view. It can wrap
@@ -51,7 +55,7 @@ public class SampleView extends ViewPart {
 	 * it and always show the same content 
 	 * (like Task List, for example).
 	 */
-	 
+
 	class ViewContentProvider implements IStructuredContentProvider {
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		}
@@ -80,6 +84,9 @@ public class SampleView extends ViewPart {
 	 * The constructor.
 	 */
 	public SampleView() {
+		//	logger = UiUsageMonitorPlugin.getDefault().getInteractionLogger();
+
+
 	}
 
 	/**
@@ -94,7 +101,7 @@ public class SampleView extends ViewPart {
 		viewer.setInput(getViewSite());
 
 		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "PluginTwoProject.viewer");
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "projTwo.viewer");
 		getSite().setSelectionProvider(viewer);
 		makeActions();
 		hookContextMenu();
@@ -133,7 +140,7 @@ public class SampleView extends ViewPart {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
-	
+
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(action1);
 		manager.add(action2);
@@ -148,8 +155,8 @@ public class SampleView extends ViewPart {
 		action1.setText("Action 1");
 		action1.setToolTipText("Action 1 tooltip");
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		
+				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+
 		action2 = new Action() {
 			public void run() {
 				showMessage("Action 2 executed");
@@ -159,11 +166,49 @@ public class SampleView extends ViewPart {
 		action2.setToolTipText("Action 2 tooltip");
 		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		
+		
 		doubleClickAction = new Action() {
 			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				
+				org.eclipse.mylyn.internal.tasks.core.TaskList list=org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
+
+
+
+
+				Collection<AbstractTask> tasks=list.getAllTasks();
+
+				for (AbstractTask task : tasks) {
+					System.out.println("=====================================");
+					System.out.println("TASK:"+task.toString());
+					System.out.println("	TASK ID:"+task.getTaskId());
+					System.out.println("	TASK Owner:"+task.getOwner()+". ID:"+task.getOwnerId());
+					System.out.println("	TASK Priority:"+task.getPriority());
+					System.out.println("	TASK URL:"+task.getUrl());
+
+					System.out.println("	TASK Repository URL:"+task.getRepositoryUrl());
+
+					System.out.println("	TASK KIND:"+task.getTaskKind());
+					System.out.println("	TASK Child Tasks-");
+					for (ITask child : task.getChildren()) {
+
+						System.out.println("		Child  TASK :"+child.toString());
+					}
+
+					System.out.println("	TASK Status:"+task.getStatus());
+
+					System.out.println("=====================================");
+
+
+
+
+
+
+
+
+
+				}
+
 			}
 		};
 	}
@@ -177,9 +222,9 @@ public class SampleView extends ViewPart {
 	}
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"Sample View",
-			message);
+				viewer.getControl().getShell(),
+				"Sample View",
+				message);
 	}
 
 	/**
@@ -188,4 +233,35 @@ public class SampleView extends ViewPart {
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
+
+	//	@Override
+	//	public void partActivated(IWorkbenchPart part) {
+	//		System.out.println("PART ACTIVATED");
+	//		
+	//	}
+	//
+	//	@Override
+	//	public void partBroughtToTop(IWorkbenchPart part) {
+	//		System.out.println("PART partBroughtToTop");
+	//		
+	//	}
+	//
+	//	@Override
+	//	public void partClosed(IWorkbenchPart part) {
+	//		System.out.println("PART partClosed");
+	//		
+	//		
+	//	}
+	//
+	//	@Override
+	//	public void partDeactivated(IWorkbenchPart part) {
+	//		System.out.println("PART partDeactivated");
+	//		
+	//	}
+	//
+	//	@Override
+	//	public void partOpened(IWorkbenchPart part) {
+	//		System.out.println("PART partOpened");
+	//		
+	//	}
 }
