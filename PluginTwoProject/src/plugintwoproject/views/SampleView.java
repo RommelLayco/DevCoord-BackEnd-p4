@@ -3,6 +3,7 @@ package plugintwoproject.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.*;
 
@@ -10,7 +11,13 @@ import helper.TaskInfo;
 
 import org.eclipse.jface.viewers.*;
 import org.eclipse.mylyn.commons.notifications.ui.AbstractUiNotification;
+import org.eclipse.mylyn.internal.tasks.core.ITaskListChangeListener;
+import org.eclipse.mylyn.internal.tasks.core.TaskContainerDelta;
 import org.eclipse.mylyn.internal.tasks.ui.ITaskListNotificationProvider;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jface.action.*;
@@ -39,7 +46,7 @@ import org.eclipse.ui.*;
  */
 
 @SuppressWarnings("restriction")
-public class SampleView extends ViewPart implements ITaskListNotificationProvider  {
+public class SampleView extends ViewPart implements ITaskListNotificationProvider, ITaskListChangeListener  {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
@@ -62,7 +69,7 @@ private Text text;
 	 */
 	public SampleView() {
 		super();
-		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskListNotificationManager().addNotificationProvider(this);;
+		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().addChangeListener(this);
 
 
 
@@ -93,10 +100,14 @@ private Text text;
 
 	
 	private void RefreshDevCoord(){
-
+		Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+         		text.setText(TaskInfo.getTasksInfoAsAString());
+            }
+         });
 
 		
-		text.setText(TaskInfo.getTasksInfoAsAString());
+	
 
 
 		
@@ -146,15 +157,24 @@ private Text text;
 	 */
 	public void setFocus() {
 		text.setFocus();
-//		viewer.getControl()   .setFocus();
+
+	}
+
+	@Override
+	public void containersChanged(Set<TaskContainerDelta> arg0) {
+	
+		RefreshDevCoord();
+		
+		
+		
 	}
 
 	@Override
 	public Set<AbstractUiNotification> getNotifications() {
-		System.out.println("NOTIDIED");
-		text.setText(TaskInfo.getTasksInfoAsAString());
-			return null;
+		return null;
 	}
+
+	
 
 	
 
