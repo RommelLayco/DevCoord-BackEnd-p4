@@ -23,7 +23,9 @@ public class TaskInfo {
 		String toReturn="";
 		String separator=System.getProperty("line.separator");
 
-//iContextmaanger
+		
+		toReturn+="===================================="+separator;
+
 
 IInteractionContextManager iContextManager=org.eclipse.mylyn.context.core.ContextCore.getContextManager();
 
@@ -39,40 +41,15 @@ for (IInteractionElement element : elements) {
 	
 	
 	toReturn+="		element:"+element.toString()+separator;
-	toReturn+="			element.getInterest().getClass():"+element.getClass()+separator;
+	toReturn+="			element.getInterest():"+element.getClass()+separator;
+	toReturn+="			getInterest().getValue():"+element.getInterest().getValue()+separator;
 
-	toReturn+="			element.getContentType():"+element.getContentType()+separator;
-	toReturn+="			element.getHandleIdentifier():"+element.getHandleIdentifier()+separator;
-	toReturn+="			element.getInterest():"+element.getInterest()+separator;
-	toReturn+="			element.getInterest().getValue():"+element.getInterest().getValue()+separator;
+	toReturn+="			Content Type:"+element.getContentType()+separator;
+	toReturn+="			Handle Identifier:"+element.getHandleIdentifier()+separator;
+
 		
 	
-	Collection<InteractionContextRelation> contextRelations=  element.getRelations();
-	
-	for (InteractionContextRelation interactionContextRelation : contextRelations) {
-		toReturn+="				interactionContextRelation:"+interactionContextRelation+separator;
-		toReturn+="				interactionContextRelation.getLabel():"+interactionContextRelation.getLabel()+separator;
-		
-	}
-	
-	
-	
-toReturn+="0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o"+separator;
-	
-	
-//	CompositeContextElement  compositeContextElement=(CompositeContextElement)element;
-//	
-//	
-//	List<InteractionContextElement>   interactionContextElements= compositeContextElement.getNodes();
-//	
-//	for (InteractionContextElement interactionContextElement : interactionContextElements) {
-//		toReturn+="				interactionContextElement:"+interactionContextElement+separator;
-//		toReturn+="				interactionContextElement.getHandleIdentifier():"+interactionContextElement.getHandleIdentifier()+separator;
-//		
-//		
-//		
-//	}
-	
+
 	
 }
 
@@ -80,8 +57,6 @@ toReturn+="0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o0o"+separator
 
 
 
-	
-toReturn+="===================================="+separator;
 
 	
 	toReturn+="===================================="+separator;
