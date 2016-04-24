@@ -102,7 +102,9 @@ private Text text;
 	private void RefreshDevCoord(){
 		Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-         		text.setText(TaskInfo.getTasksInfoAsAString());
+         	//	text.setText(TaskInfo.getTasksInfoAsAString());
+            
+            	text.setText(TaskInfo.getMoniterInfoAsAString());
             }
          });
 
