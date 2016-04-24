@@ -106,7 +106,7 @@ private Text text;
             public void run() {
          	//	text.setText(TaskInfo.getTasksInfoAsAString());
             
-            	text.setText(TaskInfo.getMoniterInfoAsAString());
+            	text.setText(TaskInfo.getContextInfoAsAString());
             }
          });
 
