@@ -3,10 +3,13 @@ package helper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-
+import java.util.List;
+import org.eclipse.mylyn.context.core.IInteractionContext;
+import org.eclipse.mylyn.context.core.IInteractionContextManager;
+import org.eclipse.mylyn.context.core.IInteractionElement;
+import org.eclipse.mylyn.internal.context.core.InteractionContextRelation;
 import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
 import org.eclipse.mylyn.tasks.core.ITask;
 
@@ -15,6 +18,51 @@ import org.eclipse.mylyn.tasks.core.ITask;
 public class TaskInfo {
 	
 
+
+	public static String getContextInfoAsAString(){
+		String toReturn="";
+		String separator=System.getProperty("line.separator");
+
+		
+		toReturn+="===================================="+separator;
+
+
+IInteractionContextManager iContextManager=org.eclipse.mylyn.context.core.ContextCore.getContextManager();
+
+toReturn+="iContextManager:"+iContextManager+separator;
+
+IInteractionContext  iContext =iContextManager.getActiveContext();
+
+toReturn+="iContext:"+iContext+separator;
+
+List<IInteractionElement>elements = iContext.getAllElements();
+
+for (IInteractionElement element : elements) {
+	
+	
+	toReturn+="		element:"+element.toString()+separator;
+	toReturn+="			element.getInterest():"+element.getClass()+separator;
+	toReturn+="			getInterest().getValue():"+element.getInterest().getValue()+separator;
+
+	toReturn+="			Content Type:"+element.getContentType()+separator;
+	toReturn+="			Handle Identifier:"+element.getHandleIdentifier()+separator;
+
+		
+	
+
+	
+}
+
+
+
+
+
+
+	
+	toReturn+="===================================="+separator;
+	
+return toReturn;
+	}
 	public static void printTaskInfoForAllTasks(){
 		
 		
@@ -24,8 +72,10 @@ public class TaskInfo {
 
 
 		Collection<AbstractTask> tasks=list.getAllTasks();
+		
 
 		for (AbstractTask task : tasks) {
+			
 			System.out.println("=====================================");
 			System.out.println("TASK:"+task.toString());
 			System.out.println("	TASK ID:"+task.getTaskId());
@@ -78,12 +128,18 @@ toReturn.add("*Refreshed At "+new SimpleDateFormat("HH:mm").format(new Date())+"
 
 		Collection<AbstractTask> tasks=list.getAllTasks();
 
+		//TODO
+		//list.getTask(handleIdentifier)
 		for (AbstractTask task : tasks) {
+			
+			
 			toReturn.add("****************");
 
 			toReturn.add("TASK:"+task.toString());
 			
 			toReturn.add("	  ID:"+task.getTaskId());
+			toReturn.add("	  Handle:"+task.getHandleIdentifier());
+			
 			toReturn.add("	  Owner:"+task.getOwner()+". ID:"+task.getOwnerId());
 			toReturn.add("	  Priority:"+task.getPriority());
 			toReturn.add("	  URL:"+task.getUrl());
