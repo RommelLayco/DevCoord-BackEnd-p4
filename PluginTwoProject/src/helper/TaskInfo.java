@@ -79,6 +79,12 @@ List<IInteractionElement>elements = iContext.getAllElements();
 
 for (IInteractionElement element : elements) {
 	toReturn+="		element:"+element.toString()+separator;
+	toReturn+="				element.getContentType():"+element.getContentType()+separator;
+	toReturn+="				element.getHandleIdentifier():"+element.getHandleIdentifier()+separator;
+	toReturn+="				element.getInterest():"+element.getInterest()+separator;
+	toReturn+="				element.getInterest().getValue():"+element.getInterest().getValue()+separator;
+	
+	
 }
 
 

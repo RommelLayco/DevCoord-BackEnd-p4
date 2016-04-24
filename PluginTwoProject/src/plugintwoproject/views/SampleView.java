@@ -11,6 +11,8 @@ import helper.TaskInfo;
 
 import org.eclipse.jface.viewers.*;
 import org.eclipse.mylyn.commons.notifications.ui.AbstractUiNotification;
+import org.eclipse.mylyn.context.core.ContextChangeEvent;
+import org.eclipse.mylyn.context.core.IContextListener;
 import org.eclipse.mylyn.internal.tasks.core.ITaskListChangeListener;
 import org.eclipse.mylyn.internal.tasks.core.TaskContainerDelta;
 import org.eclipse.mylyn.internal.tasks.ui.ITaskListNotificationProvider;
@@ -46,7 +48,7 @@ import org.eclipse.ui.*;
  */
 
 @SuppressWarnings("restriction")
-public class SampleView extends ViewPart implements ITaskListNotificationProvider, ITaskListChangeListener  {
+public class SampleView extends ViewPart implements ITaskListNotificationProvider, ITaskListChangeListener,IContextListener   {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
@@ -71,7 +73,7 @@ private Text text;
 		super();
 		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().addChangeListener(this);
 
-
+		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
 
 
 	}
@@ -174,6 +176,12 @@ private Text text;
 	@Override
 	public Set<AbstractUiNotification> getNotifications() {
 		return null;
+	}
+
+	@Override
+	public void contextChanged(ContextChangeEvent arg0) {
+		RefreshDevCoord();
+		
 	}
 
 	
