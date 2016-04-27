@@ -9,32 +9,112 @@ import java.util.List;
 import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionContextManager;
 import org.eclipse.mylyn.context.core.IInteractionElement;
+import org.eclipse.mylyn.internal.context.core.AggregateInteractionEvent;
 import org.eclipse.mylyn.internal.context.core.InteractionContextRelation;
 import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
+import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.mylyn.tasks.core.ITask;
 
 
 @SuppressWarnings("restriction")
 public class TaskInfo {
+	private static InteractionEvent latestEvent=null;
+	
+	public static InteractionEvent getLatestEvent() {
+		
+		
+		return latestEvent;
+	}
+	public static void setLatestEvent(InteractionEvent latestEventArg) {
+		
+		
+
+			if (!latestEventArg.equals(latestEvent)) {
+				TaskInfo.latestEvent = latestEventArg;
+			}
+
+		
+	}
 	public static String getContextInfoAsAString(){
 		String toReturn="";
 		String separator=System.getProperty("line.separator");
+		toReturn+="*DevCoord plugin*"+separator ;
+		toReturn+="*Refreshed At "+new SimpleDateFormat("HH:mm:ss").format(new Date())+separator ;
+		
+		
+
 		toReturn+="===================================="+separator;
 		IInteractionContextManager iContextManager=org.eclipse.mylyn.context.core.ContextCore.getContextManager();
-		toReturn+="iContextManager:"+iContextManager+separator;
+
+		if (getLatestEvent()!=null) {
+			toReturn+="				getLatestEvent().getKind:"+getLatestEvent().getKind() +separator;
+			toReturn+="				getLatestEvent().getStructureHandle().toString():"+getLatestEvent().getStructureHandle().toString() +separator;
+
+			
+		}
+		
+		toReturn+="===================================="+separator;
+		
+		//	toReturn+="iContextManager:"+iContextManager+separator;
+
 
 		IInteractionContext  iContext =iContextManager.getActiveContext();
-		toReturn+="iContext:"+iContext+separator;
+	//	toReturn+="iContext:"+iContext+separator;
+/*		
+		List<InteractionEvent> events=iContext.getInteractionHistory();
+
 		
+		toReturn+="____________________________________" +separator;
+		
+		if (events.size()>0) {
+			InteractionEvent last=events.get(events.size()-1);
+			
+			
+			
+			toReturn+="				last.getKind:"+last.getKind() +separator;
+			toReturn+="				last.getStructureHandle().toString():"+last.getStructureHandle().toString() +separator;
+
+
+			
+		}
+		toReturn+="____________________________________" +separator;
+		
+
+		for (interactionEvent interactionEvent : events) {
+			if (!interactionEvent.getKind().equals(InteractionEvent.Kind.PROPAGATION)) {
+				toReturn+="				getKind:"+interactionEvent.getKind() +separator;
+				toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
+
+			}
+			
+		}
+		*/
+		
+		
+		
+		
+//		toReturn+="		event :"+event.getClass() +separator;
+//		toReturn+="		event.getKind().name():"+event.getKind().name() +separator;
+	
+		
+
+		
+		/**
 		List<IInteractionElement>elements = iContext.getAllElements();
+		
+		
 		for (IInteractionElement element : elements) {
 			
 			toReturn+="		element:"+element.toString()+separator;
+			toReturn+="		element.getContentType():"+element.getContentType()+separator;
+			
+//			toReturn+="		element.getContentType():"+element. +separator;
 			
 			toReturn+="			getInterest().getValue():"+element.getInterest().getValue()+separator;
 			toReturn+="			Content Type:"+element.getContentType()+separator;
 			toReturn+="			Handle Identifier:"+element.getHandleIdentifier()+separator;
 		}
+		*/
 		toReturn+="===================================="+separator;
 		return toReturn;
 	}
@@ -90,7 +170,7 @@ public class TaskInfo {
 			for (ITask child : task.getChildren()) {
 				toReturn.add("		Child:"+child.toString());
 			}
-			toReturn.add("	  Status:"+task.getStatus());
+			//toReturn.add("	  Status:"+task.getStatus());
 			toReturn.add("****************");
 		}
 		return toReturn;
