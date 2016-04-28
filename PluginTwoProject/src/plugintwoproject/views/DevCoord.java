@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.*;
 
 import helper.TaskInfo;
+import helper.TaskWrapper;
 
 import org.eclipse.jface.viewers.*;
 import org.eclipse.mylyn.commons.notifications.ui.AbstractUiNotification;
@@ -160,6 +161,16 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		TaskInfo.setLatestEvent(arg0);
 		
 		RefreshDevCoord();
+		
+		
+		/**
+		 * TODO This task Wrapper needs to be passed on to the Task criticality calcualtion.
+		 * 
+		 * */
+	TaskWrapper taskWrapper=TaskWrapper.getTaskWrapper(arg0);
+	
+	
+	
 		
 	}
 
