@@ -1,6 +1,5 @@
 package plugintwoproject.views;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
