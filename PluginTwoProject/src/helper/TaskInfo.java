@@ -12,6 +12,8 @@ import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionContextManager;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.internal.context.core.AggregateInteractionEvent;
+import org.eclipse.mylyn.internal.context.core.CompositeInteractionContext;
+import org.eclipse.mylyn.internal.context.core.InteractionContextManager;
 import org.eclipse.mylyn.internal.context.core.InteractionContextRelation;
 import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
@@ -28,20 +30,29 @@ public class TaskInfo {
 		return latestEvent;
 	}
 	public static void setLatestEvent(InteractionEvent latestEventArg) {
-		System.out.println("latestEventArg coming in method:"+latestEventArg.getKind());
-		if (latestEvent!=null) {
-		System.out.println("latestEvent before:"+latestEvent.getKind());	
-		} else {
-			System.out.println("latestEvent before:"+"NULL");
-			
-		}
-		
+//		System.out.println("latestEventArg coming in method:"+latestEventArg.getKind());
+//		if (latestEvent!=null) {
+//		System.out.println("latestEvent before:"+latestEvent.getKind());	
+//		} else {
+//			System.out.println("latestEvent before:"+"NULL");
+//			
+//		}
+//		
 
-
+//		if (latestEvent!=null) {
+//			
+//			boolean shouldreplace=InteractionEventHelper.shouldReplace(latestEvent, latestEventArg);
+//			
+//			if (shouldreplace) {
+//				latestEvent = latestEventArg;
+//				return;
+//			}
+//
+//		}
 			
-				latestEvent = latestEventArg;
+		latestEvent = latestEventArg;
 		
-			System.out.println("latestEvent after:"+latestEvent.getKind());	
+	//		System.out.println("latestEvent after:"+latestEvent.getKind());	
 				
 		
 	}
@@ -65,19 +76,33 @@ public class TaskInfo {
 		
 		toReturn+="===================================="+separator;
 	*/	
-		//	toReturn+="iContextManager:"+iContextManager+separator;
+
+
+		
+		
+//		toReturn+="iContextManager:"+iContextManager.getClass()+separator;
 
 
 		IInteractionContext  iContext =iContextManager.getActiveContext();
-	//	toReturn+="iContext:"+iContext+separator;
+	//	toReturn+="iContext:"+iContext.getClass()+separator;
 	
-		List<InteractionEvent> events=iContext.getInteractionHistory();
+		List<InteractionEvent> eventsBeforeStrip=iContext.getInteractionHistory();
+		
+		List<InteractionEvent> eventsAfterStrip=InteractionEventHelper.getEventsOfTheLastTwoSeconds(eventsBeforeStrip, latestEvent.getDate().getTime());
+		
 
+
+		Collections.sort(eventsAfterStrip, new Comparator<InteractionEvent>() {
+	    public int compare(InteractionEvent m1, InteractionEvent m2) {
+	        return m2.getDate().compareTo(m1.getDate());
+	    }
+	} );
+		
 		
 		toReturn+="____________________________________" +separator;
 		
-		if (events.size()>0) {
-			InteractionEvent last=events.get(events.size()-1);
+		if (eventsAfterStrip.size()>0) {
+			InteractionEvent last=eventsAfterStrip.get(0);
 			
 			
 			
@@ -90,22 +115,21 @@ public class TaskInfo {
 		toReturn+="____________________________________" +separator;
 		
 
-		Collections.sort(events, new Comparator<InteractionEvent>() {
-		    public int compare(InteractionEvent m1, InteractionEvent m2) {
-		        return m2.getDate().compareTo(m1.getDate());
-		    }
-		} );
+
 		
-		for (InteractionEvent interactionEvent : events) {
-			if (!interactionEvent.getKind().equals(InteractionEvent.Kind.PROPAGATION)) {
-				toReturn+="				getKind:"+interactionEvent.getKind() +separator;
+		for (InteractionEvent interactionEvent : eventsAfterStrip) {
+		
+				toReturn+="getKind:"+interactionEvent.getKind() +separator;
 				toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
 
-				toReturn+="				getStructureHandle().getDelta():"+interactionEvent.getDelta()+separator;
-				toReturn+="				getStructureHandle().getgetDate():"+interactionEvent.getDate()+separator;
+				toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
+				toReturn+="				getgetDate().getTime():"+interactionEvent.getDate().getTime()+separator;
+				toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
+				
+				toReturn+=separator;
 
 
-			}
+		
 			
 		}
 		/*		*/

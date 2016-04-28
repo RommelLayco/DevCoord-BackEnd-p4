@@ -65,6 +65,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		//org.eclipse.mylyn.monitor.ui.MonitorUi.addInteractionListener(this);
 		//org.eclipse.mylyn.monitor.ui.MonitorUi.add
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
+		
 		//	Collection<AbstractTask> abstractTasks=	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().getAllTasks();
 		
 		
@@ -159,11 +160,13 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 	@Override
 	public void interactionObserved(InteractionEvent arg0) {
-		System.out.println("arg0:"+arg0.getKind());
-		System.out.println("		arg0.getStructureHandle():"+arg0.getStructureHandle());
-		System.out.println("		arg0.getClass():"+arg0.getClass());
-		System.out.println("		arg0.getOriginId():"+arg0.getOriginId());
-		
+//		System.out.println("arg0:"+arg0.getKind());
+//		System.out.println("		arg0.getStructureHandle():"+arg0.getStructureHandle());
+//		System.out.println("		arg0.getClass():"+arg0.getClass());
+//		System.out.println("		arg0.getOriginId():"+arg0.getOriginId());
+//		
+System.out.println("EVENT TIME:"+arg0.getDate().getTime());
+
 
 		TaskInfo.setLatestEvent(arg0);
 		
@@ -183,13 +186,15 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 	@Override
 	public void startMonitoring() {
-		// TODO Auto-generated method stub
+	//	System.out.println("startMonitoring called");
+		
 		
 	}
 
 	@Override
 	public void stopMonitoring() {
-		// TODO Auto-generated method stub
+		//System.out.println("stopMonitoring called");
+		
 		
 	}
 
