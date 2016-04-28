@@ -4,6 +4,8 @@ package helper;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import org.eclipse.mylyn.context.core.IInteractionContext;
@@ -26,13 +28,21 @@ public class TaskInfo {
 		return latestEvent;
 	}
 	public static void setLatestEvent(InteractionEvent latestEventArg) {
-		
+		System.out.println("latestEventArg coming in method:"+latestEventArg.getKind());
+		if (latestEvent!=null) {
+		System.out.println("latestEvent before:"+latestEvent.getKind());	
+		} else {
+			System.out.println("latestEvent before:"+"NULL");
+			
+		}
 		
 
-			if (!latestEventArg.equals(latestEvent)) {
-				TaskInfo.latestEvent = latestEventArg;
-			}
 
+			
+				latestEvent = latestEventArg;
+		
+			System.out.println("latestEvent after:"+latestEvent.getKind());	
+				
 		
 	}
 	public static String getContextInfoAsAString(){
@@ -45,7 +55,7 @@ public class TaskInfo {
 
 		toReturn+="===================================="+separator;
 		IInteractionContextManager iContextManager=org.eclipse.mylyn.context.core.ContextCore.getContextManager();
-
+		/*
 		if (getLatestEvent()!=null) {
 			toReturn+="				getLatestEvent().getKind:"+getLatestEvent().getKind() +separator;
 			toReturn+="				getLatestEvent().getStructureHandle().toString():"+getLatestEvent().getStructureHandle().toString() +separator;
@@ -54,13 +64,13 @@ public class TaskInfo {
 		}
 		
 		toReturn+="===================================="+separator;
-		
+	*/	
 		//	toReturn+="iContextManager:"+iContextManager+separator;
 
 
 		IInteractionContext  iContext =iContextManager.getActiveContext();
 	//	toReturn+="iContext:"+iContext+separator;
-/*		
+	
 		List<InteractionEvent> events=iContext.getInteractionHistory();
 
 		
@@ -80,15 +90,25 @@ public class TaskInfo {
 		toReturn+="____________________________________" +separator;
 		
 
-		for (interactionEvent interactionEvent : events) {
+		Collections.sort(events, new Comparator<InteractionEvent>() {
+		    public int compare(InteractionEvent m1, InteractionEvent m2) {
+		        return m2.getDate().compareTo(m1.getDate());
+		    }
+		} );
+		
+		for (InteractionEvent interactionEvent : events) {
 			if (!interactionEvent.getKind().equals(InteractionEvent.Kind.PROPAGATION)) {
 				toReturn+="				getKind:"+interactionEvent.getKind() +separator;
 				toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
 
+				toReturn+="				getStructureHandle().getDelta():"+interactionEvent.getDelta()+separator;
+				toReturn+="				getStructureHandle().getgetDate():"+interactionEvent.getDate()+separator;
+
+
 			}
 			
 		}
-		*/
+		/*		*/
 		
 		
 		
