@@ -23,46 +23,46 @@ import org.eclipse.mylyn.tasks.core.ITask;
 @SuppressWarnings("restriction")
 public class TaskInfo {
 	private static InteractionEvent latestEvent=null;
-	
+
 	public static InteractionEvent getLatestEvent() {
-		
-		
+
+
 		return latestEvent;
 	}
 	public static void setLatestEvent(InteractionEvent latestEventArg) {
-//		System.out.println("latestEventArg coming in method:"+latestEventArg.getKind());
-//		if (latestEvent!=null) {
-//		System.out.println("latestEvent before:"+latestEvent.getKind());	
-//		} else {
-//			System.out.println("latestEvent before:"+"NULL");
-//			
-//		}
-//		
+		//		System.out.println("latestEventArg coming in method:"+latestEventArg.getKind());
+		//		if (latestEvent!=null) {
+		//		System.out.println("latestEvent before:"+latestEvent.getKind());	
+		//		} else {
+		//			System.out.println("latestEvent before:"+"NULL");
+		//			
+		//		}
+		//		
 
-//		if (latestEvent!=null) {
-//			
-//			boolean shouldreplace=InteractionEventHelper.shouldReplace(latestEvent, latestEventArg);
-//			
-//			if (shouldreplace) {
-//				latestEvent = latestEventArg;
-//				return;
-//			}
-//
-//		}
-			
+		//		if (latestEvent!=null) {
+		//			
+		//			boolean shouldreplace=InteractionEventHelper.shouldReplace(latestEvent, latestEventArg);
+		//			
+		//			if (shouldreplace) {
+		//				latestEvent = latestEventArg;
+		//				return;
+		//			}
+		//
+		//		}
+
 		latestEvent = latestEventArg;
-		
-	//		System.out.println("latestEvent after:"+latestEvent.getKind());	
-				
-		
+
+		//		System.out.println("latestEvent after:"+latestEvent.getKind());	
+
+
 	}
 	public static String getContextInfoAsAString(){
 		String toReturn="";
 		String separator=System.getProperty("line.separator");
 		toReturn+="*DevCoord plugin*"+separator ;
 		toReturn+="*Refreshed At "+new SimpleDateFormat("HH:mm:ss").format(new Date())+separator ;
-		
-		
+
+
 
 		toReturn+="===================================="+separator;
 		IInteractionContextManager iContextManager=org.eclipse.mylyn.context.core.ContextCore.getContextManager();
@@ -71,94 +71,118 @@ public class TaskInfo {
 			toReturn+="				getLatestEvent().getKind:"+getLatestEvent().getKind() +separator;
 			toReturn+="				getLatestEvent().getStructureHandle().toString():"+getLatestEvent().getStructureHandle().toString() +separator;
 
-			
+
 		}
-		
+
 		toReturn+="===================================="+separator;
-	*/	
+		 */	
 
 
-		
-		
-//		toReturn+="iContextManager:"+iContextManager.getClass()+separator;
+
+
+		//		toReturn+="iContextManager:"+iContextManager.getClass()+separator;
 
 
 		IInteractionContext  iContext =iContextManager.getActiveContext();
-	//	toReturn+="iContext:"+iContext.getClass()+separator;
-	
+		//	toReturn+="iContext:"+iContext.getClass()+separator;
+
 		List<InteractionEvent> eventsBeforeStrip=iContext.getInteractionHistory();
-		
-		List<InteractionEvent> eventsAfterStrip=InteractionEventHelper.getEventsOfTheLastTwoSeconds(eventsBeforeStrip, latestEvent.getDate().getTime());
-		
 
+		if (latestEvent!=null & eventsBeforeStrip.size()>0 ) {
+			List<InteractionEvent> eventsAfterStrip=InteractionEventHelper.getEventsOfTheLastOneSeconds(eventsBeforeStrip, latestEvent.getDate().getTime());
 
-		Collections.sort(eventsAfterStrip, new Comparator<InteractionEvent>() {
-	    public int compare(InteractionEvent m1, InteractionEvent m2) {
-	        return m2.getDate().compareTo(m1.getDate());
-	    }
-	} );
-		
-		
-		toReturn+="____________________________________" +separator;
-		
-		if (eventsAfterStrip.size()>0) {
-			InteractionEvent last=eventsAfterStrip.get(0);
-			
-			
-			
-			toReturn+="				last.getKind:"+last.getKind() +separator;
-			toReturn+="				last.getStructureHandle().toString():"+last.getStructureHandle().toString() +separator;
+			if (eventsAfterStrip.size()>0) {
 
-
-			
-		}
-		toReturn+="____________________________________" +separator;
-		
-
-
-		
-		for (InteractionEvent interactionEvent : eventsAfterStrip) {
-		
-				toReturn+="getKind:"+interactionEvent.getKind() +separator;
-				toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
-
-				toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
-				toReturn+="				getgetDate().getTime():"+interactionEvent.getDate().getTime()+separator;
-				toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
 				
-				toReturn+=separator;
 
 
-		
-			
+				toReturn+="____________________________________" +separator;
+
+
+				InteractionEvent last=InteractionEventHelper.getFirstEvent(eventsAfterStrip);
+
+
+
+				toReturn+="				last.getKind:"+last.getKind() +separator;
+				toReturn+="				last.getStructureHandle().toString():"+last.getStructureHandle().toString() +separator;
+				toReturn+="				getgetDate():"+last.getDate()+separator;
+				//		
+
+
+
+				toReturn+="____________________________________" +separator;
+				
+				
+				
+				
+				for (InteractionEvent interactionEvent : eventsAfterStrip) {
+						
+								toReturn+="getKind:"+interactionEvent.getKind() +separator;
+								toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
+				
+								toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
+								toReturn+="				getgetDate().getTime():"+interactionEvent.getDate().getTime()+separator;
+								toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
+								
+								toReturn+=separator;
+				
+				
+						
+							
+						}
+				
+				
+				toReturn+="____________________________________" +separator;
+				
+
+			}
 		}
-		/*		*/
-		
-		
-		
-		
-//		toReturn+="		event :"+event.getClass() +separator;
-//		toReturn+="		event.getKind().name():"+event.getKind().name() +separator;
-	
-		
 
-		
+
+		//
+		//		
+		//		for (InteractionEvent interactionEvent : eventsAfterStrip) {
+		//		
+		//				toReturn+="getKind:"+interactionEvent.getKind() +separator;
+		//				toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
+		//
+		//				toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
+		//				toReturn+="				getgetDate().getTime():"+interactionEvent.getDate().getTime()+separator;
+		//				toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
+		//				
+		//				toReturn+=separator;
+		//
+		//
+		//		
+		//			
+		//		}
+		/*		*/
+
+
+
+
+		//		toReturn+="		event :"+event.getClass() +separator;
+		//		toReturn+="		event.getKind().name():"+event.getKind().name() +separator;
+
+
+
+
 		/**
 		List<IInteractionElement>elements = iContext.getAllElements();
-		
-		
+
+
 		for (IInteractionElement element : elements) {
-			
+
 			toReturn+="		element:"+element.toString()+separator;
 			toReturn+="		element.getContentType():"+element.getContentType()+separator;
-			
+
 //			toReturn+="		element.getContentType():"+element. +separator;
-			
+
 			toReturn+="			getInterest().getValue():"+element.getInterest().getValue()+separator;
 			toReturn+="			Content Type:"+element.getContentType()+separator;
 			toReturn+="			Handle Identifier:"+element.getHandleIdentifier()+separator;
 		}
-		*/
+		 */
 		toReturn+="===================================="+separator;
 		return toReturn;
 	}
@@ -204,7 +228,7 @@ public class TaskInfo {
 			toReturn.add("	  ID:"+task.getTaskId());
 			toReturn.add("	  Handle:"+task.getHandleIdentifier());
 			toReturn.add("	  IsActive?:"+task.isActive());
-			
+
 			toReturn.add("	  Owner:"+task.getOwner()+". ID:"+task.getOwnerId());
 			toReturn.add("	  Priority:"+task.getPriority());
 			toReturn.add("	  URL:"+task.getUrl());
