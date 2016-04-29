@@ -22,40 +22,10 @@ import org.eclipse.mylyn.tasks.core.ITask;
 
 @SuppressWarnings("restriction")
 public class TaskInfo {
-	private static InteractionEvent latestEvent=null;
-
-	public static InteractionEvent getLatestEvent() {
 
 
-		return latestEvent;
-	}
-	public static void setLatestEvent(InteractionEvent latestEventArg) {
-		//		System.out.println("latestEventArg coming in method:"+latestEventArg.getKind());
-		//		if (latestEvent!=null) {
-		//		System.out.println("latestEvent before:"+latestEvent.getKind());	
-		//		} else {
-		//			System.out.println("latestEvent before:"+"NULL");
-		//			
-		//		}
-		//		
 
-		//		if (latestEvent!=null) {
-		//			
-		//			boolean shouldreplace=InteractionEventHelper.shouldReplace(latestEvent, latestEventArg);
-		//			
-		//			if (shouldreplace) {
-		//				latestEvent = latestEventArg;
-		//				return;
-		//			}
-		//
-		//		}
-
-		latestEvent = latestEventArg;
-
-		//		System.out.println("latestEvent after:"+latestEvent.getKind());	
-
-
-	}
+	
 	public static String getContextInfoAsAString(){
 		String toReturn="";
 		String separator=System.getProperty("line.separator");
@@ -88,55 +58,55 @@ public class TaskInfo {
 
 		List<InteractionEvent> eventsBeforeStrip=iContext.getInteractionHistory();
 
-		if (latestEvent!=null & eventsBeforeStrip.size()>0 ) {
-			List<InteractionEvent> eventsAfterStrip=InteractionEventHelper.getEventsOfTheLastOneSeconds(eventsBeforeStrip, latestEvent.getDate().getTime());
-
-			if (eventsAfterStrip.size()>0) {
-
-				
-
-
-				toReturn+="____________________________________" +separator;
-
-
-				InteractionEvent last=InteractionEventHelper.getFirstEvent(eventsAfterStrip);
-
-
-
-				toReturn+="				last.getKind:"+last.getKind() +separator;
-				toReturn+="				last.getStructureHandle().toString():"+last.getStructureHandle().toString() +separator;
-				toReturn+="				getgetDate():"+last.getDate()+separator;
-				//		
-
-
-
-				toReturn+="____________________________________" +separator;
-				
-				
-				
-				
-				for (InteractionEvent interactionEvent : eventsAfterStrip) {
-						
-								toReturn+="getKind:"+interactionEvent.getKind() +separator;
-								toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
-				
-								toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
-								toReturn+="				getgetDate().getTime():"+interactionEvent.getDate().getTime()+separator;
-								toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
-								
-								toReturn+=separator;
-				
-				
-						
-							
-						}
-				
-				
-				toReturn+="____________________________________" +separator;
-				
-
-			}
-		}
+//		if (latestEvent!=null & eventsBeforeStrip.size()>0 ) {
+//			List<InteractionEvent> eventsAfterStrip=InteractionEventHelper.getEventsOfTheLastOneSeconds(eventsBeforeStrip, latestEvent.getDate().getTime());
+//
+//			if (eventsAfterStrip.size()>0) {
+//
+//				
+//
+//
+//				toReturn+="____________________________________" +separator;
+//
+//
+//				InteractionEvent last=InteractionEventHelper.getFirstEvent(eventsAfterStrip);
+//
+//
+//
+//				toReturn+="				last.getKind:"+last.getKind() +separator;
+//				toReturn+="				last.getStructureHandle().toString():"+last.getStructureHandle().toString() +separator;
+//				toReturn+="				getgetDate():"+last.getDate()+separator;
+//				//		
+//
+//
+//
+//				toReturn+="____________________________________" +separator;
+//				
+//				
+//				
+//				
+//				for (InteractionEvent interactionEvent : eventsAfterStrip) {
+//						
+//								toReturn+="getKind:"+interactionEvent.getKind() +separator;
+//								toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
+//				
+//								toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
+//								toReturn+="				getgetDate().getTime():"+interactionEvent.getDate().getTime()+separator;
+//								toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
+//								
+//								toReturn+=separator;
+//				
+//				
+//						
+//							
+//						}
+//				
+//				
+//				toReturn+="____________________________________" +separator;
+//				
+//
+//			}
+//		}
 
 
 		//

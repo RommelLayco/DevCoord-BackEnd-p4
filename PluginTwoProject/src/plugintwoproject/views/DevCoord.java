@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.*;
 
+import helper.InteractionEventHelper;
 import helper.TaskInfo;
 import helper.TaskWrapper;
 
@@ -39,7 +40,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 */
 	public static final String ID = "projtwo.views.DevCoord";
 
-
+	public static TaskWrapper taskWrapper;
 
 	private Text text;
 
@@ -90,7 +91,11 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 	//	text.setText(TaskInfo.getTasksInfoAsAString()+TaskInfo.getContextInfoAsAString());
-				text.setText(TaskInfo.getContextInfoAsAString());
+				if (taskWrapper!=null) {
+					text.setText(taskWrapper.toString());
+					
+				}
+				
 				
 			}
 		});
@@ -168,7 +173,8 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 System.out.println("EVENT TIME:"+arg0.getDate().getTime());
 
 
-		TaskInfo.setLatestEvent(arg0);
+taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
+
 		
 		RefreshDevCoord();
 		
@@ -177,7 +183,7 @@ System.out.println("EVENT TIME:"+arg0.getDate().getTime());
 		 * TODO This task Wrapper needs to be passed on to the Task criticality calcualtion.
 		 * 
 		 * */
-	TaskWrapper taskWrapper=TaskWrapper.getTaskWrapper(arg0);
+		
 	
 	
 	

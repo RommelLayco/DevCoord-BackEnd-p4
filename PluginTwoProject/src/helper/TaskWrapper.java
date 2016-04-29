@@ -46,7 +46,7 @@ public class TaskWrapper {
 	private Kind interactionEventKind;
 	private String structureHandle;
 	
-	public TaskWrapper(InteractionEvent interactionEventArg) {
+	private TaskWrapper(InteractionEvent interactionEventArg) {
 		
 		interactionEventKind=interactionEventArg.getKind();
 		
