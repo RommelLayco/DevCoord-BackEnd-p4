@@ -36,108 +36,16 @@ public class TaskInfo {
 
 		toReturn+="===================================="+separator;
 		IInteractionContextManager iContextManager=org.eclipse.mylyn.context.core.ContextCore.getContextManager();
-		/*
-		if (getLatestEvent()!=null) {
-			toReturn+="				getLatestEvent().getKind:"+getLatestEvent().getKind() +separator;
-			toReturn+="				getLatestEvent().getStructureHandle().toString():"+getLatestEvent().getStructureHandle().toString() +separator;
+	
 
-
-		}
-
-		toReturn+="===================================="+separator;
-		 */	
-
-
-
-
-		//		toReturn+="iContextManager:"+iContextManager.getClass()+separator;
 
 
 		IInteractionContext  iContext =iContextManager.getActiveContext();
-		//	toReturn+="iContext:"+iContext.getClass()+separator;
-
-		List<InteractionEvent> eventsBeforeStrip=iContext.getInteractionHistory();
-
-//		if (latestEvent!=null & eventsBeforeStrip.size()>0 ) {
-//			List<InteractionEvent> eventsAfterStrip=InteractionEventHelper.getEventsOfTheLastOneSeconds(eventsBeforeStrip, latestEvent.getDate().getTime());
-//
-//			if (eventsAfterStrip.size()>0) {
-//
-//				
-//
-//
-//				toReturn+="____________________________________" +separator;
-//
-//
-//				InteractionEvent last=InteractionEventHelper.getFirstEvent(eventsAfterStrip);
-//
-//
-//
-//				toReturn+="				last.getKind:"+last.getKind() +separator;
-//				toReturn+="				last.getStructureHandle().toString():"+last.getStructureHandle().toString() +separator;
-//				toReturn+="				getgetDate():"+last.getDate()+separator;
-//				//		
-//
-//
-//
-//				toReturn+="____________________________________" +separator;
-//				
-//				
-//				
-//				
-//				for (InteractionEvent interactionEvent : eventsAfterStrip) {
-//						
-//								toReturn+="getKind:"+interactionEvent.getKind() +separator;
-//								toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
-//				
-//								toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
-//								toReturn+="				getgetDate().getTime():"+interactionEvent.getDate().getTime()+separator;
-//								toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
-//								
-//								toReturn+=separator;
-//				
-//				
-//						
-//							
-//						}
-//				
-//				
-//				toReturn+="____________________________________" +separator;
-//				
-//
-//			}
-//		}
+		
+	
 
 
-		//
-		//		
-		//		for (InteractionEvent interactionEvent : eventsAfterStrip) {
-		//		
-		//				toReturn+="getKind:"+interactionEvent.getKind() +separator;
-		//				toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
-		//
-		//				toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
-		//				toReturn+="				getgetDate().getTime():"+interactionEvent.getDate().getTime()+separator;
-		//				toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
-		//				
-		//				toReturn+=separator;
-		//
-		//
-		//		
-		//			
-		//		}
-		/*		*/
-
-
-
-
-		//		toReturn+="		event :"+event.getClass() +separator;
-		//		toReturn+="		event.getKind().name():"+event.getKind().name() +separator;
-
-
-
-
-		/**
+		
 		List<IInteractionElement>elements = iContext.getAllElements();
 
 
@@ -152,10 +60,56 @@ public class TaskInfo {
 			toReturn+="			Content Type:"+element.getContentType()+separator;
 			toReturn+="			Handle Identifier:"+element.getHandleIdentifier()+separator;
 		}
-		 */
+		 
 		toReturn+="===================================="+separator;
 		return toReturn;
 	}
+	
+	public static String getInteractionEventListAsAString(){
+	
+		String toReturn="";
+		String separator=System.getProperty("line.separator");
+		toReturn+="*DevCoord plugin*"+separator ;
+		toReturn+="*Refreshed At "+new SimpleDateFormat("HH:mm:ss").format(new Date())+separator ;
+
+		IInteractionContextManager iContextManager=org.eclipse.mylyn.context.core.ContextCore.getContextManager();
+		IInteractionContext  iContext =iContextManager.getActiveContext();
+	
+		List<InteractionEvent> events=iContext.getInteractionHistory();
+		
+		/**
+		 * Sorting solely on date and time,not kind.
+		 * */
+		Collections.sort(events, new Comparator<InteractionEvent>() {
+		    public int compare(InteractionEvent m1, InteractionEvent m2) {
+		        return m2.getDate().compareTo(m1.getDate());
+		    }
+		});
+		
+		
+
+		
+		for (InteractionEvent interactionEvent : events) {
+			toReturn+="____________________________________" +separator;
+				toReturn+="getKind:"+interactionEvent.getKind() +separator;
+				toReturn+="				getStructureHandle().toString():"+interactionEvent.getStructureHandle().toString() +separator;
+
+				toReturn+="				getDelta():"+interactionEvent.getDelta()+separator;
+				toReturn+="				getgetDate().getTime():"+interactionEvent.getDate()+separator;
+				toReturn+="				getInterestContribution():"+interactionEvent.getInterestContribution()+separator;
+				
+				toReturn+=separator;
+
+
+		
+			
+		}
+		toReturn+="____________________________________" +separator;
+		
+		return toReturn;
+	}
+	
+	
 	public static void printTaskInfoForAllTasks(){
 		/**
 		 * Classes being used
