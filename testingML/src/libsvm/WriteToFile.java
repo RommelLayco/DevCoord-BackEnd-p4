@@ -39,10 +39,10 @@ public class WriteToFile {
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(f), "utf-8"))) {
 
-
+			System.err.println(data.getTrainKeys().size());
 			if(train){
 				for(TaskPairKey key : data.getTrainKeys()){
-
+					
 					TaskPair tp = data.getTaskPairs().get(key);
 
 					String line = createLine(tp);
