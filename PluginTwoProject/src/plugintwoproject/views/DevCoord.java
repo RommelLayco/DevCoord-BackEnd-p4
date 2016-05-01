@@ -25,6 +25,7 @@ import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.mylyn.tasks.core.ITaskActivityListener;
 
+import java.lang.annotation.Inherited;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -34,21 +35,20 @@ import org.eclipse.jface.action.*;
 import org.eclipse.ui.*;
 
 @SuppressWarnings("restriction")
+/**The main plugin itself,contains a View that is shown in the plug window.*/
 public class DevCoord extends ViewPart implements  ITaskListNotificationProvider, ITaskListChangeListener,IContextListener,IInteractionEventListener  {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "projtwo.views.DevCoord";
 
+	/**This is static {@link #helper.TaskWrapper} object is used to store the latest
+	 * Wrapped {@link InteractionEvent} object. */
 	public static TaskWrapper taskWrapper;
-
 	private Text text;
-
 	private Action action1;
-
-
-
-
+/**
+ * Automated generation from the HelloWorld Example.*/
 	class NameSorter extends ViewerSorter {
 	}
 
@@ -62,16 +62,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		 * */
 		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().addChangeListener(this);
 		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
-		//org.eclipse.mylyn.tasks.ui.TasksUi.getTaskActivityManager().addActivityListener(this);
-		//org.eclipse.mylyn.monitor.ui.MonitorUi.addInteractionListener(this);
-		//org.eclipse.mylyn.monitor.ui.MonitorUi.add
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
-		
-		//	Collection<AbstractTask> abstractTasks=	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().getAllTasks();
-		
-		
-//		org.eclipse.mylyn.tasks.ui.TasksUi.getTaskActivityManager().getActiveTask().
-	
 	}
 
 	/**
@@ -79,28 +70,29 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
-
 		text = new Text(parent, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
 		RefreshDevCoord();
 		makeActions();
 		contributeToActionBars();
 	}
 
-
+/**
+ * This method is Refreshed when-
+ * A new task is added/edited
+ * A new {@link #InterationEvent} is lodged
+ * 
+ * This method places that event in the static handle {@link #taskWrapper} to be used by
+ * other classes.
+ * */
 	private void RefreshDevCoord(){
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-	//	text.setText(TaskInfo.getTasksInfoAsAString()+TaskInfo.getContextInfoAsAString());
-				if (taskWrapper!=null) {
+					if (taskWrapper!=null) {
 					text.setText(taskWrapper.toString()+TaskInfo.getInteractionEventListAsAString());
-					
 				}
-				
-				
 			}
 		});
-
-}
+	}
 
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
@@ -111,7 +103,6 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(action1);
 		manager.add(new Separator());
-
 	}
 
 
@@ -124,15 +115,12 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		action1 = new Action() {
 			public void run() {
 				RefreshDevCoord();
-
 			}
 		};
 		action1.setText("Refresh DevCoord");
 		action1.setToolTipText("Press to Referesh DevCoord");
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_ELCL_SYNCED));
-
-
 	}
 
 	/**
@@ -140,69 +128,43 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 */
 	public void setFocus() {
 		text.setFocus();
-
 	}
-
+	/**{@inheritDoc}*/
 	@Override
 	public void containersChanged(Set<TaskContainerDelta> arg0) {
-
 		RefreshDevCoord();
-
 	}
 
 	@Override
 	public Set<AbstractUiNotification> getNotifications() {
 		return null;
 	}
-
+	
+	/**{@inheritDoc}*/
 	@Override
 	public void contextChanged(ContextChangeEvent arg0) {
 		RefreshDevCoord();
 
 	}
 
-	
 
+	/**{@inheritDoc}
+	 * 
+	 * It creates a new {@link TaskWrapper} object and stores it in {@link #taskWrapper}
+	 * */
 	@Override
 	public void interactionObserved(InteractionEvent arg0) {
-//		System.out.println("arg0:"+arg0.getKind());
-//		System.out.println("		arg0.getStructureHandle():"+arg0.getStructureHandle());
-//		System.out.println("		arg0.getClass():"+arg0.getClass());
-//		System.out.println("		arg0.getOriginId():"+arg0.getOriginId());
-//		
-System.out.println("EVENT TIME:"+arg0.getDate().getTime());
-
-
-taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
-
-		
+		System.out.println("EVENT TIME:"+arg0.getDate().getTime());
+		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
 		RefreshDevCoord();
-		
-		
-		/**
-		 * TODO This task Wrapper needs to be passed on to the Task criticality calcualtion.
-		 * 
-		 * */
-		
-	
-	
-	
-		
 	}
 
 	@Override
 	public void startMonitoring() {
-	//	System.out.println("startMonitoring called");
-		
-		
 	}
 
 	@Override
 	public void stopMonitoring() {
-		//System.out.println("stopMonitoring called");
-		
-		
 	}
-
 
 }

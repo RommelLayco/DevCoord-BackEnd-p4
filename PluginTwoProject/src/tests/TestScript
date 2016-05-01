@@ -1,0 +1,31 @@
+Project Name:DevCoord
+Test Stage	:Integration Test
+Script Prerequisites:The environment is set up properly and	The dependencies(both static and runtime) are loaded-
+		Step One:External Jar files are loaded and are available for the DevCoord Plugin to access.
+		Step Two:The eclipse plugin developement environment is installed correctly.
+		Step Three:A dummy project,a few dummy tasks and classes already exists prior to testing.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Script Execution:
+	Step :
+		Action:
+		Expected Result:
+		Pass/Fail:
+		Comments:
+
+	Step 1:Activate A Task
+		Action 1:Right click on a Task in the Mylyn view
+		Action 2:Click on 'Activate' from the pop up menu
+		Expected Result:The chosen Task will activate.
+						The Context will fill up with the tree of files that were previously open.
+						Any classes previously opened in the Context of this Task will also open.
+		Pass/Fail:PASS
+		Comments:
+	*************************************************************
+	Step 2:Opening a file
+		Action:Double click on a file from the package explorer,not previously open.
+		Expected Result:A 'Selection' InteractionEvent is generated.
+						A TaskWrapper Object is generated for the corresponding InteractionEvent.
+						The information of the TaskWrapper Object is shown in the plugin window.
+		Pass/Fail:Pass
+		Comments:
+	**************************************************************	

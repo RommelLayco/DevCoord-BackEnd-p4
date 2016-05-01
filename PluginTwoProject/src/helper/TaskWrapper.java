@@ -5,27 +5,13 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent.Kind;
 import org.eclipse.mylyn.tasks.core.ITask;
 
 /**
- * Rommel needs-
- * 		Task wrapper
-
-		Event happens - “an edit or selection of a context structure associated with the active task”
-		
-		Create a task wrapper with :
-		Task id
-		Task handle
-		Task label
-		From the interaction element get:
-		The kind - i.e edit or select
-		The structure handle - i.e. what has been seen/ modified.
-
  * 
- * 
- * */
+ *The objects of this class envelope the IntercationEvent Objects,while also providing 
+ *additional  information about the Current task that is being worked on.
+ *  * */
 
 @SuppressWarnings("restriction")
 public class TaskWrapper {
-
-
 	/**
 	 * By calling this static method,a TaskWrapper object is created with the desired
 	 * informaton.
@@ -34,74 +20,46 @@ public class TaskWrapper {
 	 * 
 	 * */
 	public static TaskWrapper getTaskWrapper(InteractionEvent eventArg){
-		
 		return  new TaskWrapper(eventArg);
-		
 	}
 
 	private String taskID;
 	private String taskHandle;
 	private String taskLabel;
-
 	private Kind interactionEventKind;
 	private String structureHandle;
-	
+	/**
+	 * Constructor
+	 * */
 	private TaskWrapper(InteractionEvent interactionEventArg) {
-		
 		interactionEventKind=interactionEventArg.getKind();
-		
 		structureHandle=interactionEventArg.getStructureHandle();
-		
 		ITask activeTask=getActiveTask();
-		
-		
 		taskID=activeTask.getTaskId();
 		taskHandle=activeTask.getHandleIdentifier();
-		taskLabel="DUMMY_LABEL";
-		
-		
-		
+		taskLabel=activeTask.toString();
+	}
 
-	
-	}
-	
-	
-	
+	/**Returns currently active task*/
 	private ITask getActiveTask(){
-		
-		
-		
-	return	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskActivityManager().getActiveTask();
-		
-		
+		return	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskActivityManager().getActiveTask();
 	}
-	
-	
-	
 
 	public String getTaskID() {
 		return taskID;
 	}
 
-
-
 	public String getTaskHandle() {
 		return taskHandle;
 	}
-
-
 
 	public String getTaskLabel() {
 		return taskLabel;
 	}
 
-
-
 	public Kind getInteractionEventKind() {
 		return interactionEventKind;
 	}
-
-
 
 	public String getStructureHandle() {
 		return structureHandle;
@@ -109,23 +67,13 @@ public class TaskWrapper {
 
 	@Override
 	public String toString() {	
-
 		String separator=System.getProperty("line.separator");
-		
 		String toReturn="";
-		
-		
 		toReturn+="TaskID:"+getTaskID()+separator;
 		toReturn+="TaskLabel:"+getTaskLabel()+separator;
 		toReturn+="TaskHandle:"+getTaskHandle()+separator;
 		toReturn+="EventKind:"+getInteractionEventKind()+separator;
 		toReturn+="StructureHandle:"+getStructureHandle()+separator;
-		
-		
-
 		return toReturn;
-
 	}
-	
-
 }
