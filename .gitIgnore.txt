@@ -44,6 +44,11 @@ Build\ 1.0/.classpath
 DataBase/.classpath
 DevCoord_Part_4_project/.classpath
 DevCoord_Part_4_project/bin
+PluginTwoProject
+MylynTest
+dependencies/mylyn Monitor/
+
+
 
 #ignore misc files #
 ###################
