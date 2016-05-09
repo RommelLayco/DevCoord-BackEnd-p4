@@ -6,6 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ Database.class, ReadXMLTest.class, TaskPairTest.class })
+
 public class AllTests {
 
 }
