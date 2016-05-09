@@ -20,6 +20,7 @@
 *.tar
 *.zip
 
+
 # Logs and databases #
 ######################
 *.log
@@ -42,7 +43,7 @@ testingML/.classpath
 Build\ 1.0/.classpath
 DataBase/.classpath
 DevCoord_Part_4_project/.classpath
-
+DevCoord_Part_4_project/bin
 
 #ignore misc files #
 ###################
