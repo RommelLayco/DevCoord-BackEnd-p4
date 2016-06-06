@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Type;
 
+import org.eclipse.mylyn.monitor.core.InteractionEvent.Kind;
+
 @Embeddable
 public class Context_Structure {
 
@@ -46,6 +48,23 @@ public class Context_Structure {
 		this.edit = edit;
 	}
 
+	public void update(Kind kind){
+		switch(kind){
+		case EDIT:
+			this.edit = true;
+			this.select = false;
+		
+		case SELECTION:
+			this.edit = false;
+			this.select = true;
+		
+		default:
+			System.err.println("we don't care about the other types,"
+					+ "should not get here, this must be handle somewhere else");
+				
+		}
+		
+	}
 
 	public String getName(){
 		return this.name;

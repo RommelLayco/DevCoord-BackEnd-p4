@@ -28,6 +28,8 @@ public class TaskWrapper {
 	private String taskLabel;
 	private Kind interactionEventKind;
 	private String structureHandle;
+	
+	private String kindType;
 	/**
 	 * Constructor
 	 * */
@@ -38,6 +40,12 @@ public class TaskWrapper {
 		taskID=activeTask.getTaskId();
 		taskHandle=activeTask.getHandleIdentifier();
 		taskLabel=activeTask.toString();
+	}
+	
+	public TaskWrapper(String id, String kind, String handle){
+		taskID = id;
+		kindType = kind;
+		structureHandle = handle;
 	}
 
 	/**Returns currently active task*/
@@ -76,4 +84,6 @@ public class TaskWrapper {
 		toReturn+="StructureHandle:"+getStructureHandle()+separator;
 		return toReturn;
 	}
+	
+	
 }
