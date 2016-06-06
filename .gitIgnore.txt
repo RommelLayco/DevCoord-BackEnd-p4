@@ -47,6 +47,8 @@ DevCoord_Part_4_project/bin
 PluginTwoProject
 MylynTest
 dependencies/mylyn Monitor/
+workspace/DevCoord_Part_4_project/.classpath
+
 
 
 
