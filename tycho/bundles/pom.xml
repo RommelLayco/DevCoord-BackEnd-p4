@@ -10,6 +10,8 @@
         <artifactId>nz.ac.auckland.devcoord.root</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
+    
+   
 
     <modules>
         <module>nz.ac.auckland.devcoord.plugin</module>
