@@ -1,17 +1,18 @@
 <project>
- <modelVersion>4.0.0</modelVersion>
- <groupId>nz.ac.auckland.devcoord</groupId>
- <artifactId>nz.ac.auckland.devcoord.root</artifactId>
- <version>1.0.0-SNAPSHOT</version>
- <packaging>pom</packaging>
- 
- <parent>
-   <groupId>nz.ac.auckland.devcoord</groupId>
-   <artifactId>nz.ac.auckland.devcoord.configuration</artifactId>
-   <version>1.0.0-SNAPSHOT</version>
-  <relativePath>./releng/nz.ac.auckland.devcoord.configuration</relativePath>
- </parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>nz.ac.auckland.devcoord</groupId>
+	<artifactId>nz.ac.auckland.devcoord.root</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
- <modules>
- </modules>
+	<parent>
+		<groupId>nz.ac.auckland.devcoord</groupId>
+		<artifactId>nz.ac.auckland.devcoord.configuration</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>./releng/nz.ac.auckland.devcoord.configuration</relativePath>
+	</parent>
+
+	<modules>
+		<module>bundles</module>
+	</modules>
 </project>
