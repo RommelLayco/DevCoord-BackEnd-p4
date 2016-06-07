@@ -13,5 +13,6 @@
 
     <modules>
         <module>nz.ac.auckland.devcoord.plugin</module>
+        <module>nz.ac.auckland.devcoord.unittest</module>
     </modules>
 </project>
