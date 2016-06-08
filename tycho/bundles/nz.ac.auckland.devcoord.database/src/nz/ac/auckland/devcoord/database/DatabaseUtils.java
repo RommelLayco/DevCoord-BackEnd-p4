@@ -7,13 +7,13 @@ import javax.persistence.spi.PersistenceProvider;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
-public class Util {
+public class DatabaseUtils {
 	
-	public EntityManager getEntityManager(){
+	public static EntityManager getEntityManager(){
 		BundleContext context =  HibernateJpaActivator.getContext(); 
 		ServiceReference serviceReference = context.getServiceReference( PersistenceProvider.class.getName() );
 		PersistenceProvider persistenceProvider = (PersistenceProvider) context.getService( serviceReference );
-		EntityManagerFactory emf = persistenceProvider.createEntityManagerFactory( "TheNameOfMyPersistenceUnit", null );
+		EntityManagerFactory emf = persistenceProvider.createEntityManagerFactory( "PersistenceUnit", null );
 		EntityManager em = emf.createEntityManager();
 		return em;
 	}
