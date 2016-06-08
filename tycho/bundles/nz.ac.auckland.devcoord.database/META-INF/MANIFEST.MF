@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Database
+Bundle-SymbolicName: nz.ac.auckland.devcoord.database
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: nz.ac.auckland.devcoord.database.HibernateJpaActivator
+Require-Bundle: org.eclipse.core.runtime,
+ nz.ac.auckland.devcoord.hibernate
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Eclipse-RegisterBuddy: nz.ac.auckland.devcoord.hibernate
+
