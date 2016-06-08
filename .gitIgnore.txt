@@ -60,3 +60,4 @@ tycho/bundles/nz.ac.auckland.devcoord.unittest/target/
 .recommenders/
 testingMl/output/
 TestDatabase/
+workspace/JPA test
