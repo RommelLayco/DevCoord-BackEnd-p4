@@ -50,6 +50,8 @@ dependencies/mylyn Monitor/
 workspace/DevCoord_Part_4_project/.classpath
 tycho/bundles/nz.ac.auckland.devcoord.plugin/target/
 tycho/bundles/nz.ac.auckland.devcoord.unittest/target/
+runtime-EclipseApplication/
+workspace/External Plug-in Libraries
 
 
 
