@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Plugin
-Bundle-SymbolicName: nz.ac.auckland.devcoord.plugin
+Bundle-SymbolicName: nz.ac.auckland.devcoord.plugin;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: nz.ac.auckland.devcoord.plugin.Activator
 Require-Bundle: org.eclipse.ui,
