@@ -9,6 +9,7 @@ public class HibernateJpaActivator extends Plugin {
 
     @Override
     public void start(BundleContext context)throws Exception {
+    	System.out.println("here");
         HibernateJpaActivator.context = context;
     }
 

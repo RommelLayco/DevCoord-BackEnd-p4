@@ -13,18 +13,16 @@
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/devcoord_1.0s" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/devcoord_1.0" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="" />
-
-			<property name="org.hibernate.FlushMode" value="commit" />
-			<property name="hibernate.current_session_context_class"
-				value="thread" />
-
+			
 			<property name="hibernate.hbm2ddl.auto" value="create" />
-			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
-			<property name="hibernate.show_sql" value="true" />
+
+			
 		</properties>
+		
+
 	</persistence-unit>
 </persistence>
