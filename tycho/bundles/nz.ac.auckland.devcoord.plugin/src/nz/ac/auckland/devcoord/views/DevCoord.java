@@ -40,7 +40,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "projtwo.views.DevCoord";
+	public static final String ID = "nz.ac.auckland.devcoord.views.DevCoord";
 
 	/**This is static {@link #helper.TaskWrapper} object is used to store the latest
 	 * Wrapped {@link InteractionEvent} object. */

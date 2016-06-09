@@ -10,7 +10,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "DevCoord_Part_4_project"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "nz.ac.auckland.devcoord.plugin"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
