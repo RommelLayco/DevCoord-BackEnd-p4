@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Entity
+Bundle-SymbolicName: nz.ac.auckland.entity
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: nz.ac.auckland.entity.HibernateJpaActivator
+Require-Bundle: org.eclipse.core.runtime,
+ nz.ac.auckland.hibernateReq;bundle-version="1.0.0",
+ org.junit;bundle-version="4.12.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Eclipse-RegisterBuddy: nz.ac.auckland.hibernateReq
