@@ -18,5 +18,6 @@
         <module>nz.ac.auckland.devcoord.unittest</module>
         <module>nz.ac.auckland.devcoord.hibernate</module>
         <module>nz.ac.auckland.devcoord.database</module>
+        <module>nz.ac.auckland.devcoord.hibernate2</module>
     </modules>
 </project>
