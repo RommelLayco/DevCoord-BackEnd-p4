@@ -1,5 +1,0 @@
--------------------------------------------------------------------------------
-Test set: nz.ac.auckland.devcoord.databasetest.ExampleTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.051 sec - in nz.ac.auckland.devcoord.databasetest.ExampleTest
-test(nz.ac.auckland.devcoord.databasetest.ExampleTest)  Time elapsed: 0.002 sec

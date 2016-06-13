@@ -1,5 +1,0 @@
--------------------------------------------------------------------------------
-Test set: nz.ac.auckland.devcoord.databasetest.TaskTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.225 sec - in nz.ac.auckland.devcoord.databasetest.TaskTest
-testCreateNewTask(nz.ac.auckland.devcoord.databasetest.TaskTest)  Time elapsed: 9.217 sec
