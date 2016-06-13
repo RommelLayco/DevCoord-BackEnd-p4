@@ -59,7 +59,8 @@ tycho/bundles/nz.ac.auckland.devcoord.hibernate2/target/
 tycho/bundles/nz.ac.auckland.devcoord.hibernate/.classpath
 tycho/bundles/nz.ac.auckland.devcoord.hibernate2/.classpath
 
-
+#ignore runtime folder#
+runtime-EclipseApplication/
 
 
 
