@@ -54,6 +54,8 @@ workspace/DevCoord_Part_4_project/.classpath
 tycho/bundles/nz.ac.auckland.devcoord.plugin/target/
 tycho/bundles/nz.ac.auckland.devcoord.unittest/target/
 tycho/bundles/nz.ac.auckland.devcoord.database/target/
+tycho/bundles/nz.ac.auckland.devcoord.hibernate/target/
+tycho/bundles/nz.ac.auckland.devcoord.hibernate2/target/
 tycho/bundles/nz.ac.auckland.devcoord.hibernate/.classpath
 tycho/bundles/nz.ac.auckland.devcoord.hibernate2/.classpath
 
