@@ -56,8 +56,11 @@ tycho/bundles/nz.ac.auckland.devcoord.unittest/target/
 tycho/bundles/nz.ac.auckland.devcoord.database/target/
 tycho/bundles/nz.ac.auckland.devcoord.hibernate/target/
 tycho/bundles/nz.ac.auckland.devcoord.hibernate2/target/
+tycho/tests/nz.ac.auckland.devcoord.databaseTest/target/
+
 tycho/bundles/nz.ac.auckland.devcoord.hibernate/.classpath
 tycho/bundles/nz.ac.auckland.devcoord.hibernate2/.classpath
+
 
 #ignore runtime folder#
 runtime-EclipseApplication/
