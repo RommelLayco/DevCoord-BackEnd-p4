@@ -10,5 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Eclipse-RegisterBuddy: nz.ac.auckland.devcoord.hibernate
-Export-Package: nz.ac.auckland.devcoord.database
+Export-Package: nz.ac.auckland.devcoord.database,
+ nz.ac.auckland.devcoord.database.test
+Import-Package: javax.persistence
 
