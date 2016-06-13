@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <units size='1'>
-  <unit id='nz.ac.auckland.devcoord.databaseTest' version='1.0.0.201606130840' singleton='false'>
-    <update id='nz.ac.auckland.devcoord.databaseTest' range='[0.0.0,1.0.0.201606130840)' severity='0'/>
+  <unit id='nz.ac.auckland.devcoord.databaseTest' version='1.0.0.201606132255' singleton='false'>
+    <update id='nz.ac.auckland.devcoord.databaseTest' range='[0.0.0,1.0.0.201606132255)' severity='0'/>
     <properties size='4'>
       <property name='org.eclipse.equinox.p2.name' value='DatabaseTest'/>
       <property name='maven-groupId' value='nz.ac.auckland.devcoord'/>
@@ -9,24 +9,25 @@
       <property name='maven-version' value='1.0.0-SNAPSHOT'/>
     </properties>
     <provides size='3'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='nz.ac.auckland.devcoord.databaseTest' version='1.0.0.201606130840'/>
-      <provided namespace='osgi.bundle' name='nz.ac.auckland.devcoord.databaseTest' version='1.0.0.201606130840'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='nz.ac.auckland.devcoord.databaseTest' version='1.0.0.201606132255'/>
+      <provided namespace='osgi.bundle' name='nz.ac.auckland.devcoord.databaseTest' version='1.0.0.201606132255'/>
       <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
     </provides>
-    <requires size='4'>
+    <requires size='5'>
       <required namespace='osgi.bundle' name='org.junit' range='4.12.0'/>
       <required namespace='osgi.bundle' name='nz.ac.auckland.devcoord.database' range='1.0.0'/>
       <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='3.11.1'/>
       <required namespace='osgi.bundle' name='org.eclipse.ui' range='3.107.0'/>
+      <required namespace='osgi.bundle' name='nz.ac.auckland.devcoord.hibernate2' range='1.0.0'/>
     </requires>
     <artifacts size='1'>
-      <artifact classifier='osgi.bundle' id='nz.ac.auckland.devcoord.databaseTest' version='1.0.0.201606130840'/>
+      <artifact classifier='osgi.bundle' id='nz.ac.auckland.devcoord.databaseTest' version='1.0.0.201606132255'/>
     </artifacts>
     <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
     <touchpointData size='1'>
       <instructions size='1'>
         <instruction key='manifest'>
-          Bundle-SymbolicName: nz.ac.auckland.devcoord.databaseTest&#xA;Bundle-Version: 1.0.0.201606130840&#xA;
+          Bundle-SymbolicName: nz.ac.auckland.devcoord.databaseTest&#xA;Bundle-Version: 1.0.0.201606132255&#xA;
         </instruction>
       </instructions>
     </touchpointData>

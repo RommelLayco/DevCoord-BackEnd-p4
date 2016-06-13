@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="nz.ac.auckland.devcoord.databasetest.ExampleTest" time="0.002" tests="1" errors="0" skipped="0" failures="0">
+<testsuite name="nz.ac.auckland.devcoord.databasetest.TaskTest" time="9.217" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.vendor" value="Oracle Corporation"/>
     <property name="osgi.bundles.defaultStartLevel" value="4"/>
@@ -97,5 +97,5 @@
     <property name="osgi.configuration.area" value="file:/C:/Users/Rommel/Documents/Uni/se700/gitrepo/DevCoord-Backend-/tycho/tests/nz.ac.auckland.devcoord.databaseTest/target/work/configuration/"/>
     <property name="osgi.logfile" value="C:\Users\Rommel\Documents\Uni\se700\gitrepo\DevCoord-Backend-\tycho\tests\nz.ac.auckland.devcoord.databaseTest\target\work\configuration\1465858524488.log"/>
   </properties>
-  <testcase name="test" classname="nz.ac.auckland.devcoord.databasetest.ExampleTest" time="0.002"/>
+  <testcase name="testCreateNewTask" classname="nz.ac.auckland.devcoord.databasetest.TaskTest" time="9.217"/>
 </testsuite>
