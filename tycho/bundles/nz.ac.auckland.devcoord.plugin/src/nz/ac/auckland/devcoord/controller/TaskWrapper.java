@@ -1,5 +1,10 @@
 package nz.ac.auckland.devcoord.controller;
 
+import java.util.List;
+
+import org.eclipse.mylyn.context.core.IInteractionContext;
+import org.eclipse.mylyn.context.core.IInteractionContextManager;
+import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.mylyn.monitor.core.InteractionEvent.Kind;
 import org.eclipse.mylyn.tasks.core.ITask;
@@ -23,12 +28,13 @@ public class TaskWrapper {
 		return  new TaskWrapper(eventArg);
 	}
 
-	private String taskID;
+	private int taskID;
 	private String taskHandle;
 	private String taskLabel;
 	private Kind interactionEventKind;
 	private String structureHandle;
-	
+	private List<IInteractionElement> interactionElements;
+
 	private String kindType;
 	/**
 	 * Constructor
@@ -37,15 +43,20 @@ public class TaskWrapper {
 		interactionEventKind=interactionEventArg.getKind();
 		structureHandle=interactionEventArg.getStructureHandle();
 		ITask activeTask=getActiveTask();
-		taskID=activeTask.getTaskId();
+		taskID=Integer.parseInt(activeTask.getTaskId());
 		taskHandle=activeTask.getHandleIdentifier();
 		taskLabel=activeTask.toString();
+
+		interactionElements=getCurrentContextElements();
+
 	}
-	
+
 	public TaskWrapper(String id, String kind, String handle){
-		taskID = id;
+		taskID = Integer.parseInt(id);
 		kindType = kind;
 		structureHandle = handle;
+		interactionElements=getCurrentContextElements();
+
 	}
 
 	/**Returns currently active task*/
@@ -53,7 +64,7 @@ public class TaskWrapper {
 		return	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskActivityManager().getActiveTask();
 	}
 
-	public String getTaskID() {
+	public Integer getTaskID() {
 		return taskID;
 	}
 
@@ -73,6 +84,12 @@ public class TaskWrapper {
 		return structureHandle;
 	}
 
+	
+	
+	public List<IInteractionElement> getInteractionElements() {
+		return interactionElements;
+	}
+
 	@Override
 	public String toString() {	
 		String separator=System.getProperty("line.separator");
@@ -84,6 +101,13 @@ public class TaskWrapper {
 		toReturn+="StructureHandle:"+getStructureHandle()+separator;
 		return toReturn;
 	}
-	
-	
+
+	private List<IInteractionElement> getCurrentContextElements(){
+
+		IInteractionContextManager contextManager=		org.eclipse.mylyn.context.core.ContextCore.getContextManager();
+		IInteractionContext context=contextManager.getActiveContext();
+		return context.getAllElements();
+
+
+	}
 }

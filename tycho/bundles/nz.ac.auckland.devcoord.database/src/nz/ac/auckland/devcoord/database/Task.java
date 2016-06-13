@@ -2,6 +2,7 @@ package nz.ac.auckland.devcoord.database;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
@@ -13,6 +14,10 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.eclipse.mylyn.context.core.IInteractionElement;
+import org.eclipse.mylyn.monitor.core.InteractionEvent;
+
+import nz.ac.auckland.devcoord.controller.TaskWrapper;
 
 /**
  * Class that stores information about a
@@ -68,7 +73,7 @@ public class Task {
 		this.contextStructure = new HashMap<String, Context_Structure>();
 	}
 
-	
+
 	public int getTaskID(){
 		return this.taskID;
 	}
@@ -122,4 +127,47 @@ public class Task {
 				isEquals( );
 	}
 
+
+
+	public boolean update(TaskWrapper taskWrapper){
+
+		this.taskID=taskWrapper.getTaskID();
+		this.handle = taskWrapper.getTaskHandle();
+		this.label = taskWrapper.getTaskLabel();
+
+		if (contextStructure==null) {
+			this.contextStructure = new HashMap<String, Context_Structure>();
+		}
+
+		addElementsToContext(taskWrapper);
+
+
+
+		return true;
+
+
+
+	}
+
+	private boolean addElementsToContext(TaskWrapper taskWrapper){
+		List<IInteractionElement> elements=taskWrapper.getInteractionElements();
+		for (IInteractionElement interactionElement : elements) {
+			if (interactionElement.getContentType().equals("resource")) {
+				Context_Structure context_Structure=new Context_Structure(interactionElement.getHandleIdentifier(), interactionEventIsSelection(taskWrapper), interactionEventIsEdit(taskWrapper));
+				contextStructure.put(interactionElement.getHandleIdentifier(), context_Structure);
+				
+			}
+		}
+		return true;
+	}
+
+	private boolean interactionEventIsSelection(TaskWrapper taskWrapper){
+
+		return taskWrapper.getInteractionEventKind().equals(InteractionEvent.Kind.SELECTION);
+	}
+	private boolean interactionEventIsEdit(TaskWrapper taskWrapper){
+
+		return taskWrapper.getInteractionEventKind().equals(InteractionEvent.Kind.EDIT);
+
+	}
 }
