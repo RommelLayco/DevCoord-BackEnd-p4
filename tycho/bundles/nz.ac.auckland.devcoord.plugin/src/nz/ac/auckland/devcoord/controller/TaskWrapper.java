@@ -67,10 +67,17 @@ public class TaskWrapper {
 
 	//constuctor to test
 	private TaskWrapper(int taskID, String handle, String label, Context_Structure context){
-		
+		this.taskID = taskID;
+		taskHandle = handle;
+		taskLabel = label;
+		this.context = context;
 	}
 
 
+	public TaskWrapper getTestWrappper(int taskID, String handle, String label, Context_Structure context){
+		return new TaskWrapper(taskID, handle, label, context);
+	}
+	
 	/**Returns currently active task*/
 	private ITask getActiveTask(){
 		return	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskActivityManager().getActiveTask();
