@@ -67,14 +67,14 @@ public class TaskWrapper {
 		return	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskActivityManager().getActiveTask();
 	}
 
-	private Integer getTaskID() {
+	public Integer getTaskID() {
 		return taskID;
 	}
 
-	private String getTaskHandle() {
+	public String getTaskHandle() {
 		return taskHandle;
 	}
-	private String getTaskLabel() {
+	public String getTaskLabel() {
 		return taskLabel;
 	}
 
