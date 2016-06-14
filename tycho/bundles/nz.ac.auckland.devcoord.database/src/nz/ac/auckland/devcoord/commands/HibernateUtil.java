@@ -19,15 +19,6 @@ public class HibernateUtil {
 		return getEntityManagerFactory().createEntityManager();
 	}
 	
-	public static EntityManager getEntityManager1(){
-//		System.out.println(HibernateJpaActivator.class);
-//		BundleContext context =  HibernateJpaActivator.getContext(); 
-//		ServiceReference serviceReference = context.getServiceReference( PersistenceProvider.class.getName() );
-//		PersistenceProvider persistenceProvider = (PersistenceProvider) context.getService( serviceReference );
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "PersistenceUnit", null );
-		EntityManager em = emf.createEntityManager();
-		return em;
-	}
 	
 	private EntityManagerFactory getEntityManagerFactory() {
 		if ( emf == null ) {

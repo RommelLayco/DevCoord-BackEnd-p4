@@ -4,11 +4,9 @@ Bundle-Name: Database
 Bundle-SymbolicName: nz.ac.auckland.devcoord.database
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: nz.ac.auckland.devcoord.database.HibernateJpaActivator
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: nz.ac.auckland.devcoord.hibernate2;bundle-version="1.0.0",
  org.junit;bundle-version="4.12.0",
- nz.ac.auckland.devcoord.hibernate2;bundle-version="1.0.0"
- org.eclipse.mylyn.context.core,
- org.eclipse.mylyn.monitor.core
+ org.eclipse.core.runtime;bundle-version="3.11.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Eclipse-RegisterBuddy: nz.ac.auckland.devcoord.hibernate
