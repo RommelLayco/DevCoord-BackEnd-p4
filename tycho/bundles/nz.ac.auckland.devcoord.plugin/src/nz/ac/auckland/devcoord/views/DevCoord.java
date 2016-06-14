@@ -158,6 +158,14 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		System.out.println("EVENT TIME:"+arg0.getDate().getTime());
 		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
 		//update interaction event here,
+		
+		//getTask pairs
+		
+		
+		//machine learning 
+		
+		//persist taskpairs
+		
 		RefreshDevCoord();
 	}
 
