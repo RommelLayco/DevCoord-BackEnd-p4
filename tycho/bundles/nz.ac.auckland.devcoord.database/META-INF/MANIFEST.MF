@@ -10,7 +10,7 @@ Require-Bundle: nz.ac.auckland.devcoord.hibernate2;bundle-version="1.0.0",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Eclipse-RegisterBuddy: nz.ac.auckland.devcoord.hibernate
-Export-Package: nz.ac.auckland.devcoord.database,
- nz.ac.auckland.devcoord.database.test
+Export-Package: nz.ac.auckland.devcoord.commands,
+ nz.ac.auckland.devcoord.database
 Import-Package: javax.persistence
 
