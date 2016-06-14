@@ -9,6 +9,8 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.mylyn.monitor.core.InteractionEvent.Kind;
 import org.eclipse.mylyn.tasks.core.ITask;
 
+import nz.ac.auckland.devcoord.database.Context_Structure;
+
 
 
 /**
@@ -41,6 +43,7 @@ public class TaskWrapper {
 
 	private boolean isEdit;
 	private boolean isSelect;
+	private Context_Structure context;
 
 	private String kindType;
 	/**
@@ -57,9 +60,15 @@ public class TaskWrapper {
 		//infor for context_Struture model
 		structureHandle=interactionEventArg.getStructureHandle();
 		setSelectOrEdit(interactionEventArg.getKind());
+		context = new Context_Structure(structureHandle, isSelect,
+				isEdit);
 
 	}
 
+	//constuctor to test
+	private TaskWrapper(int taskID, String handle, String label, Context_Structure context){
+		
+	}
 
 
 	/**Returns currently active task*/
@@ -82,10 +91,13 @@ public class TaskWrapper {
 		return interactionEventKind;
 	}
 
-	private String getStructureHandle() {
+	public String getStructureHandle() {
 		return structureHandle;
 	}
 
+	public Context_Structure getContextStructure(){
+		return context;
+	}
 
 
 	public List<IInteractionElement> getInteractionElements() {
