@@ -14,10 +14,6 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.eclipse.mylyn.context.core.IInteractionElement;
-import org.eclipse.mylyn.monitor.core.InteractionEvent;
-
-import nz.ac.auckland.devcoord.controller.TaskWrapper;
 
 /**
  * Class that stores information about a
@@ -77,13 +73,25 @@ public class Task {
 	public int getTaskID(){
 		return this.taskID;
 	}
+	
+	public void updateTaskID(int ID){
+		this.taskID = ID;
+	}
 
 	public String getHandle(){
 		return this.handle;
 	}
 
+	public void updateHandle(String handle){
+		this.handle = handle;
+	}
+	
 	public String getLabel(){
 		return this.label;
+	}
+	
+	public void updateLable(String label){
+		this.label = label;
 	}
 
 	public void addContextStructure(String filepath, Context_Structure structure){
@@ -129,45 +137,5 @@ public class Task {
 
 
 
-	public boolean update(TaskWrapper taskWrapper){
-
-		this.taskID=taskWrapper.getTaskID();
-		this.handle = taskWrapper.getTaskHandle();
-		this.label = taskWrapper.getTaskLabel();
-
-		if (contextStructure==null) {
-			this.contextStructure = new HashMap<String, Context_Structure>();
-		}
-
-		addElementsToContext(taskWrapper);
-
-
-
-		return true;
-
-
-
-	}
-
-	private boolean addElementsToContext(TaskWrapper taskWrapper){
-		List<IInteractionElement> elements=taskWrapper.getInteractionElements();
-		for (IInteractionElement interactionElement : elements) {
-			if (interactionElement.getContentType().equals("resource")) {
-				Context_Structure context_Structure=new Context_Structure(interactionElement.getHandleIdentifier(), interactionEventIsSelection(taskWrapper), interactionEventIsEdit(taskWrapper));
-				contextStructure.put(interactionElement.getHandleIdentifier(), context_Structure);
-				
-			}
-		}
-		return true;
-	}
-
-	private boolean interactionEventIsSelection(TaskWrapper taskWrapper){
-
-		return taskWrapper.getInteractionEventKind().equals(InteractionEvent.Kind.SELECTION);
-	}
-	private boolean interactionEventIsEdit(TaskWrapper taskWrapper){
-
-		return taskWrapper.getInteractionEventKind().equals(InteractionEvent.Kind.EDIT);
-
-	}
+	
 }

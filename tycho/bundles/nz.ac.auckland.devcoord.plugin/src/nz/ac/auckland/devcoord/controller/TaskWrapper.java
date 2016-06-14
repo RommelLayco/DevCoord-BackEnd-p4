@@ -9,6 +9,8 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.mylyn.monitor.core.InteractionEvent.Kind;
 import org.eclipse.mylyn.tasks.core.ITask;
 
+
+
 /**
  * 
  *The objects of this class envelope the IntercationEvent Objects,while also providing 
@@ -28,6 +30,8 @@ public class TaskWrapper {
 		return  new TaskWrapper(eventArg);
 	}
 
+	
+	
 	private int taskID;
 	private String taskHandle;
 	private String taskLabel;
@@ -35,57 +39,55 @@ public class TaskWrapper {
 	private String structureHandle;
 	private List<IInteractionElement> interactionElements;
 
+	private boolean isEdit;
+	private boolean isSelect;
+
 	private String kindType;
 	/**
 	 * Constructor
 	 * */
 	private TaskWrapper(InteractionEvent interactionEventArg) {
-		interactionEventKind=interactionEventArg.getKind();
-		structureHandle=interactionEventArg.getStructureHandle();
+
+		//info for task model
 		ITask activeTask=getActiveTask();
 		taskID=Integer.parseInt(activeTask.getTaskId());
 		taskHandle=activeTask.getHandleIdentifier();
 		taskLabel=activeTask.toString();
 
-		interactionElements=getCurrentContextElements();
+		//infor for context_Struture model
+		structureHandle=interactionEventArg.getStructureHandle();
+		setSelectOrEdit(interactionEventArg.getKind());
 
 	}
 
-	public TaskWrapper(String id, String kind, String handle){
-		taskID = Integer.parseInt(id);
-		kindType = kind;
-		structureHandle = handle;
-		interactionElements=getCurrentContextElements();
 
-	}
 
 	/**Returns currently active task*/
 	private ITask getActiveTask(){
 		return	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskActivityManager().getActiveTask();
 	}
 
-	public Integer getTaskID() {
+	private Integer getTaskID() {
 		return taskID;
 	}
 
-	public String getTaskHandle() {
+	private String getTaskHandle() {
 		return taskHandle;
 	}
-
-	public String getTaskLabel() {
+	private String getTaskLabel() {
 		return taskLabel;
 	}
 
-	public Kind getInteractionEventKind() {
+	private Kind getInteractionEventKind() {
 		return interactionEventKind;
 	}
 
-	public String getStructureHandle() {
+	private String getStructureHandle() {
 		return structureHandle;
 	}
 
-	
-	
+
+
 	public List<IInteractionElement> getInteractionElements() {
 		return interactionElements;
 	}
@@ -109,5 +111,19 @@ public class TaskWrapper {
 		return context.getAllElements();
 
 
+	}
+
+
+	private void setSelectOrEdit(Kind kind){
+		if(kind.equals(InteractionEvent.Kind.EDIT)){
+			this.isEdit = true;
+			this.isSelect = false;
+		} else if(kind.equals(InteractionEvent.Kind.SELECTION)){
+			this.isEdit = false;
+			this.isSelect = true;
+		} else {
+			this.isEdit = false;
+			this.isSelect = false;
+		}
 	}
 }

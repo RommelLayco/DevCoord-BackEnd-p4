@@ -8,7 +8,6 @@ import org.eclipse.ui.part.*;
 
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
 import nz.ac.auckland.devcoord.controller.TaskInfo;
-import nz.ac.auckland.devcoord.controller.TaskUtil;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
 
 import org.eclipse.jface.viewers.*;
@@ -64,7 +63,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().addChangeListener(this);
 		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
-		TaskUtil.update(taskWrapper);
+		
 	}
 
 	/**
@@ -158,7 +157,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	public void interactionObserved(InteractionEvent arg0) {
 		System.out.println("EVENT TIME:"+arg0.getDate().getTime());
 		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
-		TaskUtil.update(taskWrapper);
+		//update interaction event here,
 		RefreshDevCoord();
 	}
 
