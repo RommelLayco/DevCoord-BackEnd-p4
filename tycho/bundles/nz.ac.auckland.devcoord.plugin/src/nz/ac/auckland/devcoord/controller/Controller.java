@@ -21,11 +21,14 @@ public class Controller {
 			task.updateTaskID(wrapper.getTaskID());
 			task.updateHandle(wrapper.getTaskHandle());
 			task.updateLable(wrapper.getTaskLabel());
+			task.addContextStructure(wrapper.getStructureHandle(), wrapper.getContextStructure());
 			
 			service.updateTask(task);
 		} else{
 			task = new Task(wrapper.getTaskID(),wrapper.getTaskHandle(), 
 					wrapper.getTaskLabel());
+			
+			task.addContextStructure(wrapper.getStructureHandle(), wrapper.getContextStructure());
 			
 			service.addTask(task);
 		}
