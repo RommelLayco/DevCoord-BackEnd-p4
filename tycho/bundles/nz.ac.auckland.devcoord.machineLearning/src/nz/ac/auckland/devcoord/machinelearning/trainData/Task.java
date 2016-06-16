@@ -1,4 +1,4 @@
-package nz.ac.auckland.devcoord.machinelearning.getTaskPairs;
+package nz.ac.auckland.devcoord.machinelearning.trainData;
 
 /**
  * Class to store tasks from the tasks file for further processing

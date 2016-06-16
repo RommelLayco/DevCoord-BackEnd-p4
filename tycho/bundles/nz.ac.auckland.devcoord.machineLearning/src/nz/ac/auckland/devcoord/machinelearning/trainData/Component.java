@@ -1,4 +1,4 @@
-package nz.ac.auckland.devcoord.machinelearning.getTaskPairs;
+package nz.ac.auckland.devcoord.machinelearning.trainData;
 
 public enum Component {
 	BUGZILLA, UI, JIRA, TASK, CORE, JAVA,

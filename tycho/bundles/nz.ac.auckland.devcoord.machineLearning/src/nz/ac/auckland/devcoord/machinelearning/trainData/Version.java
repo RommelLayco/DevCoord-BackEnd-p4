@@ -1,4 +1,4 @@
-package nz.ac.auckland.devcoord.machinelearning.getTaskPairs;
+package nz.ac.auckland.devcoord.machinelearning.trainData;
 
 /**
  * Enum to help split data into release version
