@@ -46,6 +46,8 @@ public class TaskPair {
 
 	@Transient
 	private double actualScore;
+	
+	private boolean isCritical;
 
 	/**
 	 * To prevent duplication of the same two task, the task id
@@ -267,6 +269,14 @@ public class TaskPair {
 				append( potentialScore, rhs.potentialScore ).
 				append( actualScore, rhs.actualScore ).
 				isEquals( );
+	}
+
+	public boolean isCritical() {
+		return isCritical;
+	}
+
+	public void setCritical(boolean isCritical) {
+		this.isCritical = isCritical;
 	}
 }
 
