@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import getTaskPairs.ProcessData;
-import getTaskPairs.ReadFiles;
-import getTaskPairs.Task;
-import getTaskPairs.TaskAcc;
-import getTaskPairs.TaskPair;
-import getTaskPairs.TaskPairKey;
+import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.ProcessData;
+import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.ReadFiles;
+import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.Task;
+import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskAcc;
+import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPair;
+import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPairKey;
 /**
  * To run the algorithm
  * */
