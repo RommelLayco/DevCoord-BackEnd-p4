@@ -30,6 +30,23 @@ public class TaskPair {
 		this.samePlatform = false;
 		this.critical = false;
 	}
+	/**
+	 * for coding/testing ML stuff in plugin
+	 * */
+	public TaskPair(int task1, int task2, float pscore,boolean isCritical){
+		this.task1 = task1;
+		this.task2 = task2;
+		this.proxmityScore = pscore;
+		this.SLSM = -1;
+		this.AL = -1;
+		this.sameComponent = false;
+		this.sameOS = false;
+		this.samePlatform = false;
+		this.critical = isCritical;
+	}
+	
+	
+	
 	
 	/**
 	 * Helper method to create task pair object from a line in the file

@@ -45,17 +45,15 @@ public class MainClass {
 		/**Rommel's*/	
 
 
-		
-		/**With Without*/
-				/**UNPRUNED*/
-				makeARFFAndTree(data,true);
 
-				/**PRUNED*/
-				makeARFFAndTree(data,false);
+//		/**With Without*/
+//		/**UNPRUNED*/
+//		makeARFFAndTree(data,true);
+
+		/**PRUNED*/
+		makeARFFAndTree(data,false);
 
 
-
-		System.out.println("Done");
 
 
 	}
@@ -67,7 +65,21 @@ public class MainClass {
 
 
 		DataToARFF.convertTrainData(data, InputEnum.PAIRS_3_2);
-		//MakeTree.make(DRH,unpruned);
+		
+		
+		String[] lines={"0","1","FALSE","TRUE","FALSE","0.35454","-1","-1"};
+
+		TaskPair dummyPair= new TaskPair(0, 34, (float) 0.05, false);
+		DataToARFF.convertTestData(dummyPair);
+
+
+		System.out.println("Done");
+		
+		
+		
+		
+		
+		MakeTree.make(false,false);
 
 
 

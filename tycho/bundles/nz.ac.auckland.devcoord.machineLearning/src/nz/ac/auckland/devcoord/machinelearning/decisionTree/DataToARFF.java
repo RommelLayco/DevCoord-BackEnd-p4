@@ -93,92 +93,43 @@ public class DataToARFF {
 	} 
 
 
+	public static void convertTestData(TaskPair taskPair){
+		
+
+		Writer writer = null;
+
+		String inputString;
 
 
 
+		inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
 
+		
+		try{
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(inputString), "utf-8"));
+			
 
-	//	public static void convert(ProcessData data,InputEnum inputEnum){
-	//		try {
-	//			switch(inputEnum){
-	//			case PAIRS_3_2:{makeArff(data,true);
-	//			makeArff(data,false);};
-	//			case ACCURACY_CODING:convertAccuracy(data);
-	//			case TASKS_3_2:convertTasks(data);
-	//			}
-	//
-	//		} catch (IOException e) {
-	//
-	//			e.printStackTrace();
-	//
-	//		}
-	//
-	//
-	//		System.out.println("Arff file made");
-	//	}
+			writer.write(getLabels());
+			writer.write("@data"+"\n");
+			writer.write(getStringOfTheTestTaskPair(taskPair));
+			writer.write("\n");
+			writer.close();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+	}
 
-
-	/**
-	 * Used to create ARFF file from the Pairs csv file.
-	 * It also acquired other attributes from the ProcessData object like OS,component etc.
-	 * */
-//	protected static void makeArff(ProcessData data,boolean train) throws IOException{
-//		Writer writer = null;
-//
-//		String inputString;
-//
-//
-//		if (train) {
-//			inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
-//
-//
-//
-//			writer = new BufferedWriter(new OutputStreamWriter(
-//					new FileOutputStream(inputString), "utf-8"));
-//
-//
-//			writer.write(getLabels());
-//			writer.write("@data"+"\n");
-//
-//
-//			int countOfBadData=0;
-//
-//			List<TaskPairKey> keys;
-//			if (train) {
-//				keys=data.getTrainKeys();
-//			} else {
-//				keys=data.getTestKeys();
-//			}
-//			for (TaskPairKey taskPairKey : keys) {
-//				try{
-//					writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data));
-//					writer.write("\n");
-//
-//				}
-//				catch(NullPointerException n){
-//
-//					countOfBadData+=1;
-//				}
-//
-//			}
-//
-//			writer.close();
-//			System.out.println("number of bad entries:"+countOfBadData);
-//
-//		} else {
-//			inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
-//
-//
-//
-//
-//		}	
-//
-//
-//
-//
-//
-//
-//	}
 
 
 
@@ -233,5 +184,27 @@ public class DataToARFF {
 
 	}
 
+	protected static String getStringOfTheTestTaskPair(TaskPair taskPair){
+		//Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
+		float proximity=taskPair.getPscore();
+		String critical=""+taskPair.isCritical();
+		boolean component=taskPair.isSameComponent();
+		boolean platform=taskPair.isSamePlatform();
+		boolean oS=taskPair.isSameOS();
+
+
+
+		return proximity+","
+		+ critical+","+component+","+platform+","+oS;
+
+
+
+
+
+
+
+	}
+	
+	
 
 }
