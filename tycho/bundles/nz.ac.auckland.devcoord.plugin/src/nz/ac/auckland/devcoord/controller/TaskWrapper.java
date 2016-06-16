@@ -60,6 +60,7 @@ public class TaskWrapper {
 		//infor for context_Struture model
 		structureHandle=interactionEventArg.getStructureHandle();
 		setSelectOrEdit(interactionEventArg.getKind());
+		interactionEventKind=interactionEventArg.getKind();
 		context = new Context_Structure(structureHandle, isSelect,
 				isEdit);
 
