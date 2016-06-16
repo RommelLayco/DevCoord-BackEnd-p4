@@ -66,7 +66,7 @@ public class MainClass {
 	private static void makeARFFAndTree(ProcessData data,boolean unpruned){
 
 
-		DataToARFF.convert(data, InputEnum.PAIRS_3_2);
+		DataToARFF.convertTrainData(data, InputEnum.PAIRS_3_2);
 		//MakeTree.make(DRH,unpruned);
 
 

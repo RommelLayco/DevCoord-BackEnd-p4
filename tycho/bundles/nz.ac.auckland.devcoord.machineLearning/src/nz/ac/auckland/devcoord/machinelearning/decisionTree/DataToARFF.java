@@ -1,9 +1,11 @@
 package nz.ac.auckland.devcoord.machinelearning.decisionTree;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
@@ -16,83 +18,167 @@ import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPairKey;
  * 
  * */
 public class DataToARFF {
+	
+	
 	/**
-	 * This method Calls the respective methods to convert the CSV file stated in arguments,
+	 * Used for making the arff file for the train data
 	 * to an arff file.
 	 * */
-	public static void convert(ProcessData data,InputEnum inputEnum){
+	public static void convertTrainData(ProcessData data,InputEnum inputEnum){
+	
+		
+
+
+		Writer writer = null;
+
+		String inputString;
+
+
+
+		inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
+
+
+
 		try {
-			switch(inputEnum){
-			case PAIRS_3_2:{makeArff(data,true);
-			makeArff(data,false);};
-			case ACCURACY_CODING:convertAccuracy(data);
-			case TASKS_3_2:convertTasks(data);
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(inputString), "utf-8"));
+			
+
+			writer.write(getLabels());
+			writer.write("@data"+"\n");
+
+
+			int countOfBadData=0;
+
+			List<TaskPairKey> keys;
+			if (true) {
+				keys=data.getTrainKeys();
+			}
+			for (TaskPairKey taskPairKey : keys) {
+				try{
+					writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data));
+					writer.write("\n");
+
+				}
+				catch(NullPointerException n){
+
+					countOfBadData+=1;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 
-		} catch (IOException e) {
+			writer.close();
+			System.out.println("number of bad entries:"+countOfBadData);
 
+			
+			
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
 
-		System.out.println("Arff file made");
-	}
+		
+		
+		
+	} 
+
+
+
+
+
+
+
+	//	public static void convert(ProcessData data,InputEnum inputEnum){
+	//		try {
+	//			switch(inputEnum){
+	//			case PAIRS_3_2:{makeArff(data,true);
+	//			makeArff(data,false);};
+	//			case ACCURACY_CODING:convertAccuracy(data);
+	//			case TASKS_3_2:convertTasks(data);
+	//			}
+	//
+	//		} catch (IOException e) {
+	//
+	//			e.printStackTrace();
+	//
+	//		}
+	//
+	//
+	//		System.out.println("Arff file made");
+	//	}
 
 
 	/**
 	 * Used to create ARFF file from the Pairs csv file.
 	 * It also acquired other attributes from the ProcessData object like OS,component etc.
 	 * */
-	protected static void makeArff(ProcessData data,boolean train) throws IOException{
-		Writer writer = null;
-
-		String inputString;
-
-
-			if (train) {
-				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
-			} else {
-				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
-			}	
-
-
-		writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(inputString), "utf-8"));
-
-
-		writer.write(getLabels());
-		writer.write("@data"+"\n");
-
-
-		int countOfBadData=0;
-
-		List<TaskPairKey> keys;
-		if (train) {
-			keys=data.getTrainKeys();
-		} else {
-			keys=data.getTestKeys();
-		}
-		for (TaskPairKey taskPairKey : keys) {
-			try{
-				writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data));
-				writer.write("\n");
-
-			}
-			catch(NullPointerException n){
-
-				countOfBadData+=1;
-			}
-
-		}
-
-		writer.close();
-
-
-		System.out.println("number of bad entries:"+countOfBadData);
-
-
-	}
+//	protected static void makeArff(ProcessData data,boolean train) throws IOException{
+//		Writer writer = null;
+//
+//		String inputString;
+//
+//
+//		if (train) {
+//			inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
+//
+//
+//
+//			writer = new BufferedWriter(new OutputStreamWriter(
+//					new FileOutputStream(inputString), "utf-8"));
+//
+//
+//			writer.write(getLabels());
+//			writer.write("@data"+"\n");
+//
+//
+//			int countOfBadData=0;
+//
+//			List<TaskPairKey> keys;
+//			if (train) {
+//				keys=data.getTrainKeys();
+//			} else {
+//				keys=data.getTestKeys();
+//			}
+//			for (TaskPairKey taskPairKey : keys) {
+//				try{
+//					writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data));
+//					writer.write("\n");
+//
+//				}
+//				catch(NullPointerException n){
+//
+//					countOfBadData+=1;
+//				}
+//
+//			}
+//
+//			writer.close();
+//			System.out.println("number of bad entries:"+countOfBadData);
+//
+//		} else {
+//			inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
+//
+//
+//
+//
+//		}	
+//
+//
+//
+//
+//
+//
+//	}
 
 
 
@@ -102,10 +188,10 @@ public class DataToARFF {
 	 * **/
 	protected static String getLabels(){
 		String toReturn;
-	
 
-			toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
-					"@attribute Proximity numeric"+"\n"+
+
+		toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
+				"@attribute Proximity numeric"+"\n"+
 
 			"@attribute Critical {true,false}"+"\n"+""
 			+ "@attribute Component {true,false}"+"\n"
@@ -113,7 +199,7 @@ public class DataToARFF {
 			+ "@attribute OS {true,false}"+"\n"
 			+ "\n";
 
-		
+
 
 
 		return toReturn;
@@ -134,13 +220,13 @@ public class DataToARFF {
 		boolean platform=taskPairs.get(taskPairKey).isSamePlatform();
 		boolean oS=taskPairs.get(taskPairKey).isSameOS();
 
-	
-
-			return proximity+","
-					+ critical+","+component+","+platform+","+oS;
 
 
-		
+		return proximity+","
+		+ critical+","+component+","+platform+","+oS;
+
+
+
 
 
 
@@ -148,22 +234,4 @@ public class DataToARFF {
 	}
 
 
-
-	private static void convertTasks(ProcessData data){
-
-		/**
-		 * TODO when needed
-		 * */
-
-	}
-
-
-	private static void convertAccuracy(ProcessData data){
-
-		/**
-		 * TODO when needed
-		 * */
-
-
-	}
 }
