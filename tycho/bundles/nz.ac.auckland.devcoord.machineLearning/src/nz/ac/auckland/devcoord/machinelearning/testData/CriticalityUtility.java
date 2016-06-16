@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 
 import nz.ac.auckland.devcoord.database.Task;
@@ -22,12 +23,66 @@ import weka.core.Instances;
  * */
 public class CriticalityUtility {
 
+	public static void main(String[] args) {
+		Task one=new Task(1, "Dummy Handle one", "Dummy label one");
+		Task two=new Task(2, "Dummy Handle two", "Dummy label two");
+		Task three=new Task(3, "Dummy Handle one", "Dummy label three");
+
+		
+		
+		TaskPair taskPairOne=new TaskPair(one,two);
+		taskPairOne.setCritical(true);
+		TaskPair taskPairTwo=new TaskPair(one,three);
+		taskPairTwo.setCritical(false);
+		TaskPair taskPairThree=new TaskPair(three,two);
+		taskPairThree.setCritical(false);
+		
+		
+		List<TaskPair> taskPairs=new ArrayList<TaskPair>();
+		taskPairs.add(taskPairOne);taskPairs.add(taskPairTwo);taskPairs.add(taskPairThree);
+		
+		System.out.println("BEFORE CLASSIFYING,Criticality is:");
+		for (TaskPair taskPair : taskPairs) {
+			System.out.println("	====================");
+			System.out.println("	First Task ID:"+taskPair.getID1());
+			System.out.println("	Second Task ID:"+taskPair.getID2());
+			System.out.println("	IsCritical?:"+taskPair.isCritical());
+			
+			
+		}
+		
+		taskPairs=fillInCriticality(taskPairs);
+		
+		System.out.println("AFTER CLASSIFYING,Criticality is:");
+		for (TaskPair taskPair : taskPairs) {
+			System.out.println("	====================");
+			System.out.println("	First Task ID:"+taskPair.getID1());
+			System.out.println("	Second Task ID:"+taskPair.getID2());
+			System.out.println("	IsCritical?:"+taskPair.isCritical());
+			
+			
+		}
+		
+		
+		
+	}
+	
+	
 	public static List<TaskPair> fillInCriticality(List<TaskPair> taskPairsListArg){
 
 		for (TaskPair taskPair : taskPairsListArg) {
 			//this loop will contain the machine learning code
 
-			taskPair.setCritical(true);//Dummy code
+			taskPair.setCritical(false);
+			
+			convertTestDataToArff(taskPair);
+			
+
+			if (!wasClassificationCorrect()) {
+				taskPair.setCritical(!taskPair.isCritical());
+				
+			}
+			
 
 		}
 
@@ -36,19 +91,12 @@ public class CriticalityUtility {
 
 
 	}
-	public static void 	testDummyTestData( ){
-		TaskPair taskPair=new TaskPair(new Task(0, "Dummy Handle one", "Dummy label one"), new Task(12, "Dummy Handle two", "Dummy label two"));
 
-		taskPair.setCritical(false);
-		
-		convertTestDataToArff(taskPair);
-		
-	}
 	
 	/**
 	 * Creates an arff file out of a TaskPair object
 	 * */
-	public static void convertTestDataToArff(TaskPair taskPair ){
+	private static void convertTestDataToArff(TaskPair taskPair ){
 		
 		Writer writer = null;
 
@@ -89,7 +137,7 @@ public class CriticalityUtility {
 	 * Return true if the value of isCritical already present is correct.
 	 * 
 	 * */
-	public static boolean wasClassificationCorrect()
+	private static boolean wasClassificationCorrect()
 	{
 		
 		String trainString;
