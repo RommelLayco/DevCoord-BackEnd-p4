@@ -10,11 +10,9 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.ProcessData;
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPair;
-
-
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPairKey;
+import nz.ac.auckland.devcoord.machinelearning.trainData.ProcessData;
+import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPair;
+import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPairKey;
 /**
  * Used for conversion of CSV files provided to ARFF files(Weka readable)
  * 

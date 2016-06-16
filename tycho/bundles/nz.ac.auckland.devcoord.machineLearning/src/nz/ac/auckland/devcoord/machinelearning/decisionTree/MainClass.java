@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import nz.ac.auckland.devcoord.machinelearning.CriticalityUtility;
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.ProcessData;
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.ReadFiles;
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.Task;
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskAcc;
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPair;
-import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPairKey;
+import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
+import nz.ac.auckland.devcoord.machinelearning.trainData.ProcessData;
+import nz.ac.auckland.devcoord.machinelearning.trainData.ReadFiles;
+import nz.ac.auckland.devcoord.machinelearning.trainData.Task;
+import nz.ac.auckland.devcoord.machinelearning.trainData.TaskAcc;
+import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPair;
+import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPairKey;
 /**
  * To run the algorithm
  * */
@@ -73,7 +73,7 @@ public class MainClass {
 		
 		CriticalityUtility.testDummyTestData(); 
 
-		System.out.println("MakeTree.wasClassificationCorrect():"+MakeTree.wasClassificationCorrect());
+		System.out.println("MakeTree.wasClassificationCorrect():"+CriticalityUtility.wasClassificationCorrect());
 		System.out.println("Done");
 		
 		
