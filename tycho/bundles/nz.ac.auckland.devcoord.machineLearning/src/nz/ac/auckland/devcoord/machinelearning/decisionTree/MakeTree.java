@@ -23,6 +23,55 @@ import weka.gui.treevisualizer.TreeVisualizer;
  * Credit for tree visualising:http://stackoverflow.com/questions/9175116/visualizing-weka-classification-tree
  * */
 public class MakeTree {
+	/**
+	 * Return true if the value of isCritical already present is correct.
+	 * 
+	 * */
+	public static boolean wasClassificationCorrect()
+	{
+		
+		String trainString;
+		String testString;
+	
+			trainString=InputEnum.toString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
+			testString=InputEnum.toString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
+	
+			// train classifier
+		     J48 cls = new J48();
+		     Instances train;
+		     Instances test;
+		     
+			try {
+				train = new Instances(new BufferedReader(new FileReader(trainString)));
+				train.setClassIndex(train.numAttributes() - 4);
+				
+				
+				test = new Instances(new BufferedReader(new FileReader(testString)));
+				test.setClassIndex(test.numAttributes() - 4);
+				
+
+
+			
+				cls.setUnpruned(false);
+				
+				
+			     cls.buildClassifier(train);
+			     
+			     Evaluation eval = new Evaluation(train);
+			     eval.evaluateModel(cls, test);
+			     
+			    
+			     return eval.correct()>0;
+			
+			}
+			
+			catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return false;
+		
+	}
 	
 	/**
 	 * Used to to make a decision tree out of a set of train data,

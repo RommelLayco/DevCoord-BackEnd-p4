@@ -72,14 +72,14 @@ public class MainClass {
 		TaskPair dummyPair= new TaskPair(0, 34, (float) 0.05, false);
 		DataToARFF.convertTestData(dummyPair);
 
-
+		System.out.println("MakeTree.wasClassificationCorrect():"+MakeTree.wasClassificationCorrect());
 		System.out.println("Done");
 		
 		
 		
 		
 		
-		MakeTree.make(false,false);
+		//MakeTree.make(false,false);
 
 
 
