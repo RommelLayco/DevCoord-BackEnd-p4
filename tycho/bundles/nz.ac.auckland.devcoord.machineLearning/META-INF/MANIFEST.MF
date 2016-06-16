@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: MachineLearning
+Bundle-SymbolicName: nz.ac.auckland.devcoord.machineLearning
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: nz.ac.auckland.devcoord.machinelearning.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ nz.ac.auckland.devcoord.database
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
