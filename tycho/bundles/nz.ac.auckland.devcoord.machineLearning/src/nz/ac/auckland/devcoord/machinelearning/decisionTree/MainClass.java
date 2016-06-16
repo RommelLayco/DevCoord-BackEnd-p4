@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import nz.ac.auckland.devcoord.machinelearning.CriticalityUtility;
 import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.ProcessData;
 import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.ReadFiles;
 import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.Task;
@@ -67,10 +68,10 @@ public class MainClass {
 		DataToARFF.convertTrainData(data, InputEnum.PAIRS_3_2);
 		
 		
-		String[] lines={"0","1","FALSE","TRUE","FALSE","0.35454","-1","-1"};
+	//	String[] lines={"0","1","FALSE","TRUE","FALSE","0.35454","-1","-1"};
 
-		TaskPair dummyPair= new TaskPair(0, 34, (float) 0.05, false);
-		DataToARFF.convertTestData(dummyPair);
+		
+		CriticalityUtility.testDummyTestData(); 
 
 		System.out.println("MakeTree.wasClassificationCorrect():"+MakeTree.wasClassificationCorrect());
 		System.out.println("Done");

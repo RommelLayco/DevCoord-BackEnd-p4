@@ -12,6 +12,8 @@ import java.util.Map;
 
 import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.ProcessData;
 import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPair;
+
+
 import nz.ac.auckland.devcoord.machinelearning.getTaskPairs.TaskPairKey;
 /**
  * Used for conversion of CSV files provided to ARFF files(Weka readable)
@@ -92,45 +94,6 @@ public class DataToARFF {
 		
 	} 
 
-/**
- * Creates an arff file out of a TaskPair object
- * */
-	public static void convertTestData(TaskPair taskPair){
-		
-
-		Writer writer = null;
-
-		String inputString;
-
-
-
-		inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
-
-		
-		try{
-			writer = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(inputString), "utf-8"));
-			
-
-			writer.write(getLabels());
-			writer.write("@data"+"\n");
-			writer.write(getStringOfTheTestTaskPair(taskPair));
-			writer.write("\n");
-			writer.close();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-		
-	}
 
 
 
@@ -147,9 +110,7 @@ public class DataToARFF {
 				"@attribute Proximity numeric"+"\n"+
 
 			"@attribute Critical {true,false}"+"\n"+""
-			+ "@attribute Component {true,false}"+"\n"
-			+ "@attribute Platform {true,false}"+"\n"
-			+ "@attribute OS {true,false}"+"\n"
+
 			+ "\n";
 
 
@@ -169,14 +130,12 @@ public class DataToARFF {
 		Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
 		float proximity=taskPairs.get(taskPairKey).getPscore();
 		String critical=""+taskPairs.get(taskPairKey).isCritical();
-		boolean component=taskPairs.get(taskPairKey).isSameComponent();
-		boolean platform=taskPairs.get(taskPairKey).isSamePlatform();
-		boolean oS=taskPairs.get(taskPairKey).isSameOS();
+
 
 
 
 		return proximity+","
-		+ critical+","+component+","+platform+","+oS;
+		+ critical;
 
 
 
@@ -185,32 +144,6 @@ public class DataToARFF {
 
 
 	}
-	/**
-	 * Helper method-creates a string that contains information about a pair TEST of task.
-	 * this string is returned,which is then written directly into the arff file(not be this method). 
-	 * 
-	 * */
-	protected static String getStringOfTheTestTaskPair(TaskPair taskPair){
-		
-		float proximity=taskPair.getPscore();
-		String critical=""+taskPair.isCritical();
-		boolean component=taskPair.isSameComponent();
-		boolean platform=taskPair.isSamePlatform();
-		boolean oS=taskPair.isSameOS();
 
-
-
-		return proximity+","
-		+ critical+","+component+","+platform+","+oS;
-
-
-
-
-
-
-
-	}
-	
-	
 
 }

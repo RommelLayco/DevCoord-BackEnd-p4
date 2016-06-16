@@ -43,11 +43,11 @@ public class MakeTree {
 		     
 			try {
 				train = new Instances(new BufferedReader(new FileReader(trainString)));
-				train.setClassIndex(train.numAttributes() - 4);
+				train.setClassIndex(train.numAttributes() - 1);
 				
 				
 				test = new Instances(new BufferedReader(new FileReader(testString)));
-				test.setClassIndex(test.numAttributes() - 4);
+				test.setClassIndex(test.numAttributes() - 1);
 				
 
 
@@ -96,11 +96,11 @@ public class MakeTree {
 	     
 		try {
 			train = new Instances(new BufferedReader(new FileReader(trainString)));
-			train.setClassIndex(train.numAttributes() - 4);
+			train.setClassIndex(train.numAttributes() - 1);
 			
 			
 			test = new Instances(new BufferedReader(new FileReader(testString)));
-			test.setClassIndex(test.numAttributes() - 4);
+			test.setClassIndex(test.numAttributes() - 1);
 			
 
 
