@@ -45,19 +45,13 @@ public class MainClass {
 		/**Rommel's*/	
 
 
-		/**With DRH*/
-			/**UNPRUNED*/
-				makeARFFAndTree(true,data,true);
-			/**PRUNED*/
-				makeARFFAndTree(true,data,false);
-
 		
 		/**With Without*/
 				/**UNPRUNED*/
-				makeARFFAndTree(false,data,true);
+				makeARFFAndTree(data,true);
 
 				/**PRUNED*/
-				makeARFFAndTree(false,data,false);
+				makeARFFAndTree(data,false);
 
 
 
@@ -69,11 +63,11 @@ public class MainClass {
 	 * Calls convert method to make arff files from csvs,
 	 * and Make method to create a tree and make a report for the test set classification.
 	 * */
-	private static void makeARFFAndTree(boolean DRH,ProcessData data,boolean unpruned){
+	private static void makeARFFAndTree(ProcessData data,boolean unpruned){
 
 
-		DataToARFF.convert(data, InputEnum.PAIRS_3_2,DRH);
-		MakeTree.make(DRH,unpruned);
+		DataToARFF.convert(data, InputEnum.PAIRS_3_2);
+		//MakeTree.make(DRH,unpruned);
 
 
 

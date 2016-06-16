@@ -20,11 +20,11 @@ public class DataToARFF {
 	 * This method Calls the respective methods to convert the CSV file stated in arguments,
 	 * to an arff file.
 	 * */
-	public static void convert(ProcessData data,InputEnum inputEnum,boolean withDRH){
+	public static void convert(ProcessData data,InputEnum inputEnum){
 		try {
 			switch(inputEnum){
-			case PAIRS_3_2:{makeArff(data, withDRH,true);
-			makeArff(data, withDRH,false);};
+			case PAIRS_3_2:{makeArff(data,true);
+			makeArff(data,false);};
 			case ACCURACY_CODING:convertAccuracy(data);
 			case TASKS_3_2:convertTasks(data);
 			}
@@ -44,32 +44,24 @@ public class DataToARFF {
 	 * Used to create ARFF file from the Pairs csv file.
 	 * It also acquired other attributes from the ProcessData object like OS,component etc.
 	 * */
-	protected static void makeArff(ProcessData data,boolean withDRH,boolean train) throws IOException{
+	protected static void makeArff(ProcessData data,boolean train) throws IOException{
 		Writer writer = null;
 
 		String inputString;
 
-		if (withDRH) {
-			if (train) {
-				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_DRH);
-			} else {
-				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_DRH);
-			}
 
-		} else {
 			if (train) {
 				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
 			} else {
 				inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
 			}	
-		}
 
 
 		writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(inputString), "utf-8"));
 
 
-		writer.write(getLabels(withDRH));
+		writer.write(getLabels());
 		writer.write("@data"+"\n");
 
 
@@ -83,7 +75,7 @@ public class DataToARFF {
 		}
 		for (TaskPairKey taskPairKey : keys) {
 			try{
-				writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data, withDRH));
+				writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data));
 				writer.write("\n");
 
 			}
@@ -108,19 +100,9 @@ public class DataToARFF {
 	 * Helper method- creates a label which is written in the arff file,depending on the arguments,
 	 * it includes or excludes DRH attributes from the label.
 	 * **/
-	protected static String getLabels(boolean withDRH){
+	protected static String getLabels(){
 		String toReturn;
-		if (withDRH) {
-			toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
-					"@attribute Proximity numeric"+"\n"+
-					"@attribute SLSMS numeric"+"\n"+
-					"@attribute ALS numeric"+"\n"+
-					"@attribute Critical {true,false}"+"\n"+""
-					+ "@attribute Component {true,false}"+"\n"
-					+ "@attribute Platform {true,false}"+"\n"
-					+ "@attribute OS {true,false}"+"\n"
-					+ "\n";
-		} else {
+	
 
 			toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
 					"@attribute Proximity numeric"+"\n"+
@@ -131,7 +113,7 @@ public class DataToARFF {
 			+ "@attribute OS {true,false}"+"\n"
 			+ "\n";
 
-		}
+		
 
 
 		return toReturn;
@@ -144,7 +126,7 @@ public class DataToARFF {
 	 * this string is returned,which is then written directly into the arff file(not be this method). 
 	 * 
 	 * */
-	protected static String getStringOfTheFollowingTaskPairKey(TaskPairKey taskPairKey,ProcessData processData,boolean withDRH){
+	protected static String getStringOfTheFollowingTaskPairKey(TaskPairKey taskPairKey,ProcessData processData){
 		Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
 		float proximity=taskPairs.get(taskPairKey).getPscore();
 		String critical=""+taskPairs.get(taskPairKey).isCritical();
@@ -152,20 +134,13 @@ public class DataToARFF {
 		boolean platform=taskPairs.get(taskPairKey).isSamePlatform();
 		boolean oS=taskPairs.get(taskPairKey).isSameOS();
 
-		if (withDRH) {
-			int sLMS=taskPairs.get(taskPairKey).getSLSM();
-			int aLS=taskPairs.get(taskPairKey).getAL();
-
-			return proximity+","
-			+ +sLMS+","+aLS+","+critical+","+component+","+platform+","+oS;
-
-		} else {
+	
 
 			return proximity+","
 					+ critical+","+component+","+platform+","+oS;
 
 
-		}
+		
 
 
 
