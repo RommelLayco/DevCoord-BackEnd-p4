@@ -52,7 +52,7 @@ public class DataToARFF {
 
 			List<TaskPairKey> keys;
 			if (true) {
-				keys=data.getTrainKeys();
+				keys=data.getTestKeys();
 			}
 			for (TaskPairKey taskPairKey : keys) {
 				try{

@@ -12,6 +12,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
 import nz.ac.auckland.devcoord.database.TaskPair;
 import nz.ac.auckland.devcoord.machinelearning.decisionTree.InputEnum;
@@ -25,17 +26,33 @@ public class CriticalityUtility {
 
 	public static void main(String[] args) {
 		Task one=new Task(1, "Dummy Handle one", "Dummy label one");
+		
+		Context_Structure context_StructureOne=new Context_Structure("ContextOne", false, true);
+		one.addContextStructure(context_StructureOne.getName(), context_StructureOne);
+		
 		Task two=new Task(2, "Dummy Handle two", "Dummy label two");
+		
+		Context_Structure context_StructureTwo=new Context_Structure("ContextOne", true, false);
+		two.addContextStructure(context_StructureTwo.getName(), context_StructureTwo);
+		
 		Task three=new Task(3, "Dummy Handle one", "Dummy label three");
 
-		
+		Context_Structure context_StructureThree=new Context_Structure("ContextThree", false, true);
+		three.addContextStructure(context_StructureThree.getName(), context_StructureThree);
 		
 		TaskPair taskPairOne=new TaskPair(one,two);
-		taskPairOne.setCritical(true);
+		taskPairOne.setCritical(false);
 		TaskPair taskPairTwo=new TaskPair(one,three);
 		taskPairTwo.setCritical(false);
 		TaskPair taskPairThree=new TaskPair(three,two);
 		taskPairThree.setCritical(false);
+		
+		taskPairOne.calcProximityScore();taskPairTwo.calcProximityScore();taskPairThree.calcProximityScore();
+		
+		
+		System.out.println("PairOne Proximityscore"+taskPairOne.getProximityScore());
+		System.out.println("PairTwo Proximityscore"+taskPairTwo.getProximityScore());
+		System.out.println("PairThree Proximityscore"+taskPairThree.getProximityScore());
 		
 		
 		List<TaskPair> taskPairs=new ArrayList<TaskPair>();
