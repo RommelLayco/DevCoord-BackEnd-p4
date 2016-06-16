@@ -92,7 +92,9 @@ public class DataToARFF {
 		
 	} 
 
-
+/**
+ * Creates an arff file out of a TaskPair object
+ * */
 	public static void convertTestData(TaskPair taskPair){
 		
 
@@ -183,9 +185,13 @@ public class DataToARFF {
 
 
 	}
-
+	/**
+	 * Helper method-creates a string that contains information about a pair TEST of task.
+	 * this string is returned,which is then written directly into the arff file(not be this method). 
+	 * 
+	 * */
 	protected static String getStringOfTheTestTaskPair(TaskPair taskPair){
-		//Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
+		
 		float proximity=taskPair.getPscore();
 		String critical=""+taskPair.isCritical();
 		boolean component=taskPair.isSameComponent();
