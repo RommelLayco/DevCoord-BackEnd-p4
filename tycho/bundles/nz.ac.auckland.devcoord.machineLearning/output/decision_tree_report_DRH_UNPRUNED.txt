@@ -1,0 +1,33 @@
+J48 unpruned tree
+------------------
+
+Proximity <= 1.683954
+|   Component = true
+|   |   ALS <= 2: false (33.0/1.0)
+|   |   ALS > 2: true (3.0/1.0)
+|   Component = false: false (144.0/3.0)
+Proximity > 1.683954
+|   Platform = true: true (13.0/3.0)
+|   Platform = false: false (7.0/1.0)
+
+Number of Leaves  : 	5
+
+Size of the tree : 	9
+
+
+Results
+======
+
+Correctly Classified Instances         110               87.3016 %
+Incorrectly Classified Instances        16               12.6984 %
+Kappa statistic                          0.4881
+K&B Relative Info Score              -1103.8298 %
+K&B Information Score                   -4.785  bits     -0.038  bits/instance
+Class complexity | order 0              60.5631 bits      0.4807 bits/instance
+Class complexity | scheme               46.3533 bits      0.3679 bits/instance
+Complexity improvement     (Sf)         14.2098 bits      0.1128 bits/instance
+Mean absolute error                      0.145 
+Root mean squared error                  0.2895
+Relative absolute error                 83.381  %
+Root relative squared error             95.0687 %
+Total Number of Instances              126     
