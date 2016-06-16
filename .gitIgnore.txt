@@ -69,7 +69,8 @@ runtime-EclipseApplication/
 workspace/External Plug-in Libraries/.searchable
 
 
-
+#arff test file#
+tycho/bundles/nz.ac.auckland.devcoord.machineLearning/output/test_NODRH.arff
 
 #ignore misc files #
 ###################
