@@ -20,7 +20,8 @@ public class CommandsTest {
 
 	/**
 	 * 
-	 * Test addition of task object
+	 * Test addition of task object using commands from the 
+	 * database plugin
 	 * 
 	 */
 
@@ -35,6 +36,10 @@ public class CommandsTest {
 		assertEquals(t1.getLabel(), t2.getLabel());
 		assertEquals(t1.getHandle(), t2.getHandle());
 	}
+	
+	/**
+	 * Test update of task using commands from database plugin
+	 */
 
 	@Test
 	public void updateTaskInfo(){
@@ -50,4 +55,15 @@ public class CommandsTest {
 		assertEquals(t1.getLabel(), t2.getLabel());
 		assertEquals(t1.getHandle(), t2.getHandle());
 	}
+	
+	/**
+	 * Test update/ add task info with the method from 
+	 * controller method in the plugin plugin
+	 * 
+	 * Uses the two add and update commands tested above,
+	 * 
+	 * Uses a task wrapper to update the information
+	 * 
+	 */
+	
 }
