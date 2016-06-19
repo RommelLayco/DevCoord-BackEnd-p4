@@ -12,11 +12,24 @@ import nz.ac.auckland.devcoord.machinelearning.trainData.TaskAcc;
 import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPair;
 import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPairKey;
 /**
- * To run the algorithm
+ * Used for conversion of Train data csv file to a Weka Readable Arff File
  * */
 public class TrainDataGeneration {
 
 	public static void main(String[] args) {
+		convertTrainCSVToArff();
+	}
+	public static void convertTrainCSVToArff() {
+		ProcessData data= convertCSVToProcessData();
+
+
+		DataToARFF.convertProcessDataToArff(data, InputEnum.TRAIN_OUTPUT_PATH);
+
+
+
+
+	}
+	public static ProcessData convertCSVToProcessData(){
 
 		/**Rommel's*/
 		//List of taskPair keys
@@ -42,22 +55,12 @@ public class TrainDataGeneration {
 		ProcessData data = new ProcessData(taskPairs, tasks, keys, taskAcc, accKeys);
 		data.setMatching();
 		data.setCritical();
-
-		/**Rommel's*/	
-
-
-
-//		/**With Without*/
-//		/**UNPRUNED*/
-//		makeARFFAndTree(data,true);
-
-		/**PRUNED*/
-		DataToARFF.convertTrainData(data, InputEnum.PAIRS_3_2);
-
-
+		return data;
 
 
 	}
+
+
 
 
 }

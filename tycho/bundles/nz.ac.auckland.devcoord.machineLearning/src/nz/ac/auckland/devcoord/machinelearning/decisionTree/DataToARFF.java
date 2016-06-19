@@ -14,7 +14,7 @@ import nz.ac.auckland.devcoord.machinelearning.trainData.ProcessData;
 import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPair;
 import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPairKey;
 /**
- * Used for conversion of CSV files provided to ARFF files(Weka readable)
+ * Used for conversion of ProcessData Object to ARFF files(Weka readable)
  * 
  * */
 public class DataToARFF {
@@ -24,7 +24,7 @@ public class DataToARFF {
 	 * Used for making the arff file for the train data
 	 * to an arff file.
 	 * */
-	public static void convertTrainData(ProcessData data,InputEnum inputEnum){
+	public static void convertProcessDataToArff(ProcessData data,InputEnum inputEnum){
 	
 		
 
@@ -35,7 +35,7 @@ public class DataToARFF {
 
 
 
-		inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
+		inputString=InputEnum.outputToString(inputEnum);
 
 
 
@@ -52,7 +52,7 @@ public class DataToARFF {
 
 			List<TaskPairKey> keys;
 			if (true) {
-				keys=data.getTestKeys();
+				keys=data.getTestKeys();//USING TEST KEYS HERE FOR TRAINING
 			}
 			for (TaskPairKey taskPairKey : keys) {
 				try{
