@@ -25,62 +25,6 @@ import weka.core.Instances;
 public class CriticalityUtility {
 
 	public static void main(String[] args) {
-		Task one=new Task(1, "Dummy Handle one", "Dummy label one");
-		
-		Context_Structure context_StructureOne=new Context_Structure("ContextOne", false, true);
-		one.addContextStructure(context_StructureOne.getName(), context_StructureOne);
-		
-		Task two=new Task(2, "Dummy Handle two", "Dummy label two");
-		
-		Context_Structure context_StructureTwo=new Context_Structure("ContextOne", true, false);
-		two.addContextStructure(context_StructureTwo.getName(), context_StructureTwo);
-		
-		Task three=new Task(3, "Dummy Handle one", "Dummy label three");
-
-		Context_Structure context_StructureThree=new Context_Structure("ContextThree", false, true);
-		three.addContextStructure(context_StructureThree.getName(), context_StructureThree);
-		
-		TaskPair taskPairOne=new TaskPair(one,two);
-		taskPairOne.setCritical(false);
-		TaskPair taskPairTwo=new TaskPair(one,three);
-		taskPairTwo.setCritical(false);
-		TaskPair taskPairThree=new TaskPair(three,two);
-		taskPairThree.setCritical(false);
-		
-		taskPairOne.calcProximityScore();taskPairTwo.calcProximityScore();taskPairThree.calcProximityScore();
-		
-		
-		System.out.println("PairOne Proximityscore"+taskPairOne.getProximityScore());
-		System.out.println("PairTwo Proximityscore"+taskPairTwo.getProximityScore());
-		System.out.println("PairThree Proximityscore"+taskPairThree.getProximityScore());
-		
-		
-		List<TaskPair> taskPairs=new ArrayList<TaskPair>();
-		taskPairs.add(taskPairOne);taskPairs.add(taskPairTwo);taskPairs.add(taskPairThree);
-		
-		System.out.println("BEFORE CLASSIFYING,Criticality is:");
-		for (TaskPair taskPair : taskPairs) {
-			System.out.println("	====================");
-			System.out.println("	First Task ID:"+taskPair.getID1());
-			System.out.println("	Second Task ID:"+taskPair.getID2());
-			System.out.println("	IsCritical?:"+taskPair.isCritical());
-			
-			
-		}
-		
-		taskPairs=fillInCriticality(taskPairs);
-		
-		System.out.println("AFTER CLASSIFYING,Criticality is:");
-		for (TaskPair taskPair : taskPairs) {
-			System.out.println("	====================");
-			System.out.println("	First Task ID:"+taskPair.getID1());
-			System.out.println("	Second Task ID:"+taskPair.getID2());
-			System.out.println("	IsCritical?:"+taskPair.isCritical());
-			
-			
-		}
-		
-		
 		
 	}
 	
