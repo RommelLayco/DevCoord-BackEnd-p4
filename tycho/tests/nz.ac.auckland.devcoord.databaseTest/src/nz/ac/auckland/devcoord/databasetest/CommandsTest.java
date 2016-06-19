@@ -6,15 +6,20 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import nz.ac.auckland.devcoord.commands.Commands;
+import nz.ac.auckland.devcoord.controller.Controller;
+import nz.ac.auckland.devcoord.controller.TaskWrapper;
+import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
 
 public class CommandsTest {
 
 	private static Commands service;
+	private static Controller controller;
 
 	@BeforeClass
 	public static void setUpService(){
 		service = new Commands();
+		controller = new Controller();
 	}
 
 
@@ -42,7 +47,7 @@ public class CommandsTest {
 	 */
 
 	@Test
-	public void updateTaskInfo(){
+	public void updateTask(){
 		Task t1 = new Task(-2, "update value", "testing update existing");
 
 		service.addTask(t1);
@@ -65,5 +70,24 @@ public class CommandsTest {
 	 * Uses a task wrapper to update the information
 	 * 
 	 */
+	public void updateUsingController(){
+		Context_Structure c1 = new Context_Structure("wrapperTest", true, true);
+		TaskWrapper wrapper = TaskWrapper.
+				getTestWrappper(-3, "wrapper", "test", c1);
+		
+		controller.updateTaskInfo(wrapper);
+		Task t1 = controller.getTask(-3);
+		
+		assertEquals(t1.getTaskID(), -3);
+		assertEquals(t1.getLabel(), "wrapper");
+		assertEquals(t1.getHandle(), "test");
+		
+		//get context Structure
+		Context_Structure c2 = t1.getContextStructures().get("wrapperTest");
+		assertEquals("wrapperTest", c2.getName());
+		assertTrue(c2.isEdited());
+		assertTrue(c2.isSelected());
+		
+	}
 	
 }
