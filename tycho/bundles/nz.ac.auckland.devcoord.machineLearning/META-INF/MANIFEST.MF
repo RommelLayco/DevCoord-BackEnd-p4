@@ -11,3 +11,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: dependencies/weka.jar,
  .
+Export-Package: nz.ac.auckland.devcoord.machinelearning.trainData

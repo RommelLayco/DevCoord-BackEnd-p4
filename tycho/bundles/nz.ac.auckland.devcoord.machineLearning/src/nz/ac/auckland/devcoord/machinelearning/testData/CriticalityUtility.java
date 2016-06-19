@@ -121,7 +121,7 @@ public class CriticalityUtility {
 
 
 
-		inputString=InputEnum.outputToString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
+		inputString=InputEnum.outputToString(InputEnum.TEST_OUTPUT_PATH);
 
 
 		try{
@@ -160,8 +160,8 @@ public class CriticalityUtility {
 		String trainString;
 		String testString;
 	
-			trainString=InputEnum.toString(InputEnum.PAIRS_3_2_Train_Output_NODRH);
-			testString=InputEnum.toString(InputEnum.PAIRS_3_2_Test_Output_NODRH);
+			trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
+			testString=InputEnum.toString(InputEnum.TEST_OUTPUT_PATH);
 	
 			// train classifier
 		     J48 cls = new J48();
