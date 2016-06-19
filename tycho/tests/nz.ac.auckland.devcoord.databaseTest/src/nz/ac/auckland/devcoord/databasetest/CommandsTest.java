@@ -56,9 +56,7 @@ public class CommandsTest {
 		service.updateTask(t1);
 		
 		Task t2 = service.getTask(-2);
-		assertEquals(t1.getTaskID(), t2.getTaskID());
-		assertEquals(t1.getLabel(), t2.getLabel());
-		assertEquals(t1.getHandle(), t2.getHandle());
+		
 	}
 	
 	/**
@@ -75,15 +73,15 @@ public class CommandsTest {
 		TaskWrapper wrapper = TaskWrapper.
 				getTestWrappper(-3, "wrapper", "test", c1);
 		
-		controller.updateTaskInfo(wrapper);
-		Task t1 = controller.getTask(-3);
+		Task t1 = controller.updateTaskInfo(wrapper);
+		Task t2 = controller.getTask(-3);
 		
-		assertEquals(t1.getTaskID(), -3);
-		assertEquals(t1.getLabel(), "wrapper");
-		assertEquals(t1.getHandle(), "test");
+		assertEquals(t1.getTaskID(), t2.getTaskID());
+		assertEquals(t1.getLabel(), t2.getLabel());
+		assertEquals(t1.getHandle(), t2.getHandle());
 		
 		//get context Structure
-		Context_Structure c2 = t1.getContextStructures().get("wrapperTest");
+		Context_Structure c2 = t2.getContextStructures().get("wrapperTest");
 		assertEquals("wrapperTest", c2.getName());
 		assertTrue(c2.isEdited());
 		assertTrue(c2.isSelected());

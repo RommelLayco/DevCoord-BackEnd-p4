@@ -157,7 +157,8 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	public void interactionObserved(InteractionEvent arg0) {
 		System.out.println("EVENT TIME:"+arg0.getDate().getTime());
 		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
-		//update interaction event here,
+		//update interaction event here
+		// ask chishti where i should create the controller object. 
 		
 		//getTask pairs
 		
