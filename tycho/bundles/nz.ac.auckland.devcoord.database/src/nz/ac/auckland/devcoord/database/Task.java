@@ -52,7 +52,7 @@ public class Task {
 	 */
 	@ElementCollection
 	@CollectionTable(name="CONTEXT_STRUCTURES")
-	@MapKeyColumn(name="STRUCTURE_NAME")
+	@MapKeyColumn(name="HASHMAP_KEY")
 	private Map<String, Context_Structure> contextStructure;
 
 	/**
