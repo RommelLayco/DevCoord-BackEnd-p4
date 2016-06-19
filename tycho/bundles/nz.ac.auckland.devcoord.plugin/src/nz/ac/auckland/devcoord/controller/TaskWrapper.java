@@ -75,7 +75,7 @@ public class TaskWrapper {
 	}
 
 
-	public TaskWrapper getTestWrappper(int taskID, String handle, String label, Context_Structure context){
+	public static TaskWrapper getTestWrappper(int taskID, String handle, String label, Context_Structure context){
 		return new TaskWrapper(taskID, handle, label, context);
 	}
 	
