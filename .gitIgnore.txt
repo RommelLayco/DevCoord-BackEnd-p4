@@ -63,7 +63,7 @@ tycho/bundles/nz.ac.auckland.devcoord.machineLearning/target/
 tycho/bundles/nz.ac.auckland.devcoord.hibernate/.classpath
 tycho/bundles/nz.ac.auckland.devcoord.hibernate2/.classpath
 tycho/bundles/nz.ac.auckland.devcoord.machineLearning/.classpath
-
+tycho/bundles/nz.ac.auckland.devcoord.machineLearning.test/.classpath
 #ignore runtime folder#
 runtime-EclipseApplication/
 workspace/External Plug-in Libraries/.searchable
