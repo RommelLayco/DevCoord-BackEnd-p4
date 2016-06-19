@@ -35,6 +35,11 @@ public class Controller {
 		
 		return task;
 	}
+	
+	public Task getTask(int ID){
+		Task task = service.getTask(ID);
+		return task;
+	}
 
 
 }
