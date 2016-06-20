@@ -8,8 +8,8 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
 		<class>nz.ac.auckland.devcoord.database.Task</class>
-		<class>nz.ac.auckland.devcoord.database.Task</class>
-
+		<class>nz.ac.auckland.devcoord.database.TaskPair</class>
+		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 
