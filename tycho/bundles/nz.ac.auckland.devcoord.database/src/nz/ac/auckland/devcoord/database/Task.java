@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -29,6 +30,7 @@ public class Task {
 	 * Task id created by mylyn.
 	 */
 	@Id
+	@Column(name = "ID")
 	private Integer taskID;
 
 	/**
