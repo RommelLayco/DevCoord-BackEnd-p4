@@ -18,7 +18,7 @@ public class TestTrainDataGeneration {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		trainFile= InputEnum.outputToString(InputEnum.TRAIN_OUTPUT_PATH);
-		deleteFile(trainFile);
+		FileUtility.deleteFile(trainFile);
 		
 	}
 
@@ -36,31 +36,13 @@ public class TestTrainDataGeneration {
 
 	@Test
 	public void testTrainArffGeneration() {
-		assertFalse(fileExists(trainFile));
+		assertFalse(FileUtility.fileExists(trainFile));
 
 		TrainDataGeneration.convertTrainCSVToArff();
-		assertTrue(fileExists(trainFile));
+		assertTrue(FileUtility.fileExists(trainFile));
 	}
 
 	
-	private static boolean fileExists(String path){
-		
-		
-		File file = new File(path);
-    	
-	return	file.exists();
-		
-	}
-	
-	private static void deleteFile(String path){
-	
-		
-		File file = new File(path);
-    	
-		file.delete();
-		
-		
-		
-	}
+
 	
 }

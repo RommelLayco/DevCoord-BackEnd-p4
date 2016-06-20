@@ -71,7 +71,7 @@ public class DataToARFF {
 			}
 
 			writer.close();
-			System.out.println("number of bad entries:"+countOfBadData);
+			//System.out.println("number of bad entries:"+countOfBadData);
 
 			
 			

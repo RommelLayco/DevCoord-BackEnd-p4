@@ -11,7 +11,9 @@ public enum InputEnum {
 	TASKS_3_2,
 	WEKA_DECISION_TREE_REPORT_DRH_UNPRUNED,WEKA_DECISION_TREE_REPORT_DRH_PRUNED,
 	WEKA_DECISION_TREE_REPORT_NODRH_UNPRUNED,WEKA_DECISION_TREE_REPORT_NODRH_PRUNED,
-	TRAIN_OUTPUT_PATH,TEST_OUTPUT_PATH
+	TRAIN_OUTPUT_PATH,TEST_OUTPUT_PATH,
+	
+	UNIT_TEST_TRAIN_PATH
 	;
 	
 	
@@ -34,6 +36,8 @@ public enum InputEnum {
 		case PAIRS_3_2_Test_Output_DRH:return "output/test_DRH.arff";
 		case TRAIN_OUTPUT_PATH:return "output/train_NODRH.arff";
 		case TEST_OUTPUT_PATH:return "output/test_NODRH.arff";
+		case UNIT_TEST_TRAIN_PATH:return "output/UNIT_TEST.arff";
+		
 		}
 			
 		return null;
@@ -62,7 +66,7 @@ public enum InputEnum {
 		case PAIRS_3_2_Test_Output_DRH:return "output/test_DRH.arff";		
 		case TRAIN_OUTPUT_PATH:return "output/train_NODRH.arff";
 		case TEST_OUTPUT_PATH:return "output/test_NODRH.arff";
-		
+		case UNIT_TEST_TRAIN_PATH:return "output/UNIT_TEST.arff";
 		}
 			
 		return null;
