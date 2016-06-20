@@ -32,91 +32,91 @@ public class CommandsTest {
 	}
 
 
-//	/**
-//	 * 
-//	 * Test addition of task object using commands from the 
-//	 * database plugin
-//	 * 
-//	 */
-//
-//	@Test
-//	public void addNewTask(){
-//		Task t1 = new Task(-1, "comp-key1", "testing Composite Key");
-//
-//		service.addTask(t1);
-//
-//		Task t2 = service.getTask(-1);
-//		assertEquals(t1.getTaskID(), t2.getTaskID());
-//		assertEquals(t1.getLabel(), t2.getLabel());
-//		assertEquals(t1.getHandle(), t2.getHandle());
-//	}
-//
-//	/**
-//	 * Test update of task using commands from database plugin
-//	 */
-//
-//	@Test
-//	public void updateTask(){
-//		Task t1 = new Task(-2, "update value", "testing update existing");
-//
-//		service.addTask(t1);
-//
-//		t1.updateHandle("newer handle name");
-//		service.updateTask(t1);
-//
-//		Task t2 = service.getTask(-2);
-//		
-//		assertEquals(t1.getTaskID(), t2.getTaskID());
-//		assertEquals(t1.getLabel(), t2.getLabel());
-//		assertEquals(t1.getHandle(), t2.getHandle());
-//
-//	}
-//
-//	/**
-//	 * test method to check if task exist in database
-//	 */
-//	@Test
-//	public void checkIfExist(){
-//		assertFalse(service.taskExist(-3));
-//
-//	}
-//
-//	/**
-//	 * Test update/ add task info with the method from 
-//	 * controller method in the plugin plugin
-//	 * 
-//	 * Uses the two add and update commands tested above,
-//	 * 
-//	 * Uses a task wrapper to update the information
-//	 * 
-//	 */
-//	@Test
-//	public void updateUsingController(){
-//		Context_Structure c1 = new Context_Structure("wrapperTest", true, true);
-//		TaskWrapper wrapper = TaskWrapper.
-//				getTestWrappper(-4, "wrapper", "test", c1);
-//
-//		Task t1 = controller.updateTaskInfo(wrapper);
-//		
-//		//need to lazy load entire object graph
-//		//use a test entity manager to keep session open
-//		EntityManager em = hibernateUtil.getEntityManager();
-//		Task t2 = em.find( Task.class, -4 );
-//		assertNotNull(t2);
-//		
-//		assertEquals(t1.getTaskID(), t2.getTaskID());
-//		assertEquals(t1.getLabel(), t2.getLabel());
-//		assertEquals(t1.getHandle(), t2.getHandle());
-//
-//		
-//		
-//		Context_Structure c2 = t2.getContextStructures().get("wrapperTest");
-//		assertEquals("wrapperTest", c2.getName());
-//		assertTrue(c2.isEdited());
-//		assertTrue(c2.isSelected());
-//		em.close();
-//
-//	}
+	/**
+	 * 
+	 * Test addition of task object using commands from the 
+	 * database plugin
+	 * 
+	 */
+
+	@Test
+	public void addNewTask(){
+		Task t1 = new Task(-1, "comp-key1", "testing Composite Key");
+
+		service.addTask(t1);
+
+		Task t2 = service.getTask(-1);
+		assertEquals(t1.getTaskID(), t2.getTaskID());
+		assertEquals(t1.getLabel(), t2.getLabel());
+		assertEquals(t1.getHandle(), t2.getHandle());
+	}
+
+	/**
+	 * Test update of task using commands from database plugin
+	 */
+
+	@Test
+	public void updateTask(){
+		Task t1 = new Task(-2, "update value", "testing update existing");
+
+		service.addTask(t1);
+
+		t1.updateHandle("newer handle name");
+		service.updateTask(t1);
+
+		Task t2 = service.getTask(-2);
+		
+		assertEquals(t1.getTaskID(), t2.getTaskID());
+		assertEquals(t1.getLabel(), t2.getLabel());
+		assertEquals(t1.getHandle(), t2.getHandle());
+
+	}
+
+	/**
+	 * test method to check if task exist in database
+	 */
+	@Test
+	public void checkIfExist(){
+		assertFalse(service.taskExist(-3));
+
+	}
+
+	/**
+	 * Test update/ add task info with the method from 
+	 * controller method in the plugin plugin
+	 * 
+	 * Uses the two add and update commands tested above,
+	 * 
+	 * Uses a task wrapper to update the information
+	 * 
+	 */
+	@Test
+	public void updateUsingController(){
+		Context_Structure c1 = new Context_Structure("wrapperTest", true, true);
+		TaskWrapper wrapper = TaskWrapper.
+				getTestWrappper(-4, "wrapper", "test", c1);
+
+		Task t1 = controller.updateTaskInfo(wrapper);
+		
+		//need to lazy load entire object graph
+		//use a test entity manager to keep session open
+		EntityManager em = hibernateUtil.getEntityManager();
+		Task t2 = em.find( Task.class, -4 );
+		assertNotNull(t2);
+		
+		assertEquals(t1.getTaskID(), t2.getTaskID());
+		assertEquals(t1.getLabel(), t2.getLabel());
+		assertEquals(t1.getHandle(), t2.getHandle());
+
+		
+		
+		Context_Structure c2 = t2.getContextStructures().get("wrapperTest");
+		assertEquals("wrapperTest", c2.getName());
+		assertTrue(c2.isEdited());
+		assertTrue(c2.isSelected());
+		em.close();
+
+	}
 	
 	@Test
 	public void queryTaskTest(){
