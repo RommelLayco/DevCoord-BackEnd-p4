@@ -72,6 +72,7 @@ public class TaskWrapper {
 		taskHandle = handle;
 		taskLabel = label;
 		this.context = context;
+		this.structureHandle = context.getName();
 	}
 
 
