@@ -3,13 +3,14 @@ Bundle-ManifestVersion: 2
 Bundle-Name: MachineLearning
 Bundle-SymbolicName: nz.ac.auckland.devcoord.machineLearning
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: nz.ac.auckland.devcoord.machinelearning.testData.Activator
+Bundle-Activator: nz.ac.auckland.devcoord.machinelearning.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- nz.ac.auckland.devcoord.database
+ nz.ac.auckland.devcoord.database;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: dependencies/weka.jar
+Bundle-ClassPath: dependencies/weka.jar,
+ .
 Export-Package: nz.ac.auckland.devcoord.machinelearning.decisionTree,
  nz.ac.auckland.devcoord.machinelearning.testData,
  nz.ac.auckland.devcoord.machinelearning.trainData
