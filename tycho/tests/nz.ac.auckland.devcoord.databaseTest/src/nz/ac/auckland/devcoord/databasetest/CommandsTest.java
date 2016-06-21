@@ -152,8 +152,8 @@ public class CommandsTest {
 		TaskPair tp = new TaskPair(t1,t2);
 		service.addTaskPair(tp);
 		
-		tp.getTask1().updateLable("update task pair");
-		tp.getTask2().updateLable("update task pair");
+		tp.getTask1().updateLablel("update task pair");
+		tp.getTask2().updateLablel("update task pair");
 		
 		service.updateTaskPair(tp);
 	}

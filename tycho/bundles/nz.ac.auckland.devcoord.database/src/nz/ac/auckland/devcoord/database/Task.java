@@ -9,6 +9,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
@@ -52,7 +53,7 @@ public class Task {
 	 * Java file is a value type as each file is context asscoaited with
 	 * a specific task
 	 */
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="CONTEXT_STRUCTURES")
 	@MapKeyColumn(name="HASHMAP_KEY")
 	private Map<String, Context_Structure> contextStructure;
@@ -92,7 +93,7 @@ public class Task {
 		return this.label;
 	}
 	
-	public void updateLable(String label){
+	public void updateLablel(String label){
 		this.label = label;
 	}
 
