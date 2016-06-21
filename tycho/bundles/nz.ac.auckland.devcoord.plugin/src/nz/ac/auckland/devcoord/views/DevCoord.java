@@ -6,28 +6,27 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.*;
 
+import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
 import nz.ac.auckland.devcoord.controller.TaskInfo;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
+import nz.ac.auckland.devcoord.database.Task;
+import nz.ac.auckland.devcoord.database.TaskPair;
+
 
 import org.eclipse.jface.viewers.*;
 import org.eclipse.mylyn.commons.notifications.ui.AbstractUiNotification;
 import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.IContextListener;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
-import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
 import org.eclipse.mylyn.internal.tasks.core.ITaskListChangeListener;
 import org.eclipse.mylyn.internal.tasks.core.TaskContainerDelta;
 import org.eclipse.mylyn.internal.tasks.ui.ITaskListNotificationProvider;
 import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
-import org.eclipse.mylyn.monitor.ui.MonitorUi;
-import org.eclipse.mylyn.tasks.core.ITask;
-import org.eclipse.mylyn.tasks.core.ITaskActivityListener;
 
-import java.lang.annotation.Inherited;
-import java.util.Collection;
-import java.util.Collections;
+
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jface.action.*;
@@ -47,6 +46,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	public static TaskWrapper taskWrapper;
 	private Text text;
 	private Action action1;
+	private Controller controller;
 /**
  * Automated generation from the HelloWorld Example.*/
 	class NameSorter extends ViewerSorter {
@@ -63,6 +63,8 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().addChangeListener(this);
 		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
+		controller = new Controller();
+		//TrainDataGeneration.convertTrainCSVToArff();
 		
 	}
 
@@ -158,12 +160,13 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		System.out.println("EVENT TIME:"+arg0.getDate().getTime());
 		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
 		//update interaction event here
-		// ask chishti where i should create the controller object. 
+		Task task = controller.updateTaskInfo(taskWrapper);
 		
 		//getTask pairs
-		
+		List<TaskPair> pairs = controller.getTaskPairs(task);
 		
 		//machine learning 
+		//pairs = CriticalityUtility.fillInCriticality(pairs);
 		
 		//persist taskpairs
 		
