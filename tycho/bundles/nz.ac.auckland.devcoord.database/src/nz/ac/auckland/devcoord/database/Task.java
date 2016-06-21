@@ -2,7 +2,6 @@ package nz.ac.auckland.devcoord.database;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
