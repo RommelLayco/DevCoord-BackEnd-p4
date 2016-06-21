@@ -1,4 +1,4 @@
-package nz.ac.auckland.devcoord.machinelearning.test;
+package nz.ac.auckland.devcoord.machinelearningtest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

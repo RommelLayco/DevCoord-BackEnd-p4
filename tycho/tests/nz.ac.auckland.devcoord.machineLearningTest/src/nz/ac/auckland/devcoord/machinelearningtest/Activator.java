@@ -1,4 +1,4 @@
-package nz.ac.auckland.devcoord.machinelearning.test;
+package nz.ac.auckland.devcoord.machinelearningtest;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "nz.ac.auckland.devcoord.machineLearning.test"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "nz.ac.auckland.devcoord.machineLearningTest"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
