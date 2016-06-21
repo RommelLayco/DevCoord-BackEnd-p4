@@ -153,4 +153,23 @@ public class Commands {
 		return result;
 
 	}
+	
+	public TaskPair getTaskPair(int task1ID, int task2ID){
+		//swap the ids to make sure taskID 1 is smaller
+		if(task1ID > task2ID){
+			int tmp = task2ID;
+			task2ID = task1ID;
+			task1ID = tmp;
+		}
+		
+		String jpql = "Select tp from TaskPair tp "
+				+ "where tp.task1 = " + task1ID + " AND "
+				+ "tp.task2 = " + task2ID;
+		
+		EntityManager em = hibernateUtil.getEntityManager();
+		Query query = em.createQuery(jpql);
+		
+		TaskPair tp = (TaskPair) query.getSingleResult(); 
+		return tp;
+	}
 }

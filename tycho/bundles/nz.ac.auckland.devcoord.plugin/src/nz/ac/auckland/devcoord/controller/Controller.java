@@ -55,7 +55,11 @@ public class Controller {
 		
 		while(it.hasNext()){
 			Task t2 = it.next();
-			TaskPair tp = new TaskPair(task, t2);
+			TaskPair tp = service.getTaskPair(task.getTaskID(), t2.getTaskID());
+			if(tp == null){
+				tp = new TaskPair(task, t2);
+			}
+			
 			tp.calcProximityScore();
 			taskpairs.add(tp);
 		}
