@@ -22,7 +22,6 @@ public class Controller {
 
 	public Task updateTaskInfo(TaskWrapper wrapper){
 		Task task;
-		System.out.println("dffdf");
 		boolean exist = service.taskExist(wrapper.getTaskID());
 		
 		if(exist){
