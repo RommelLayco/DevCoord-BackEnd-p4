@@ -163,6 +163,26 @@ public class CommandsTest {
 		assertFalse(service.taskPairExist(-3));
 	}
 	
+	@Test
+	public void getTaskPair(){
+		Task t1 = new Task(-11,"test", "get Task pair from task id");
+		Task t2 = new Task(-12,"test", "get Task pair from task id");
+		
+		TaskPair tp = new TaskPair(t1,t2);
+		service.addTaskPair(tp);
+		
+		//get Task pair
+		TaskPair tp2 = service.getTaskPair(-11, -12);
+		
+		assertEquals(tp.getTask1().getTaskID(), tp2.getTask1().getTaskID());
+		assertEquals(tp.getTask2().getTaskID(), tp2.getTask2().getTaskID());
+		
+		assertEquals(tp.getTask1().getHandle(), tp2.getTask1().getHandle());
+		assertEquals(tp.getTask2().getHandle(), tp2.getTask2().getHandle());
+		
+		assertEquals(tp.getTask1().getLabel(), tp2.getTask1().getLabel());
+		assertEquals(tp.getTask2().getLabel(), tp2.getTask2().getLabel());
+	}
 	
 
 }
