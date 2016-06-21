@@ -1,5 +1,7 @@
 package nz.ac.auckland.devcoord.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import nz.ac.auckland.devcoord.commands.Commands;
@@ -27,7 +29,7 @@ public class Controller {
 			task = service.getTask(wrapper.getTaskID());
 			task.updateTaskID(wrapper.getTaskID());
 			task.updateHandle(wrapper.getTaskHandle());
-			task.updateLable(wrapper.getTaskLabel());
+			task.updateLablel(wrapper.getTaskLabel());
 			task.addContextStructure(wrapper.getStructureHandle(), wrapper.getContextStructure());
 			
 			service.updateTask(task);
@@ -45,9 +47,37 @@ public class Controller {
 	
 
 	
-//	public List<TaskPair> getTaskPairs(Task task){
-//		
-//	}
+	public List<TaskPair> getTaskPairs(Task task){
+		List<TaskPair> taskpairs = new ArrayList<TaskPair>();
+		
+		List<Task> tasks = service.getTaskWithSameContext(task);
+		Iterator<Task> it = tasks.iterator();
+		
+		while(it.hasNext()){
+			Task t2 = it.next();
+			TaskPair tp = new TaskPair(task, t2);
+			tp.calcProximityScore();
+			taskpairs.add(tp);
+		}
+		
+		
+		return taskpairs;
+	}
 
+	public void saveTaskPairs(List<TaskPair> taskpairs){
+		Iterator<TaskPair> it = taskpairs.iterator();
+		
+		while(it.hasNext()){
+			TaskPair tp = it.next();
+			boolean exist = service.taskPairExist(tp.getID());
+			
+			if(exist){
+				service.addTaskPair(tp);
+			} else{
+				service.updateTaskPair(tp);
+			}
+		}
+		
+	}
 
 }

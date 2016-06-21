@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import nz.ac.auckland.devcoord.database.Task;
+import nz.ac.auckland.devcoord.database.TaskPair;
 
 public class Commands {
 
@@ -82,9 +83,6 @@ public class Commands {
 			
 			jpql = jpql + " AND (" + line + ")";
 			
-//			jpql = "Select t from Task t, IN(t.contextStructure) c"
-//					+ " where c.name = 'queryTest'";
-			
 			EntityManager em = hibernateUtil.getEntityManager();
 			Query query = em.createQuery(jpql);
 			
@@ -95,7 +93,6 @@ public class Commands {
 		} else{
 			return tasks;
 		}
-		
 		
 		
 	}
@@ -125,5 +122,35 @@ public class Commands {
 		}
 		
 		return line;
+	}
+	
+	public void addTaskPair(TaskPair taskPair){
+		EntityManager em = hibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.persist( taskPair );
+		em.getTransaction().commit();
+		em.close();
+	}
+	
+	public void updateTaskPair(TaskPair taskPair){
+		EntityManager em = hibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.merge( taskPair );
+		em.getTransaction().commit();
+		em.close();
+	}
+	
+	public boolean taskPairExist(int ID){
+		boolean result = false;
+		EntityManager em = hibernateUtil.getEntityManager();
+		TaskPair taskPair = em.find( TaskPair.class, ID );
+		em.close();
+
+		if(taskPair != null){
+			result = true;
+		} 
+
+		return result;
+
 	}
 }

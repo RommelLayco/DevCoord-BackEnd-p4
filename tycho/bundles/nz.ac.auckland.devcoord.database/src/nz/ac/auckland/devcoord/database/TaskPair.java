@@ -69,6 +69,11 @@ public class TaskPair {
 
 		proximityScore = 0;
 	}
+	
+	/**
+	 * Default constuctor required
+	 */
+	public TaskPair(){}
 
 	/**
 	 * Method to calculate the proximity score 
@@ -232,6 +237,14 @@ public class TaskPair {
 
 	public int getID2(){
 		return this.task2.getTaskID();
+	}
+	
+	public Task getTask1(){
+		return this.task1;
+	}
+	
+	public Task getTask2(){
+		return this.task2;
 	}
 
 	//need to override equals and hash for maps and sets
