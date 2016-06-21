@@ -58,7 +58,7 @@ tycho/bundles/nz.ac.auckland.devcoord.hibernate/target/
 tycho/bundles/nz.ac.auckland.devcoord.hibernate2/target/
 tycho/tests/nz.ac.auckland.devcoord.databaseTest/target/
 tycho/bundles/nz.ac.auckland.devcoord.machineLearning/target/
-
+tycho/tests/nz.ac.auckland.devcoord.machineLearningTest/target/
 
 tycho/bundles/nz.ac.auckland.devcoord.hibernate/.classpath
 tycho/bundles/nz.ac.auckland.devcoord.hibernate2/.classpath

@@ -1,4 +1,4 @@
-package nz.ac.auckland.devcoord.machinelearning.testData;
+package nz.ac.auckland.devcoord.machinelearning;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
