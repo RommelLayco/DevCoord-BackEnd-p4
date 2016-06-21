@@ -1,8 +1,0 @@
-@relation pairsTask
-
-
-@attribute Proximity numeric
-@attribute Critical {true,false}
-
-@data
-0.0,false

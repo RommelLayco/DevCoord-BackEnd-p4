@@ -1,17 +1,19 @@
 <project>
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>nz.ac.auckland.devcoord</groupId>
-    <artifactId>nz.ac.auckland.devcoord.databaseTest</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>eclipse-test-plugin</packaging>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>nz.ac.auckland.devcoord</groupId>
+	<artifactId>nz.ac.auckland.devcoord.databaseTest</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>eclipse-test-plugin</packaging>
 
-    <parent>
-        <groupId>nz.ac.auckland.devcoord</groupId>
-        <artifactId>nz.ac.auckland.devcoord.tests</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
-    
-   
+	<parent>
+		<groupId>nz.ac.auckland.devcoord</groupId>
+		<artifactId>nz.ac.auckland.devcoord.tests</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 
-   
+
+
+	<modules>
+		<module>nz.ac.auckland.devcoord.databaseTest</module>
+	</modules>
 </project>
