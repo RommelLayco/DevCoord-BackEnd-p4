@@ -12,7 +12,8 @@ import nz.ac.auckland.devcoord.controller.TaskInfo;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
 import nz.ac.auckland.devcoord.database.Task;
 import nz.ac.auckland.devcoord.database.TaskPair;
-
+import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
+import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
 
 import org.eclipse.jface.viewers.*;
 import org.eclipse.mylyn.commons.notifications.ui.AbstractUiNotification;
@@ -64,7 +65,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
 		controller = new Controller();
-		//TrainDataGeneration.convertTrainCSVToArff();
+		TrainDataGeneration.convertTrainCSVToArff();
 		
 	}
 
@@ -166,9 +167,10 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		List<TaskPair> pairs = controller.getTaskPairs(task);
 		
 		//machine learning 
-		//pairs = CriticalityUtility.fillInCriticality(pairs);
+		pairs = CriticalityUtility.fillInCriticality(pairs);
 		
 		//persist taskpairs
+		controller.saveTaskPairs(pairs);
 		
 		RefreshDevCoord();
 	}
