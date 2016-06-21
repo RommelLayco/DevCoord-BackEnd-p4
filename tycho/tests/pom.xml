@@ -15,5 +15,6 @@
 
     <modules>
         <module>nz.ac.auckland.devcoord.databaseTest</module>
+        <module>nz.ac.auckland.devcoord.machineLearningTest</module>
     </modules>
 </project>
