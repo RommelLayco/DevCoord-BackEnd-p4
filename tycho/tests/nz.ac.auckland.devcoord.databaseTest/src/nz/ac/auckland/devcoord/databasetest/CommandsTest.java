@@ -15,6 +15,7 @@ import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
 import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
+import nz.ac.auckland.devcoord.database.TaskPair;
 
 public class CommandsTest {
 
@@ -132,6 +133,34 @@ public class CommandsTest {
 		
 		List<Task> tasks = service.getTaskWithSameContext(t1);
 		assertEquals(tasks.size(), 1);
+	}
+	
+	@Test
+	public void addTaskPair(){
+		Task t1 = new Task(-7,"test", "add taskPair");
+		Task t2 = new Task(-8,"test", "add taskPair");
+		
+		TaskPair tp = new TaskPair(t1,t2);
+		service.addTaskPair(tp);
+	}
+	
+	@Test
+	public void updateTaskPair(){
+		Task t1 = new Task(-9,"test", "add taskPair");
+		Task t2 = new Task(-10,"test", "add taskPair");
+		
+		TaskPair tp = new TaskPair(t1,t2);
+		service.addTaskPair(tp);
+		
+		tp.getTask1().updateLable("update task pair");
+		tp.getTask2().updateLable("update task pair");
+		
+		service.updateTaskPair(tp);
+	}
+	
+	@Test
+	public void taskPairExist(){
+		assertFalse(service.taskPairExist(-3));
 	}
 	
 	
