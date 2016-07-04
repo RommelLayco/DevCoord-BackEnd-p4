@@ -71,6 +71,10 @@ workspace/External Plug-in Libraries/.searchable
 
 #arff test file#
 tycho/bundles/nz.ac.auckland.devcoord.machineLearning/output/test_NODRH.arff
+tycho/bundles/nz.ac.auckland.devcoord.machineLearning/output/UNIT_TEST.arff
+tycho/bundles/nz.ac.auckland.devcoord.machineLearning/output/train_NODRH.arff
+tycho/tests/nz.ac.auckland.devcoord.machineLearningTest/output/
+
 
 #ignore misc files #
 ###################
