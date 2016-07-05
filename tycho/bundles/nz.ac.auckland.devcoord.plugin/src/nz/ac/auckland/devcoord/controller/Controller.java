@@ -16,9 +16,7 @@ public class Controller {
 		this.service = new Commands();
 	}
 	
-	public Controller(Commands service){
-		this.service = service;
-	}
+	
 
 	public Task updateTaskInfo(TaskWrapper wrapper){
 		Task task;

@@ -12,7 +12,15 @@ import org.osgi.framework.ServiceReference;
 
 public class HibernateUtil {
 
+	private static HibernateUtil instance = null;
 	private EntityManagerFactory emf;
+	
+	public static HibernateUtil getInstance(){
+		if(instance == null){
+			instance = new HibernateUtil();
+		} 
+		return instance;
+	}
 
 	public EntityManager getEntityManager() {
 		return getEntityManagerFactory().createEntityManager();

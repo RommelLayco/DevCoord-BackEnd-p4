@@ -16,12 +16,10 @@ public class Commands {
 	private HibernateUtil hibernateUtil;
 
 	public Commands(){
-		hibernateUtil = new HibernateUtil();
+		hibernateUtil = HibernateUtil.getInstance();
 	}
 	
-	public Commands(HibernateUtil hibernateUtil){
-		this.hibernateUtil = hibernateUtil;
-	}
+	
 	
 	public boolean taskExist(int ID){
 		boolean result = false;

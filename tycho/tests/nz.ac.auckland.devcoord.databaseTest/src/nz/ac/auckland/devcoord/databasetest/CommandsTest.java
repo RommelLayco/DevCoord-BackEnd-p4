@@ -26,9 +26,9 @@ public class CommandsTest {
 
 	@BeforeClass
 	public static void setUpService(){
-		hibernateUtil = new HibernateUtil();
-		service = new Commands(hibernateUtil);
-		controller = new Controller(service);
+		hibernateUtil = HibernateUtil.getInstance();
+		service = new Commands();
+		controller = new Controller();
 
 	}
 
