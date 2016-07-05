@@ -18,9 +18,9 @@ public class Commands {
 	public Commands(){
 		hibernateUtil = HibernateUtil.getInstance();
 	}
-	
-	
-	
+
+
+
 	public boolean taskExist(int ID){
 		boolean result = false;
 		EntityManager em = hibernateUtil.getEntityManager();
@@ -69,32 +69,32 @@ public class Commands {
 	 */
 	public List<Task> getTaskWithSameContext(Task task){
 		List<Task> tasks = new ArrayList<Task>(); 
-		
+
 		//create query string
 		String jpql = "Select t from Task t, IN(t.contextStructure) c"
 				+ " where t.taskID != " + task.getTaskID();
-		
-		
+
+
 		Set<String> keys = task.getContextStructures().keySet();
 		if(keys.size() > 0){
 			String line = contextStructureJPQL(keys);
-			
+
 			jpql = jpql + " AND (" + line + ")";
-			
+
 			EntityManager em = hibernateUtil.getEntityManager();
 			Query query = em.createQuery(jpql);
-			
+
 			tasks = query.getResultList();
 			em.close();
-			
+
 			return tasks;
 		} else{
 			return tasks;
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Formats the the "or's" of the context structures
 	 * @param name
@@ -102,34 +102,44 @@ public class Commands {
 	 */
 	private static String contextStructureJPQL(Set<String> contextStructureNames){
 		String line = "";
-		
+
 		Iterator<String> it = contextStructureNames.iterator();
 		//put down the first context structure name
-		
+
 		//note name need to be put between '' marks
 		//else it thinks it is a column name
 		if(it.hasNext()){
 			String name  = it.next();
 			line = "c.name = '" + name +"'";
 		}
-		
+
 		//put down the rest
 		while(it.hasNext()){
 			String name = it.next();
 			line = line + " OR c.name = '" + name + "'";
 		}
-		
+
 		return line;
 	}
-	
+
 	public void addTaskPair(TaskPair taskPair){
 		EntityManager em = hibernateUtil.getEntityManager();
 		em.getTransaction().begin();
+		try{
 		em.persist( taskPair );
+		} catch (javax.persistence.PersistenceException ex){
+			//this happens cause i am trying to persist two task
+			//objects that may have already been persisted
+			
+			//code still works error you get is: 
+			//org.hibernate.PersistentObjectException: detached entity passed to persist: nz.ac.auckland.devcoord.database.TaskPair
+		
+			System.err.println("detach entity error code still works");
+		}
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	public void updateTaskPair(TaskPair taskPair){
 		EntityManager em = hibernateUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -137,7 +147,7 @@ public class Commands {
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	public boolean taskPairExist(int ID){
 		boolean result = false;
 		EntityManager em = hibernateUtil.getEntityManager();
@@ -151,7 +161,14 @@ public class Commands {
 		return result;
 
 	}
-	
+
+	/**
+	 * Gets a task pair base on the two task that make the pair
+	 * return null if the task pair does not exist
+	 * @param task1ID
+	 * @param task2ID
+	 * @return
+	 */
 	public TaskPair getTaskPair(int task1ID, int task2ID){
 		//swap the ids to make sure taskID 1 is smaller
 		if(task1ID > task2ID){
@@ -159,15 +176,23 @@ public class Commands {
 			task2ID = task1ID;
 			task1ID = tmp;
 		}
-		
+
 		String jpql = "Select tp from TaskPair tp "
 				+ "where tp.task1 = " + task1ID + " AND "
 				+ "tp.task2 = " + task2ID;
-		
+
 		EntityManager em = hibernateUtil.getEntityManager();
 		Query query = em.createQuery(jpql);
+		TaskPair tp = null;
+
+		try{
+			tp = (TaskPair) query.getSingleResult(); 
+		} catch (javax.persistence.NoResultException ex){
+			//all good if the task pair does not exist
+			//return null
+			System.err.println("ensure that tp is null");
+		}
 		
-		TaskPair tp = (TaskPair) query.getSingleResult(); 
 		return tp;
 	}
 }
