@@ -60,7 +60,8 @@ public class TaskWrapper {
 			taskLabel=activeTask.toString();
 			
 			//infor for context_Struture model
-			structureHandle=interactionEventArg.getStructureHandle();
+			structureHandle = formatHandle(interactionEventArg.getStructureHandle());
+			//structureHandle=interactionEventArg.getStructureHandle();
 			setSelectOrEdit(interactionEventArg.getKind());
 			interactionEventKind=interactionEventArg.getKind();
 			context = new Context_Structure(structureHandle, isSelect,
@@ -159,5 +160,19 @@ public class TaskWrapper {
 			this.isEdit = false;
 			this.isSelect = false;
 		}
+	}
+	
+	private static String formatHandle(String handle){
+		//get name from src level
+		//the first part is the name of the project we can
+		//decided if we need the project name
+		//String[] split1 = handle.split("/");
+		
+		//ignore field and method level
+		//only looking at class level
+		String[] split2 = handle.split("\\[");
+		
+		
+		return split2[0];
 	}
 }
