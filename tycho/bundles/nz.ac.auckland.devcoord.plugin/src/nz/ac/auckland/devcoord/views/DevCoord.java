@@ -12,8 +12,8 @@ import nz.ac.auckland.devcoord.controller.TaskInfo;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
 import nz.ac.auckland.devcoord.database.Task;
 import nz.ac.auckland.devcoord.database.TaskPair;
-import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
-import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
+//import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
+//import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
 
 import org.eclipse.jface.viewers.*;
 import org.eclipse.mylyn.commons.notifications.ui.AbstractUiNotification;
@@ -48,8 +48,8 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private Text text;
 	private Action action1;
 	private Controller controller;
-/**
- * Automated generation from the HelloWorld Example.*/
+	/**
+	 * Automated generation from the HelloWorld Example.*/
 	class NameSorter extends ViewerSorter {
 	}
 
@@ -65,8 +65,8 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
 		controller = new Controller();
-		TrainDataGeneration.convertTrainCSVToArff();
-		
+		//TrainDataGeneration.convertTrainCSVToArff();
+
 	}
 
 	/**
@@ -80,18 +80,18 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		contributeToActionBars();
 	}
 
-/**
- * This method is Refreshed when-
- * A new task is added/edited
- * A new {@link #InterationEvent} is lodged
- * 
- * This method places that event in the static handle {@link #taskWrapper} to be used by
- * other classes.
- * */
+	/**
+	 * This method is Refreshed when-
+	 * A new task is added/edited
+	 * A new {@link #InterationEvent} is lodged
+	 * 
+	 * This method places that event in the static handle {@link #taskWrapper} to be used by
+	 * other classes.
+	 * */
 	private void RefreshDevCoord(){
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-					if (taskWrapper!=null) {
+				if (taskWrapper!=null) {
 					text.setText(taskWrapper.toString()+TaskInfo.getInteractionEventListAsAString());
 				}
 			}
@@ -143,7 +143,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	public Set<AbstractUiNotification> getNotifications() {
 		return null;
 	}
-	
+
 	/**{@inheritDoc}*/
 	@Override
 	public void contextChanged(ContextChangeEvent arg0) {
@@ -160,18 +160,22 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	public void interactionObserved(InteractionEvent arg0) {
 		System.out.println("EVENT TIME:"+arg0.getDate().getTime());
 		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
-		//update interaction event here
-		Task task = controller.updateTaskInfo(taskWrapper);
-		
-		//getTask pairs
-		List<TaskPair> pairs = controller.getTaskPairs(task);
-		
-		//machine learning 
-		pairs = CriticalityUtility.fillInCriticality(pairs);
-		
-		//persist taskpairs
-		controller.saveTaskPairs(pairs);
-		
+
+		if(taskWrapper != null){
+			//update interaction event here
+			Task task = controller.updateTaskInfo(taskWrapper);
+
+
+			//getTask pairs
+			List<TaskPair> pairs = controller.getTaskPairs(task);
+
+			//machine learning 
+			//pairs = CriticalityUtility.fillInCriticality(pairs);
+
+			//persist taskpairs
+			controller.saveTaskPairs(pairs);
+		}
+
 		RefreshDevCoord();
 	}
 

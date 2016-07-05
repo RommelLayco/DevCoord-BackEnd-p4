@@ -32,8 +32,8 @@ public class TaskWrapper {
 		return  new TaskWrapper(eventArg);
 	}
 
-	
-	
+
+	private boolean isActiveTask;
 	private int taskID;
 	private String taskHandle;
 	private String taskLabel;
@@ -53,16 +53,25 @@ public class TaskWrapper {
 
 		//info for task model
 		ITask activeTask=getActiveTask();
-		taskID=Integer.parseInt(activeTask.getTaskId());
-		taskHandle=activeTask.getHandleIdentifier();
-		taskLabel=activeTask.toString();
+		if(activeTask != null){
 
-		//infor for context_Struture model
-		structureHandle=interactionEventArg.getStructureHandle();
-		setSelectOrEdit(interactionEventArg.getKind());
-		interactionEventKind=interactionEventArg.getKind();
-		context = new Context_Structure(structureHandle, isSelect,
-				isEdit);
+			taskID=Integer.parseInt(activeTask.getTaskId());
+			taskHandle=activeTask.getHandleIdentifier();
+			taskLabel=activeTask.toString();
+			
+			//infor for context_Struture model
+			structureHandle=interactionEventArg.getStructureHandle();
+			setSelectOrEdit(interactionEventArg.getKind());
+			interactionEventKind=interactionEventArg.getKind();
+			context = new Context_Structure(structureHandle, isSelect,
+					isEdit);
+			
+			isActiveTask = true;
+		} else {
+			isActiveTask = false;
+		}
+
+		
 
 	}
 
@@ -79,7 +88,7 @@ public class TaskWrapper {
 	public static TaskWrapper getTestWrappper(int taskID, String handle, String label, Context_Structure context){
 		return new TaskWrapper(taskID, handle, label, context);
 	}
-	
+
 	/**Returns currently active task*/
 	private ITask getActiveTask(){
 		return	org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskActivityManager().getActiveTask();
@@ -111,6 +120,10 @@ public class TaskWrapper {
 
 	public List<IInteractionElement> getInteractionElements() {
 		return interactionElements;
+	}
+
+	public boolean isTaskActive(){
+		return this.isActiveTask;
 	}
 
 	@Override

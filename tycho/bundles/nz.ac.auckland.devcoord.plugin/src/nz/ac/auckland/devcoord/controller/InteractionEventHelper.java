@@ -39,13 +39,18 @@ public class InteractionEventHelper implements Comparator<InteractionEvent>{
  * */
 	public static TaskWrapper getTaskWrapperObject(InteractionEvent event){
 		InteractionEvent initialEvent= getInitialEvent(event);
-		TaskWrapper toRetrun;
+		
+		TaskWrapper toReturn;
 		if (initialEvent==null) {
-			toRetrun=TaskWrapper.getTaskWrapper(event);
+			toReturn=TaskWrapper.getTaskWrapper(event);
 		} else {
-			toRetrun=TaskWrapper.getTaskWrapper(initialEvent);
+			toReturn=TaskWrapper.getTaskWrapper(initialEvent);
 		}
-		return toRetrun;
+		
+		if(!toReturn.isTaskActive()){
+			toReturn = null;
+		}
+		return toReturn;
 	}
 
 /**
