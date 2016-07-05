@@ -72,7 +72,7 @@ public class Controller {
 		
 		while(it.hasNext()){
 			TaskPair tp = it.next();
-			System.err.println("tp ID: "  + tp.getID());
+			
 			//boolean exist = service.taskPairExist(tp.getID());
 			boolean exist = (tp.getID() != null) ? true : false;
 			
