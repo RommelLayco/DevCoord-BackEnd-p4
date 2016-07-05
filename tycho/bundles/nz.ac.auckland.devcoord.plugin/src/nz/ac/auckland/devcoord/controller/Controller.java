@@ -53,8 +53,10 @@ public class Controller {
 		while(it.hasNext()){
 			Task t2 = it.next();
 			TaskPair tp = service.getTaskPair(task.getTaskID(), t2.getTaskID());
+			
 			if(tp == null){
 				tp = new TaskPair(task, t2);
+				
 			}
 			
 			tp.calcProximityScore();
@@ -70,7 +72,9 @@ public class Controller {
 		
 		while(it.hasNext()){
 			TaskPair tp = it.next();
-			boolean exist = service.taskPairExist(tp.getID());
+			System.err.println("tp ID: "  + tp.getID());
+			//boolean exist = service.taskPairExist(tp.getID());
+			boolean exist = (tp.getID() != null) ? true : false;
 			
 			if(exist){
 				service.addTaskPair(tp);

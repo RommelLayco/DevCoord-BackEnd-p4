@@ -168,6 +168,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 			//getTask pairs
 			List<TaskPair> pairs = controller.getTaskPairs(task);
+			System.err.println("Size of list: " + pairs.size());
 
 			//machine learning 
 			//pairs = CriticalityUtility.fillInCriticality(pairs);
