@@ -12,5 +12,4 @@ Bundle-ActivationPolicy: lazy
 Eclipse-RegisterBuddy: nz.ac.auckland.devcoord.hibernate
 Export-Package: nz.ac.auckland.devcoord.commands,
  nz.ac.auckland.devcoord.database
-Import-Package: javax.persistence
 
