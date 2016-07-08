@@ -77,7 +77,7 @@ public class Controller {
 			boolean exist = (tp.getID() != null) ? true : false;
 			
 			if(exist){
-				service.addTaskPair(tp);
+				service.updateTaskPair(tp);
 			} else{
 				service.updateTaskPair(tp);
 			}

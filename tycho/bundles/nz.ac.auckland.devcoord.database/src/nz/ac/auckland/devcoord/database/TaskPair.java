@@ -30,11 +30,11 @@ public class TaskPair {
 	@Id @GeneratedValue
 	Integer taskPairID;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	@JoinColumn(name = "task_pair_1")
 	private Task task1;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "task_pair_2")
 	private Task task2;
 

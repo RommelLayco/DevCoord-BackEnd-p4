@@ -2,6 +2,7 @@ package nz.ac.auckland.devcoord.databasetest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -135,6 +136,9 @@ public class CommandsTest {
 		assertEquals(tasks.size(), 1);
 	}
 	
+	/**
+	 * Add task pair without persisting task first
+	 */
 	@Test
 	public void addTaskPair(){
 		Task t1 = new Task(-7,"test", "add taskPair");
@@ -184,5 +188,67 @@ public class CommandsTest {
 		assertEquals(tp.getTask2().getLabel(), tp2.getTask2().getLabel());
 	}
 	
-
+	/**
+	 * Test persist of task pairs where the tasks that make
+	 * the task pair already exist in the database.
+	 * 
+	 * Should throw no error.
+	 */
+	@Test
+	public void testPersistTaskPairThatUsesExistingTask(){
+		Task t1 = new Task(-13,"test", "add taskPair using persisted task");
+		Task t2 = new Task(-14,"test", "add taskPair using persisted task");
+		
+		service.addTask(t1);
+		service.addTask(t2);
+		
+		TaskPair tp = new TaskPair(t1,t2);
+		service.updateTaskPair(tp);
+		
+		TaskPair tp2 = service.getTaskPair(-13, -14);
+		assertEquals(tp.getTask1().getTaskID(), tp2.getTask1().getTaskID());
+		assertEquals(tp.getTask2().getTaskID(), tp2.getTask2().getTaskID());
+		
+		assertEquals(tp.getTask1().getHandle(), tp2.getTask1().getHandle());
+		assertEquals(tp.getTask2().getHandle(), tp2.getTask2().getHandle());
+		
+		assertEquals(tp.getTask1().getLabel(), tp2.getTask1().getLabel());
+		assertEquals(tp.getTask2().getLabel(), tp2.getTask2().getLabel());
+		
+	}
+	
+	/**
+	 * Test persist of task pairs where the tasks that make
+	 * the task pair already exist in the database.
+	 * 
+	 * This uses the controller which is what is used
+	 * 
+	 * Should throw no error.
+	 */
+	@Test
+	public void testPersistTaskPairThatUsesExistingTaskWithController(){
+		Task t1 = new Task(-15,"test using controller", "add taskPair using persisted task");
+		Task t2 = new Task(-16,"test using controller", "add taskPair using persisted task");
+		
+		service.addTask(t1);
+		service.addTask(t2);
+		
+		TaskPair tp = new TaskPair(t1,t2);
+		
+		List<TaskPair> taskpairs = new ArrayList<TaskPair>();
+		taskpairs.add(tp);
+		controller.saveTaskPairs(taskpairs);
+		
+		TaskPair tp2 = service.getTaskPair(-15, -16);
+		assertEquals(tp.getTask1().getTaskID(), tp2.getTask1().getTaskID());
+		assertEquals(tp.getTask2().getTaskID(), tp2.getTask2().getTaskID());
+		
+		assertEquals(tp.getTask1().getHandle(), tp2.getTask1().getHandle());
+		assertEquals(tp.getTask2().getHandle(), tp2.getTask2().getHandle());
+		
+		assertEquals(tp.getTask1().getLabel(), tp2.getTask1().getLabel());
+		assertEquals(tp.getTask2().getLabel(), tp2.getTask2().getLabel());
+		
+	}
+	
 }

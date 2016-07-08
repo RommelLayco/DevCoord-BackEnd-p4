@@ -125,9 +125,9 @@ public class Commands {
 	public void addTaskPair(TaskPair taskPair){
 		EntityManager em = hibernateUtil.getEntityManager();
 		em.getTransaction().begin();
-		try{
+		//try{
 		em.persist( taskPair );
-		} catch (javax.persistence.PersistenceException ex){
+		/*} catch (javax.persistence.PersistenceException ex){
 			//this happens cause i am trying to persist two task
 			//objects that may have already been persisted
 			
@@ -135,7 +135,7 @@ public class Commands {
 			//org.hibernate.PersistentObjectException: detached entity passed to persist: nz.ac.auckland.devcoord.database.TaskPair
 		
 			System.err.println("detach entity error code still works");
-		}
+		}*/
 		em.getTransaction().commit();
 		em.close();
 	}
