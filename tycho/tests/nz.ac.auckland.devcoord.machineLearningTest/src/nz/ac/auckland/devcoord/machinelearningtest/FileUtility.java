@@ -18,8 +18,6 @@ public class FileUtility {
 		
 		File file = new File(path);
 		
-		System.err.println("Working Directory of where file is being deleted = " +
-	              System.getProperty("user.dir"));
 		
 		file.delete();
 		

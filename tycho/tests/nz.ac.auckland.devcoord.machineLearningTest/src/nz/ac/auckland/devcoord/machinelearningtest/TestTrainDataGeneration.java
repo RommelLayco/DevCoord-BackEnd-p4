@@ -25,8 +25,7 @@ public class TestTrainDataGeneration {
 		
 		FileUtility.deleteFile(trainFile);
 		
-		System.err.println("========================================");
-		System.err.println("Actual file deletion location: " + trainFile);
+		
 
 	}
 
@@ -49,7 +48,9 @@ public class TestTrainDataGeneration {
 		
 		System.err.println("Working Directory of where the test is executed = " +
 				System.getProperty("user.dir"));
-
+		
+		System.err.println(FileUtility.fileExists(trainFile));
+		
 		assertFalse(FileUtility.fileExists(trainFile));
 
 		TrainDataGeneration.convertTrainCSVToArff();
