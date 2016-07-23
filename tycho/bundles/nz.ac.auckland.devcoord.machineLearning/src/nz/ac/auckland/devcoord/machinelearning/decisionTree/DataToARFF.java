@@ -40,8 +40,12 @@ public class DataToARFF {
 
 
 		try {
-			writer = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(inputString), "utf-8"));
+			FileOutputStream fileOutputStream=new FileOutputStream(inputString);
+			OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream, "utf-8"); 
+
+
+			
+			writer = new BufferedWriter(outputStreamWriter);
 			
 
 			writer.write(getLabels());
@@ -69,8 +73,12 @@ public class DataToARFF {
 				}
 
 			}
+			
 
 			writer.close();
+			fileOutputStream.close();
+			
+			outputStreamWriter.close();
 			//System.out.println("number of bad entries:"+countOfBadData);
 
 			

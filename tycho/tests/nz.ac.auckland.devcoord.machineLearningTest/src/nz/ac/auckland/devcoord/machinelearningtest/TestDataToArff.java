@@ -68,12 +68,16 @@ public class TestDataToArff {
 
 	private static Instances readARFFAndGetAllInstances(){
 
+
 		Instances toReturn;
 		try {
-			toReturn = new Instances(new BufferedReader(new FileReader(filePath)));
+			FileReader fileReader=new FileReader(filePath);
+			BufferedReader bufferedReader=new BufferedReader(fileReader);
+			toReturn = new Instances(bufferedReader);
 
 			toReturn.setClassIndex(toReturn.numAttributes() - 1);
 
+			bufferedReader.close();
 			return toReturn;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -83,6 +87,7 @@ public class TestDataToArff {
 			e.printStackTrace();
 		}
 		return null;
+
 
 
 

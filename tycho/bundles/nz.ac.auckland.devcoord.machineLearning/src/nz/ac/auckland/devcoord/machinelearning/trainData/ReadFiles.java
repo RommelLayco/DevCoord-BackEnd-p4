@@ -50,7 +50,7 @@ public class ReadFiles {
 				String[] line = currentLine.split(",");
 				lines.add(line);
 			}
-
+br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -60,7 +60,7 @@ public class ReadFiles {
 				ex.printStackTrace();
 			}
 		}
-
+		
 		return lines;
 	}
 

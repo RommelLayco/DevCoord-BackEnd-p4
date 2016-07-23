@@ -69,8 +69,12 @@ public class CriticalityUtility {
 
 
 		try{
-			writer = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(inputString), "utf-8"));
+			FileOutputStream fileOutputStream=new FileOutputStream(inputString);
+			OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream, "utf-8"); 
+
+			
+			
+			writer = new BufferedWriter(outputStreamWriter);
 
 
 			writer.write(getLabels());
@@ -78,6 +82,8 @@ public class CriticalityUtility {
 			writer.write(getStringOfTheTestTaskPair(taskPair));
 			writer.write("\n");
 			writer.close();
+			outputStreamWriter.close();
+			fileOutputStream.close();
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,11 +119,14 @@ public class CriticalityUtility {
 		     Instances test;
 		     
 			try {
-				train = new Instances(new BufferedReader(new FileReader(trainString)));
+				FileReader trainFileReader=new FileReader(trainString);
+				BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
+				train = new Instances(trainBufferedReader);
 				train.setClassIndex(train.numAttributes() - 1);
 				
-				
-				test = new Instances(new BufferedReader(new FileReader(testString)));
+				FileReader testFileReader=new FileReader(testString);
+				BufferedReader testBufferedReader=new BufferedReader(testFileReader);
+				test = new Instances(testBufferedReader);
 				test.setClassIndex(test.numAttributes() - 1);
 				
 
@@ -131,7 +140,9 @@ public class CriticalityUtility {
 			     Evaluation eval = new Evaluation(train);
 			     eval.evaluateModel(cls, test);
 			     
-			    
+			    trainBufferedReader.close();
+			    testBufferedReader.close();
+			     
 			     return eval.correct()>0;
 			
 			}
