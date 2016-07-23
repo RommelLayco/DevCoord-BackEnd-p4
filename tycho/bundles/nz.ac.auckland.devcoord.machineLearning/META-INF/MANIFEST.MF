@@ -9,8 +9,8 @@ Require-Bundle: org.eclipse.ui,
  nz.ac.auckland.devcoord.database;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: dependencies/weka.jar,
- .
+Bundle-ClassPath: .,
+ dependencies/weka.jar
 Export-Package: nz.ac.auckland.devcoord.machinelearning.decisionTree,
  nz.ac.auckland.devcoord.machinelearning.testData,
  nz.ac.auckland.devcoord.machinelearning.trainData
