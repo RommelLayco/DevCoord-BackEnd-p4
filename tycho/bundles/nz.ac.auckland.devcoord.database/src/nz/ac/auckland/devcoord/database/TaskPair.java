@@ -87,6 +87,8 @@ public class TaskPair {
 		//context_Structures
 		if(this.task1.getContextStructures().size() > 0 && this.task2.getContextStructures().size() > 0){
 			this.calcProximityScore();
+		} else {
+			this.proximityScore = 0;
 		}
 	}
 
@@ -242,7 +244,13 @@ public class TaskPair {
 
 		} else {
 			//files does not exist in both task working set
-			this.actualScores.put(file1.getName(), 0.0);
+			//only exist in one of the working sets
+
+			if(file1 != null){
+				this.actualScores.put(file1.getName(), 0.0);
+			} else { //that is file 1 is null and we are looking at file 2
+				this.actualScores.put(file2.getName(), 0.0);
+			}
 			return 0;
 		}
 	}
@@ -303,7 +311,7 @@ public class TaskPair {
 	public void setPotentialValueForContext(String name, double value){
 		this.potentialScores.put(name,value);
 	}
-	
+
 	/**
 	 * Gets the potential value score for the
 	 * associated context_Structure
@@ -312,7 +320,7 @@ public class TaskPair {
 	public double getPotentialValueForContext(String name){
 		return this.potentialScores.get(name);
 	}
-	
+
 	/**
 	 * Resets the actual value for the
 	 * associated context_Struture
@@ -321,7 +329,7 @@ public class TaskPair {
 	public void setActualValueForContext(String name, double value){
 		this.actualScores.put(name,value);
 	}
-	
+
 	/**
 	 * Gets the actual value score for the
 	 * associated context_Structure
