@@ -111,6 +111,27 @@ public class TaskPair {
 		this.proximityScore = this.actualScore / this.potentialScore;
 	}
 
+	public void updateProximityScore(Context_Structure file1, Context_Structure file2){
+		//minus the old values of the file from the potential and 
+		//actual scores.
+
+		String name = file1.getName();
+
+		this.potentialScore -= this.potentialScores.get(name);
+		this.actualScore -= this.actualScores.get(name);
+
+		//set the update value for the file in the map
+		setPotentialValueForContext(name, potentialScore(file1, file2));
+		setActualValueForContext(name, actualScore(file1, file2));
+
+		//update the potentail and actual scores
+		this.potentialScore += getPotentialValueForContext(name);
+		this.actualScore += getActualValueForContext(name);
+
+		this.proximityScore = this.actualScore / this.potentialScore;
+
+	}
+
 	/**
 	 * Calculate the potential score of the two task
 	 * i.e. union of the java files map
@@ -163,37 +184,36 @@ public class TaskPair {
 	 * @param file2
 	 * @return either 1, or 0.59 or 0
 	 */
-	private static double potentialScore(Context_Structure file1, Context_Structure file2){
+	private double potentialScore(Context_Structure file1, Context_Structure file2){
 
-		if(file1 != null && file2 != null){
-
-			if(file1.isEdited() || file2.isEdited()){
-				return 1;
-			} else if (file1.isSelected() || file2.isSelected()){
-				return 0.59;
-			} else {
-				return 0;
-			}
-
-		} else if(file1 != null){ //therefore file 2 is null
+		//only do work if one of the files is not null
+		if(file1 != null){ 
 
 			if(file1.isEdited()){
+				this.potentialScores.put(file1.getName(), 1.0);
 				return 1;
 			} else if(file1.isSelected()){
+				this.potentialScores.put(file1.getName(), 0.59);
 				return 0.59;
 			} else {
+				this.potentialScores.put(file1.getName(), 0.0);
 				return 0;
 			}
 
-		} else{ //file2 is not null and file 1 is null
+		} else if(file2 != null){
 
 			if(file2.isEdited()){
+				this.potentialScores.put(file2.getName(), 1.0);
 				return 1;
 			} else if (file2.isSelected()){
+				this.potentialScores.put(file2.getName(), 0.59);
 				return 0.59;
 			} else{
+				this.potentialScores.put(file2.getName(), 0.0);
 				return 0;
 			}
+		} else {
+			throw new IllegalArgumentException("files for calculating potential values were both null");
 		}
 	}
 
@@ -203,21 +223,27 @@ public class TaskPair {
 	 * @param file2
 	 * @return
 	 */
-	private static double actualScore(Context_Structure file1, Context_Structure file2){
+	private double actualScore(Context_Structure file1, Context_Structure file2){
 		if(file1 != null && file2 != null){
 
 			if(file1.isEdited() && file2.isEdited()){
+				this.actualScores.put(file1.getName(), 1.0);
 				return 1;
 			} else if (file1.isEdited() || file2.isEdited()){ //only 1 is edited
+				this.actualScores.put(file1.getName(), 0.79);
 				return 0.79;
 			} else if(file1.isSelected() || file2.isSelected()){ //one of them is selected but not edited
+				this.actualScores.put(file1.getName(), 0.59);
 				return 0.59;
 			} else {
+				this.actualScores.put(file1.getName(), 0.0);
 				return 0;
 			}
 
 		} else {
-			return 0; //files does not exist in both task working set
+			//files does not exist in both task working set
+			this.actualScores.put(file1.getName(), 0.0);
+			return 0;
 		}
 	}
 
@@ -268,6 +294,46 @@ public class TaskPair {
 
 	public Task getTask2(){
 		return this.task2;
+	}
+
+	/**
+	 * Resets the potential value for the
+	 * associated context_Struture
+	 * @param value
+	 */
+	public void setPotentialValueForContext(String name, double value){
+		this.potentialScores.put(name,value);
+	}
+	
+	/**
+	 * Gets the potential value score for the
+	 * associated context_Structure
+	 * @param name
+	 */
+	public double getPotentialValueForContext(String name){
+		return this.potentialScores.get(name);
+	}
+	
+	/**
+	 * Resets the actual value for the
+	 * associated context_Struture
+	 * @param value
+	 */
+	public void setActualValueForContext(String name, double value){
+		this.actualScores.put(name,value);
+	}
+	
+	/**
+	 * Gets the actual value score for the
+	 * associated context_Structure
+	 * @param name
+	 */
+	public double getActualValueForContext(String name){
+		if(this.actualScores.get(name) != null){
+			return this.actualScores.get(name);
+		} else{
+			return -1;
+		}
 	}
 
 	//need to override equals and hash for maps and sets
