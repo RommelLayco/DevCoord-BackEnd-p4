@@ -258,7 +258,6 @@ public class TaskPair {
 			Map<String, Context_Structure> files2){
 
 
-		System.err.println(files1);
 		Set<String> set1 = files1.keySet();
 		Set<String> set2 = files2.keySet();
 		Set<String> combinedSet = new HashSet<String>();
