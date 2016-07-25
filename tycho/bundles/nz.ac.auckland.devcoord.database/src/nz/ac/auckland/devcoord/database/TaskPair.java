@@ -40,10 +40,10 @@ public class TaskPair {
 
 	private double proximityScore;
 
-	@Transient
+	
 	private double potentialScore;
 
-	@Transient
+	
 	private double actualScore;
 	
 	private boolean isCritical;
