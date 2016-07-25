@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
 import nz.ac.auckland.devcoord.database.TaskPair;
 
@@ -130,10 +131,10 @@ public class Commands {
 		/*} catch (javax.persistence.PersistenceException ex){
 			//this happens cause i am trying to persist two task
 			//objects that may have already been persisted
-			
+
 			//code still works error you get is: 
 			//org.hibernate.PersistentObjectException: detached entity passed to persist: nz.ac.auckland.devcoord.database.TaskPair
-		
+
 			System.err.println("detach entity error code still works");
 		}*/
 		em.getTransaction().commit();
@@ -192,7 +193,36 @@ public class Commands {
 			//return null
 			System.err.println("ensure that tp is null");
 		}
-		
+
 		return tp;
+	}
+
+	/**
+	 * get task from database that contains the context structure file1.
+	 * 
+	 * Ignore the task that has the task_ID value.
+	 * @param file1
+	 * @param task_ID
+	 * @return
+	 */
+	public List<Task> getTaskWithSameContext(Context_Structure file1, int task_ID){
+		List<Task> tasks = new ArrayList<Task>(); 
+
+		//create query string
+		String jpql = "Select t from Task t, IN(t.contextStructure) c"
+				+ " where t.taskID != " + task_ID +
+				" AND c.name = '" + file1.getName() +"'";
+
+
+		EntityManager em = hibernateUtil.getEntityManager();
+		Query query = em.createQuery(jpql);
+
+		tasks = query.getResultList();
+		em.close();
+
+		return tasks;
+
+
+
 	}
 }
