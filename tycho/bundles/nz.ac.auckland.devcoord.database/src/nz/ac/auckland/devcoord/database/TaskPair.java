@@ -27,7 +27,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "TASK_PAIRS",
-		uniqueConstraints = {@UniqueConstraint(columnNames = {"task_pair_1", "task_pair_2"})}) 
+uniqueConstraints = {@UniqueConstraint(columnNames = {"task_pair_1", "task_pair_2"})}) 
 public class TaskPair {
 
 	@Id @GeneratedValue
@@ -43,22 +43,22 @@ public class TaskPair {
 
 	private double proximityScore;
 
-	
+
 	private double potentialScore;
-	
+
 	@ElementCollection
 	@CollectionTable(name="POTENTIAL_SCORES")
 	@MapKeyColumn(name="POTENTIAL_SCORES_KEYS")
 	private Map<String, Double> potentialScores;
-	
+
 	@ElementCollection
 	@CollectionTable(name="ACTUAL_SCORES")
 	@MapKeyColumn(name="ACTUAL_SCORES_KEY")
 	private Map<String, Double> actualScores;
 
-	
+
 	private double actualScore;
-	
+
 	private boolean isCritical;
 
 	/**
@@ -71,10 +71,10 @@ public class TaskPair {
 	 * @param task2
 	 */
 	public TaskPair(Task task1, Task task2){
-		
+
 		this.actualScores = new HashMap<String,Double>();
 		this.potentialScores = new HashMap<String,Double>();
-		
+
 		if(task1.getTaskID() < task2.getTaskID()){
 			this.task1 = task1;
 			this.task2 = task2;
@@ -83,10 +83,13 @@ public class TaskPair {
 			this.task2 = task1;
 		}
 
-	
-		//calcProximityScore();
+		//only do this if the two task actually have 
+		//context_Structures
+		if(this.task1.getContextStructures().size() > 0 && this.task2.getContextStructures().size() > 0){
+			this.calcProximityScore();
+		}
 	}
-	
+
 	/**
 	 * Default constuctor required
 	 */
@@ -228,6 +231,8 @@ public class TaskPair {
 	private static Iterator<String> combineKeys(Map<String, Context_Structure> files1, 
 			Map<String, Context_Structure> files2){
 
+
+		System.err.println(files1);
 		Set<String> set1 = files1.keySet();
 		Set<String> set2 = files2.keySet();
 		Set<String> combinedSet = new HashSet<String>();
@@ -244,7 +249,7 @@ public class TaskPair {
 	public Integer getID(){
 		return this.taskPairID;
 	}
-	
+
 	public double getProximityScore(){
 		return this.proximityScore;
 	}
@@ -256,11 +261,11 @@ public class TaskPair {
 	public int getID2(){
 		return this.task2.getTaskID();
 	}
-	
+
 	public Task getTask1(){
 		return this.task1;
 	}
-	
+
 	public Task getTask2(){
 		return this.task2;
 	}
@@ -290,7 +295,7 @@ public class TaskPair {
 			return false;
 		if ( obj == this )
 			return true;
-		
+
 		TaskPair rhs = (TaskPair) obj;
 		return new EqualsBuilder( ).
 				append( taskPairID, rhs.taskPairID ).
