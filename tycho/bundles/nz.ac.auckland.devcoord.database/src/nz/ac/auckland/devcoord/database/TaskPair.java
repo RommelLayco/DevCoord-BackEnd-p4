@@ -2,6 +2,7 @@ package nz.ac.auckland.devcoord.database;
 
 
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -70,6 +71,10 @@ public class TaskPair {
 	 * @param task2
 	 */
 	public TaskPair(Task task1, Task task2){
+		
+		this.actualScores = new HashMap<String,Double>();
+		this.potentialScores = new HashMap<String,Double>();
+		
 		if(task1.getTaskID() < task2.getTaskID()){
 			this.task1 = task1;
 			this.task2 = task2;
@@ -78,7 +83,8 @@ public class TaskPair {
 			this.task2 = task1;
 		}
 
-		proximityScore = 0;
+	
+		//calcProximityScore();
 	}
 	
 	/**
@@ -87,7 +93,8 @@ public class TaskPair {
 	public TaskPair(){}
 
 	/**
-	 * Method to calculate the proximity score 
+	 * Method to initalize the value of a proximity score
+	 * when creating a new task pair
 	 * @param files1
 	 * @param files2
 	 */
