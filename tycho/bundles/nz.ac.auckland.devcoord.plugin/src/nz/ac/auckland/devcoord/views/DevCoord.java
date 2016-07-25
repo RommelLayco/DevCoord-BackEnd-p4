@@ -10,6 +10,7 @@ import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
 import nz.ac.auckland.devcoord.controller.TaskInfo;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
+import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
 import nz.ac.auckland.devcoord.database.TaskPair;
 import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
@@ -163,11 +164,11 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 		if(taskWrapper != null){
 			//update interaction event here
-			Task task = controller.updateTaskInfo(taskWrapper);
-
+			Context_Structure file = controller.updateInfoOfActiveTask(taskWrapper);
+			int task_id = taskWrapper.getTaskID();
 
 			//getTask pairs
-			List<TaskPair> pairs = controller.getTaskPairs(task);
+			List<TaskPair> pairs = controller.getTaskPairs(file, task_id);
 			
 
 			//machine learning 
