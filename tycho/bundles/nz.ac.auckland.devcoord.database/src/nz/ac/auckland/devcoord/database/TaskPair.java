@@ -8,13 +8,15 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -42,6 +44,16 @@ public class TaskPair {
 
 	
 	private double potentialScore;
+	
+	@ElementCollection
+	@CollectionTable(name="POTENTIAL_SCORES")
+	@MapKeyColumn(name="POTENTIAL_SCORES_KEYS")
+	private Map<String, Double> potentialScores;
+	
+	@ElementCollection
+	@CollectionTable(name="ACTUAL_SCORES")
+	@MapKeyColumn(name="ACTUAL_SCORES_KEY")
+	private Map<String, Double> actualScores;
 
 	
 	private double actualScore;
