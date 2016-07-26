@@ -189,12 +189,12 @@ public class TaskPair {
 	private double potentialScore(Context_Structure file1, Context_Structure file2){
 
 		//only do work if one of the files is not null
-		if(file1 != null){ 
+		if(file1 != null && file2 != null){ 
 
-			if(file1.isEdited()){
+			if(file1.isEdited() || file2.isEdited()){
 				this.potentialScores.put(file1.getName(), 1.0);
 				return 1;
-			} else if(file1.isSelected()){
+			} else if(file1.isSelected() || file1.isSelected()){
 				this.potentialScores.put(file1.getName(), 0.59);
 				return 0.59;
 			} else {
@@ -202,7 +202,7 @@ public class TaskPair {
 				return 0;
 			}
 
-		} else if(file2 != null){
+		} else if(file2 != null){ //file 1 is null
 
 			if(file2.isEdited()){
 				this.potentialScores.put(file2.getName(), 1.0);
@@ -214,6 +214,20 @@ public class TaskPair {
 				this.potentialScores.put(file2.getName(), 0.0);
 				return 0;
 			}
+			
+		} else if(file1 != null){ //file 2 is null
+			
+			if(file1.isEdited()){
+				this.potentialScores.put(file1.getName(), 1.0);
+				return 1;
+			} else if (file1.isSelected()){
+				this.potentialScores.put(file1.getName(), 0.59);
+				return 0.59;
+			} else{
+				this.potentialScores.put(file1.getName(), 0.0);
+				return 0;
+			}
+			
 		} else {
 			throw new IllegalArgumentException("files for calculating potential values were both null");
 		}
