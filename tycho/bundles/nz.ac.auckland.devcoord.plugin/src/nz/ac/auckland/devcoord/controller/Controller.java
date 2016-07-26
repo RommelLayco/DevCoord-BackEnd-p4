@@ -129,7 +129,8 @@ public class Controller {
 			TaskPair tp = service.getTaskPair(task.getTaskID(), t2.getTaskID());
 			
 			if(tp == null){
-				tp = new TaskPair(task, t2);
+				
+				tp = service.createTaskPair(task_id, t2.getTaskID());
 				
 			} else { //update the value of the proximity score
 				tp = service.updateProximityScore(file, t2.getTaskID(), tp);

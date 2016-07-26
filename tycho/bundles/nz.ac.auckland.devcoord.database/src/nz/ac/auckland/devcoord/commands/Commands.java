@@ -248,4 +248,33 @@ public class Commands {
 		return tp;
 	}
 	
+	/**
+	 * Method to create TaskPair
+	 * 
+	 * needs to fetch context structure of task which use lazy loaded
+	 * 
+	 * i.e. need to load persistence context, this done by using the entity manager
+	 * @param c2
+	 * @param task
+	 * @param tp
+	 * @return
+	 */
+	public TaskPair createTaskPair(int id1, int id2){
+		EntityManager em = hibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		Task t1 = em.find( Task.class, id1 );
+		Task t2 = em.find( Task.class, id2 );
+				
+		TaskPair taskPair = new TaskPair(t1, t2);
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return taskPair;
+	}
+	
+	public List<Integer> getTaskWithSameContext(Context_Structure file, int task_id){
+		
+	}
+	
 }
