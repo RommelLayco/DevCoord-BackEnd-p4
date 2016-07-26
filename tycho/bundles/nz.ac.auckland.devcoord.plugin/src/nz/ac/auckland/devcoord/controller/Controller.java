@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
+
 import nz.ac.auckland.devcoord.commands.Commands;
 import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
@@ -130,7 +132,7 @@ public class Controller {
 				tp = new TaskPair(task, t2);
 				
 			} else { //update the value of the proximity score
-				tp.updateProximityScore(file, t2.getContextStructures().get(file.getName()));
+				tp = service.updateProximityScore(file, t2.getTaskID(), tp);
 			}
 			
 			

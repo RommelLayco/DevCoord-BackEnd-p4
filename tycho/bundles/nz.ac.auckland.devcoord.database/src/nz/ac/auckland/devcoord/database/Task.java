@@ -52,7 +52,7 @@ public class Task {
 	 * Java file is a value type as each file is context asscoaited with
 	 * a specific task
 	 */
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection//(fetch = FetchType.EAGER)
 	@CollectionTable(name="CONTEXT_STRUCTURES")
 	@MapKeyColumn(name="HASHMAP_KEY")
 	private Map<String, Context_Structure> contextStructure;

@@ -222,7 +222,30 @@ public class Commands {
 
 		return tasks;
 
-
-
 	}
+	
+	/**
+	 * Method to update proximity score
+	 * 
+	 * needs to fetch context structure of task which use lazy loaded
+	 * 
+	 * i.e. need to load persistence context, this done by using the entity manager
+	 * @param c2
+	 * @param task
+	 * @param tp
+	 * @return
+	 */
+	public TaskPair updateProximityScore(Context_Structure c2, int ID, TaskPair tp){
+		EntityManager em = hibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		Task task = em.find( Task.class, ID );
+				
+		tp.updateProximityScore(c2, task.getContextStructures().get(c2.getName()));
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return tp;
+	}
+	
 }
