@@ -198,18 +198,18 @@ public class Commands {
 	}
 
 	/**
-	 * get task from database that contains the context structure file1.
+	 * get list of task id that  from database that contains the context structure file1.
 	 * 
 	 * Ignore the task that has the task_ID value.
 	 * @param file1
 	 * @param task_ID
 	 * @return
 	 */
-	public List<Task> getTaskWithSameContext(Context_Structure file1, int task_ID){
-		List<Task> tasks = new ArrayList<Task>(); 
+	public List<Integer> getTaskIDsWithSameContext(Context_Structure file1, int task_ID){
+		List<Integer> task_IDs = new ArrayList<Integer>(); 
 
 		//create query string
-		String jpql = "Select t from Task t, IN(t.contextStructure) c"
+		String jpql = "Select t.id from Task t, IN(t.contextStructure) c"
 				+ " where t.taskID != " + task_ID +
 				" AND c.name = '" + file1.getName() +"'";
 
@@ -217,10 +217,10 @@ public class Commands {
 		EntityManager em = hibernateUtil.getEntityManager();
 		Query query = em.createQuery(jpql);
 
-		tasks = query.getResultList();
+		task_IDs = query.getResultList();
 		em.close();
 
-		return tasks;
+		return task_IDs;
 
 	}
 	
@@ -273,8 +273,6 @@ public class Commands {
 		return taskPair;
 	}
 	
-	public List<Integer> getTaskWithSameContext(Context_Structure file, int task_id){
-		
-	}
+	
 	
 }

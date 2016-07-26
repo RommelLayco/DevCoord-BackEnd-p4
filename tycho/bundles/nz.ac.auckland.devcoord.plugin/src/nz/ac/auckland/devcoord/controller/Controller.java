@@ -120,20 +120,20 @@ public class Controller {
 	public List<TaskPair> getTaskPairs(Context_Structure file, int task_id){
 		List<TaskPair> taskpairs = new ArrayList<TaskPair>();
 		
-		List<Task> tasks = service.getTaskWithSameContext(file, task_id);
-		Iterator<Task> it = tasks.iterator();
-		Task task = service.getTask(task_id);
+		List<Integer> task_IDs = service.getTaskIDsWithSameContext(file, task_id);
+		Iterator<Integer> it = task_IDs.iterator();
+		
 		
 		while(it.hasNext()){
-			Task t2 = it.next();
-			TaskPair tp = service.getTaskPair(task.getTaskID(), t2.getTaskID());
+			Integer t2 = it.next();
+			TaskPair tp = service.getTaskPair(task_id, t2);
 			
 			if(tp == null){
 				
-				tp = service.createTaskPair(task_id, t2.getTaskID());
+				tp = service.createTaskPair(task_id, t2);
 				
 			} else { //update the value of the proximity score
-				tp = service.updateProximityScore(file, t2.getTaskID(), tp);
+				tp = service.updateProximityScore(file, t2, tp);
 			}
 			
 			
