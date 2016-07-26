@@ -271,9 +271,9 @@ public class CommandsTest {
 		taskpairs.add(tp);
 		controller.saveTaskPairs(taskpairs);
 		
-		assertEquals(tp.getPotentialValueForContext(c1.getName()),1.0,0.01);
-		assertEquals(tp.getActualValueForContext(c1.getName()), 1.0, 0.01);
-		assertEquals(tp.getProximityScore(), 1.0, 0.01);
+		assertEquals(1.0, tp.getPotentialValueForContext(c1.getName()),0.01);
+		assertEquals(1.0, tp.getActualValueForContext(c1.getName()), 0.01);
+		assertEquals(1.0, tp.getProximityScore(), 0.01);
 		
 		c1.setEdit(false);
 		c1.setEdit(false);
@@ -283,9 +283,9 @@ public class CommandsTest {
 		
 		TaskPair tp2 = service.getTaskPair(-17, -18);
 		
-		assertEquals(tp2.getPotentialValueForContext(c1.getName()),0.59,0.01);
-		assertEquals(tp2.getActualValueForContext(c1.getName()), 0.59, 0.01);
-		assertEquals(tp2.getProximityScore(), 0.59, 0.01);
+		assertEquals(1.0, tp2.getPotentialValueForContext(c1.getName()),0.01);
+		assertEquals(0.79, tp2.getActualValueForContext(c1.getName()), 0.01);
+		assertEquals(0.79, tp2.getProximityScore(), 0.01);
 		
 	}
 	
