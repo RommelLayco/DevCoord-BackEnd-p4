@@ -251,4 +251,42 @@ public class CommandsTest {
 		
 	}
 	
+	/**
+	 * Method to test that the actual and potential scores
+	 * are updated when recalculating the proximity score
+	 */
+	
+	@Test
+	public void updateProximityScore(){
+		Task t1 = new Task(-17,"test using controller", "add taskPair using persisted task");
+		Task t2 = new Task(-18,"test using controller", "add taskPair using persisted task");
+		
+		Context_Structure c1 = new Context_Structure("update proximity score test", true, true);
+		t1.addContextStructure(c1.getName(), c1);
+		t2.addContextStructure(c1.getName(), c1);
+		
+		TaskPair tp = new TaskPair(t1, t2);
+		
+		List<TaskPair> taskpairs = new ArrayList<TaskPair>();
+		taskpairs.add(tp);
+		controller.saveTaskPairs(taskpairs);
+		
+		assertEquals(tp.getPotentialValueForContext(c1.getName()),1.0,0.01);
+		assertEquals(tp.getActualValueForContext(c1.getName()), 1.0, 0.01);
+		assertEquals(tp.getProximityScore(), 1.0, 0.01);
+		
+		c1.setEdit(false);
+		c1.setEdit(false);
+		
+		List<TaskPair> pairs = controller.getTaskPairs(c1, -17);
+		controller.saveTaskPairs(pairs);
+		
+		TaskPair tp2 = service.getTaskPair(-17, -18);
+		
+		assertEquals(tp2.getPotentialValueForContext(c1.getName()),0.59,0.01);
+		assertEquals(tp2.getActualValueForContext(c1.getName()), 0.59, 0.01);
+		assertEquals(tp2.getProximityScore(), 0.59, 0.01);
+		
+	}
+	
 }
