@@ -29,7 +29,7 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class TimeClass {
-	static String outputTestDummy="output/DUMMY_test.arff";
+
 
 	/**
 	 * Timing code Reference:http://stackoverflow.com/questions/180158/how-do-i-time-a-methods-execution-in-java
@@ -38,7 +38,7 @@ public class TimeClass {
 	 * */
 	public static void main(String[] args) {
 
-				TaskPair taskPair=buildDummyTaskPairOne();
+				TaskPair taskPair=buildDummyTaskPairTwo();
 				
 				
 				long startTime = System.nanoTime();
@@ -107,49 +107,6 @@ public class TimeClass {
 		}
 		return false;
 	}
-
-
-
-	public static boolean classify()
-	{
-		String trainString;
-		String testString;
-		trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
-		testString=outputTestDummy;
-		// train classifier
-		J48 cls = new J48();
-		Instances train;
-		Instances test;
-		try {
-			FileReader trainFileReader=new FileReader(trainString);
-			BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
-			train = new Instances(trainBufferedReader);
-			train.setClassIndex(train.numAttributes() - 1);
-			FileReader testFileReader=new FileReader(testString);
-			BufferedReader testBufferedReader=new BufferedReader(testFileReader);
-			test = new Instances(testBufferedReader);
-
-			test.setClassIndex(test.numAttributes() - 1);
-			cls.setUnpruned(false);
-			cls.buildClassifier(train);
-			Evaluation eval = new Evaluation(train);
-			eval.evaluateModel(cls, test);
-			trainBufferedReader.close();
-			testBufferedReader.close();
-			System.out.println(cls);
-			System.out.println(eval.correct());
-
-			return eval.correct()>0;
-		}
-		catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return false;
-	}
-
-
-
 
 
 	private static TaskPair buildDummyTaskPairOne(){
