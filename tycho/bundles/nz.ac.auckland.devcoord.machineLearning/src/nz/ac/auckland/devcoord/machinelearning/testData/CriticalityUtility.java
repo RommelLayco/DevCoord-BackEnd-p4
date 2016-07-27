@@ -1,10 +1,13 @@
 package nz.ac.auckland.devcoord.machinelearning.testData;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -27,13 +30,60 @@ public class CriticalityUtility {
 		for (TaskPair taskPair : taskPairsListArg) {
 			//this loop will contain the machine learning code
 			taskPair.setCritical(false);
-			convertTestDataToArff(taskPair);
-			if (!wasClassificationCorrect()) {
+//			convertTestDataToArff(taskPair);
+//			if (!wasClassificationCorrect()) {
+//				taskPair.setCritical(!taskPair.isCritical());
+//			}
+			if (!wasClassificationCorrectNoFile(taskPair)) {
 				taskPair.setCritical(!taskPair.isCritical());
 			}
 		}
 		return taskPairsListArg;
 	}
+	
+	/**
+	 * No new files created when classifying whether critical or not.
+	 * */
+	public static boolean wasClassificationCorrectNoFile(TaskPair taskPair)
+	{
+		String trainString;
+
+		trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
+
+		// train classifier
+		J48 cls = new J48();
+		Instances train;
+		Instances test;
+		try {
+			FileReader trainFileReader=new FileReader(trainString);
+			BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
+			train = new Instances(trainBufferedReader);
+			train.setClassIndex(train.numAttributes() - 1);
+			
+			String data=CriticalityUtility.getLabels()+CriticalityUtility.getStringOfTheTestTaskPair(taskPair);
+			InputStream inputStream=new ByteArrayInputStream(data.getBytes());
+			BufferedReader testBufferedReader=new BufferedReader(new InputStreamReader(inputStream));
+			
+			test = new Instances(testBufferedReader);				
+			test.setClassIndex(test.numAttributes() - 1);
+			cls.setUnpruned(false);
+			cls.buildClassifier(train);
+			Evaluation eval = new Evaluation(train);
+			eval.evaluateModel(cls, test);
+			trainBufferedReader.close();
+			testBufferedReader.close();
+
+
+			return eval.correct()>0;
+		}
+		catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * Creates an arff file out of a TaskPair object
 	 * */
