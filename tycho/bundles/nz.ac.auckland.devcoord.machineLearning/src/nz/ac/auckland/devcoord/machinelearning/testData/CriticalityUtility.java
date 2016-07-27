@@ -104,7 +104,7 @@ public class CriticalityUtility {
 	 * Helper method- creates a label which is written in the arff file,depending on the arguments,
 	 * it includes or excludes DRH attributes from the label.
 	 * **/
-	protected static String getLabels(){
+	public static String getLabels(){
 		String toReturn;
 		toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
 				"@attribute Proximity numeric"+"\n"+
@@ -117,7 +117,7 @@ public class CriticalityUtility {
 	 * this string is returned,which is then written directly into the arff file(not be this method). 
 	 * 
 	 * */
-	protected static String getStringOfTheTestTaskPair(TaskPair taskPair){
+	public static String getStringOfTheTestTaskPair(TaskPair taskPair){
 		double proximity=taskPair.getProximityScore();
 		String critical=""+taskPair.isCritical();
 		return proximity+","
