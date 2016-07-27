@@ -30,168 +30,130 @@ import weka.core.converters.ConverterUtils.DataSource;
 
 public class TimeClass {
 	static String outputTestDummy="output/DUMMY_test.arff";
-	
-/**
- * Timing code Reference:http://stackoverflow.com/questions/180158/how-do-i-time-a-methods-execution-in-java
- *
- *SANDBOX class to test and improve ML algorithm.
- * */
+
+	/**
+	 * Timing code Reference:http://stackoverflow.com/questions/180158/how-do-i-time-a-methods-execution-in-java
+	 *
+	 *SANDBOX class to test and improve ML algorithm.
+	 * */
 	public static void main(String[] args) {
 
-//		TaskPair taskPair=buildDummyTaskPairOne();
-//		
-//		
-//		long startTime = System.nanoTime();
-//
-//
-//		//CriticalityUtility.convertTestDataToArff(taskPair);
-//		CriticalityUtility.wasClassificationCorrect();
-//		
-//		
-//		long endTime = System.nanoTime();
-//
-//		long duration = (endTime - startTime)/1000000;  // milliseconds.
-//		
-//		System.out.println(duration);
-//		
-//		
-//		buildARFFTestFileWithMultipleTaskPairs();
+				TaskPair taskPair=buildDummyTaskPairOne();
+				
+				
+				long startTime = System.nanoTime();
 		
 		
-		System.out.println(classifyWithoutFile());
+				CriticalityUtility.convertTestDataToArff(taskPair);
+				boolean correct=CriticalityUtility.wasClassificationCorrect();
+				
+				System.out.println("Correct old?:"+correct);
+				long endTime = System.nanoTime();
 		
+				long duration = (endTime - startTime)/1000000;  // milliseconds.
+				
+				System.out.println( "Time taken for old method:"+duration);
+				
+				
+				startTime = System.nanoTime();
 
+				correct=classifyWithoutFile(taskPair);
+		
+				endTime = System.nanoTime();
+				duration = (endTime - startTime)/1000000;  // milliseconds.
+				System.out.println("Correct NEW?:"+correct);
+				System.out.println( "Time taken for NEW method:"+duration);
 	}
-	
-	public static boolean classifyWithoutFile()
+
+	public static boolean classifyWithoutFile(TaskPair taskpair)
 	{
 		String trainString;
-		
-			trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
-			
-			// train classifier
-		     J48 cls = new J48();
-		     Instances train;
-		     Instances test;
-			try {
-				FileReader trainFileReader=new FileReader(trainString);
-				BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
-				train = new Instances(trainBufferedReader);
-				train.setClassIndex(train.numAttributes() - 1);
-			
-				//System.getProperty("file.separator")
-				String data="@relation pairsTask"+"\n"+
-						"@attribute Proximity numeric"+"\n"+
-						"@attribute Critical {true,false}"+"\n"+
-						"@data"+"\n"+
-						"4.0,true";
-				InputStream inputStream=new ByteArrayInputStream(data.getBytes());
-				
+
+		trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
+
+		// train classifier
+		J48 cls = new J48();
+		Instances train;
+		Instances test;
+		try {
+			FileReader trainFileReader=new FileReader(trainString);
+			BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
+			train = new Instances(trainBufferedReader);
+			train.setClassIndex(train.numAttributes() - 1);
+			String data="@relation pairsTask"+"\n"+
+					"@attribute Proximity numeric"+"\n"+
+					"@attribute Critical {true,false}"+"\n"+
+					"@data"+"\n"+
+					taskpair.getProximityScore()+","+taskpair.isCritical();
+			InputStream inputStream=new ByteArrayInputStream(data.getBytes());
+
 
 			BufferedReader testBufferedReader=new BufferedReader(new InputStreamReader(inputStream));
-				test = new Instances(testBufferedReader);				
-				test.setClassIndex(test.numAttributes() - 1);
-				cls.setUnpruned(false);
-			     cls.buildClassifier(train);
-			     Evaluation eval = new Evaluation(train);
-			     eval.evaluateModel(cls, test);
-			    trainBufferedReader.close();
-			    testBufferedReader.close();
-			    System.out.println(cls);
-			    System.out.println(eval.correct());
-			    
-			    return eval.correct()>0;
-			}
-			catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			return false;
+			test = new Instances(testBufferedReader);				
+			test.setClassIndex(test.numAttributes() - 1);
+			cls.setUnpruned(false);
+			cls.buildClassifier(train);
+			Evaluation eval = new Evaluation(train);
+			eval.evaluateModel(cls, test);
+			trainBufferedReader.close();
+			testBufferedReader.close();
+
+
+			return eval.correct()>0;
+		}
+		catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return false;
 	}
-	
-	
-	
+
+
+
 	public static boolean classify()
 	{
 		String trainString;
 		String testString;
-			trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
-			testString=outputTestDummy;
-			// train classifier
-		     J48 cls = new J48();
-		     Instances train;
-		     Instances test;
-			try {
-				FileReader trainFileReader=new FileReader(trainString);
-				BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
-				train = new Instances(trainBufferedReader);
-				train.setClassIndex(train.numAttributes() - 1);
-				FileReader testFileReader=new FileReader(testString);
-				BufferedReader testBufferedReader=new BufferedReader(testFileReader);
-				test = new Instances(testBufferedReader);
-				
-				test.setClassIndex(test.numAttributes() - 1);
-				cls.setUnpruned(false);
-			     cls.buildClassifier(train);
-			     Evaluation eval = new Evaluation(train);
-			     eval.evaluateModel(cls, test);
-			    trainBufferedReader.close();
-			    testBufferedReader.close();
-			    System.out.println(cls);
-			    System.out.println(eval.correct());
-			    
-			    return eval.correct()>0;
-			}
-			catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			return false;
-	}
-	
+		trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
+		testString=outputTestDummy;
+		// train classifier
+		J48 cls = new J48();
+		Instances train;
+		Instances test;
+		try {
+			FileReader trainFileReader=new FileReader(trainString);
+			BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
+			train = new Instances(trainBufferedReader);
+			train.setClassIndex(train.numAttributes() - 1);
+			FileReader testFileReader=new FileReader(testString);
+			BufferedReader testBufferedReader=new BufferedReader(testFileReader);
+			test = new Instances(testBufferedReader);
 
-	
-	/**
-	 * 
-	 * Builds ARFF file with multiple task pairs*/
-	private static void buildARFFTestFileWithMultipleTaskPairs(){
-		
-		
-		Writer writer = null;
-		String inputString;
-		inputString=outputTestDummy;
-		try{
-			FileOutputStream fileOutputStream=new FileOutputStream(inputString);
-			OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream, "utf-8"); 
-			writer = new BufferedWriter(outputStreamWriter);
-			writer.write(CriticalityUtility.getLabels());
-			writer.write("@data"+"\n");
-			writer.write(CriticalityUtility.getStringOfTheTestTaskPair(buildDummyTaskPairTwo()));
-			writer.write("\n");
-			writer.write(CriticalityUtility.getStringOfTheTestTaskPair(buildDummyTaskPairOne()));
-			writer.write("\n");
-			
-			writer.close();
-			outputStreamWriter.close();
-			fileOutputStream.close();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e1) {
+			test.setClassIndex(test.numAttributes() - 1);
+			cls.setUnpruned(false);
+			cls.buildClassifier(train);
+			Evaluation eval = new Evaluation(train);
+			eval.evaluateModel(cls, test);
+			trainBufferedReader.close();
+			testBufferedReader.close();
+			System.out.println(cls);
+			System.out.println(eval.correct());
+
+			return eval.correct()>0;
+		}
+		catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
+		return false;
 	}
-	
-	
-	
+
+
+
+
+
 	private static TaskPair buildDummyTaskPairOne(){
-		
+
 		Task one=new Task(1, "Dummy Handle one", "Dummy label one");
 		Task two=new Task(2, "Dummy Handle two", "Dummy label two");
 		Context_Structure context_StructureOne=new Context_Structure("ContextOne", false, true);
@@ -201,11 +163,11 @@ public class TimeClass {
 		TaskPair taskPairOne=new TaskPair(one,two);
 		taskPairOne.calcProximityScore();
 		return taskPairOne;
-		
+
 	}
 
 	private static TaskPair buildDummyTaskPairTwo(){
-		
+
 		Task one=new Task(1, "Dummy Handle Three", "Dummy label Three");
 		Task two=new Task(2, "Dummy Handle four", "Dummy label four");
 		Context_Structure context_StructureOne=new Context_Structure("ContextThree", false, true);
@@ -215,8 +177,8 @@ public class TimeClass {
 		TaskPair taskPairOne=new TaskPair(one,two);
 		taskPairOne.calcProximityScore();
 		return taskPairOne;
-		
+
 	}
-	
-	
+
+
 }
