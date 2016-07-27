@@ -37,7 +37,7 @@ public class CriticalityUtility {
 	/**
 	 * Creates an arff file out of a TaskPair object
 	 * */
-	private static void convertTestDataToArff(TaskPair taskPair ){
+	public static void convertTestDataToArff(TaskPair taskPair ){
 		Writer writer = null;
 		String inputString;
 		inputString=InputEnum.outputToString(InputEnum.TEST_OUTPUT_PATH);
