@@ -73,6 +73,7 @@ workspace/External Plug-in Libraries/.searchable
 tycho/bundles/nz.ac.auckland.devcoord.machineLearning/output/test_NODRH.arff
 tycho/bundles/nz.ac.auckland.devcoord.machineLearning/output/UNIT_TEST.arff
 tycho/bundles/nz.ac.auckland.devcoord.machineLearning/output/train_NODRH.arff
+tycho/bundles/nz.ac.auckland.devcoord.machineLearning/output/DUMMY_test.arff
 tycho/tests/nz.ac.auckland.devcoord.machineLearningTest/output/
 
 
