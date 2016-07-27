@@ -67,7 +67,7 @@ public class CriticalityUtility {
 	 * Return true if the value of isCritical already present is correct.
 	 * 
 	 * */
-	private static boolean wasClassificationCorrect()
+	public static boolean wasClassificationCorrect()
 	{
 		String trainString;
 		String testString;
