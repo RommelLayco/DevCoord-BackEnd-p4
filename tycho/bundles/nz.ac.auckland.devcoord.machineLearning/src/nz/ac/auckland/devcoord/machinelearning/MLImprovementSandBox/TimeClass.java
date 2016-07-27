@@ -65,7 +65,7 @@ public class TimeClass {
 				System.out.println( "Time taken for NEW method:"+duration);
 	}
 
-	public static boolean classifyWithoutFile(TaskPair taskpair)
+	public static boolean classifyWithoutFile(TaskPair taskPair)
 	{
 		String trainString;
 
@@ -80,15 +80,11 @@ public class TimeClass {
 			BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
 			train = new Instances(trainBufferedReader);
 			train.setClassIndex(train.numAttributes() - 1);
-			String data="@relation pairsTask"+"\n"+
-					"@attribute Proximity numeric"+"\n"+
-					"@attribute Critical {true,false}"+"\n"+
-					"@data"+"\n"+
-					taskpair.getProximityScore()+","+taskpair.isCritical();
+			
+			String data=CriticalityUtility.getLabels()+CriticalityUtility.getStringOfTheTestTaskPair(taskPair);
 			InputStream inputStream=new ByteArrayInputStream(data.getBytes());
-
-
 			BufferedReader testBufferedReader=new BufferedReader(new InputStreamReader(inputStream));
+			
 			test = new Instances(testBufferedReader);				
 			test.setClassIndex(test.numAttributes() - 1);
 			cls.setUnpruned(false);

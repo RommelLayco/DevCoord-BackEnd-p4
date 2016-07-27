@@ -46,9 +46,7 @@ public class CriticalityUtility {
 			OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream, "utf-8"); 
 			writer = new BufferedWriter(outputStreamWriter);
 			writer.write(getLabels());
-			writer.write("@data"+"\n");
 			writer.write(getStringOfTheTestTaskPair(taskPair));
-			writer.write("\n");
 			writer.close();
 			outputStreamWriter.close();
 			fileOutputStream.close();
@@ -109,7 +107,7 @@ public class CriticalityUtility {
 		toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
 				"@attribute Proximity numeric"+"\n"+
 				"@attribute Critical {true,false}"+"\n"+""
-				+ "\n";
+				+ "\n"+"@data"+"\n";
 		return toReturn;
 	}
 	/**
@@ -121,6 +119,6 @@ public class CriticalityUtility {
 		double proximity=taskPair.getProximityScore();
 		String critical=""+taskPair.isCritical();
 		return proximity+","
-		+ critical;
+		+ critical+"\n";
 	}
 }
