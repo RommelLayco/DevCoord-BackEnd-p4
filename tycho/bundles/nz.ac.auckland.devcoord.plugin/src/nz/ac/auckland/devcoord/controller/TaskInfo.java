@@ -6,12 +6,28 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionContextManager;
 import org.eclipse.mylyn.context.core.IInteractionElement;
+import org.eclipse.mylyn.internal.bugzilla.core.BugzillaClient;
+import org.eclipse.mylyn.internal.bugzilla.core.BugzillaCorePlugin;
+import org.eclipse.mylyn.internal.bugzilla.core.BugzillaRepositoryConnector;
+import org.eclipse.mylyn.internal.bugzilla.core.RepositoryConfiguration;
+import org.eclipse.mylyn.internal.bugzilla.ui.tasklist.BugzillaConnectorUi;
+import org.eclipse.mylyn.internal.bugzilla.ui.tasklist.Messages;
 import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
+import org.eclipse.mylyn.internal.tasks.core.TaskTask;
+import org.eclipse.mylyn.internal.tasks.ui.preferences.MylynPreferencePage;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.mylyn.tasks.core.ITask;
+import org.eclipse.mylyn.tasks.core.RepositoryClientManager;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
+import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
+import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
+import org.eclipse.mylyn.tasks.core.data.TaskData;
 
 
 @SuppressWarnings("restriction")
@@ -90,7 +106,48 @@ public class TaskInfo {
 			System.out.println("	TASK URL:"+task.getUrl());
 			System.out.println("	TASK Repository URL:"+task.getRepositoryUrl());
 			System.out.println("	TASK KIND:"+task.getTaskKind());
-			System.out.println("	TASK Child Tasks-");
+			System.out.println("	TASK OS:"+task.getAttribute("OS"));
+			
+		
+			
+			System.out.println("org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().getTask.getClass().toString():"+org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().getTask("https://app.devzing.com/devcoordp4/bugzilla", "1").getClass().toString());
+			TaskTask taskTask=	(TaskTask) org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().getTask("https://app.devzing.com/devcoordp4/bugzilla", "1");
+
+			Map<String, String> mapT=	taskTask.getAttributes();
+			for (Map.Entry<String, String> s : mapT.entrySet()) {
+				System.out.println("		mapTS:  "+s);
+			}
+			System.out.println(mapT.size());
+			
+//			TaskRepository repository=new TaskRepository("bugzilla", "https://app.devzing.com/devcoordp4/bugzilla");
+//			
+//			TaskAttributeMapper mapper=new TaskAttributeMapper(repository);
+//			TaskData data=new  TaskData(mapper, "bugzilla",  "https://app.devzing.com/devcoordp4/bugzilla", "1");
+//			
+//			
+//			RepositoryConfiguration configuration=new  RepositoryConfiguration();
+//			configuration.setRepositoryUrl("https://app.devzing.com/devcoordp4/bugzilla");
+//			
+//			BugzillaRepositoryConnector connector=new BugzillaRepositoryConnector();
+//			connector.addRepositoryConfiguration(configuration);
+//			connector.get
+//			//connector.
+//			
+//			
+//			Set<ITask> tasksBUG= list.getTasks("https://app.devzing.com/devcoordp4/bugzilla");
+//			System.out.println("0000000000000000000000000000000");
+//			for (ITask iTask : tasks) {
+//				System.out.println(iTask.getTaskId());
+//				for (Map.Entry<String, String> s : iTask.getAttributes().entrySet()) {
+//					System.out.println("		"+s);
+//				}
+//				
+//			}
+//			System.out.println("0000000000000000000000000000000");
+//			
+//			System.out.println("	TASK Child Tasks-");
+//		//	org.eclipse.mylyn.internal.tasks.ui.
+			
 			for (ITask child : task.getChildren()) {
 				System.out.println("		Child  TASK :"+child.toString());
 			}

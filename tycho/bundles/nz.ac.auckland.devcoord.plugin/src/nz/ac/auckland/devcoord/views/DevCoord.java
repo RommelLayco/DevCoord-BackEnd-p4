@@ -92,6 +92,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				if (taskWrapper!=null) {
+					TaskInfo.printTaskInfoForAllTasks();
 					text.setText(taskWrapper.toString()+TaskInfo.getInteractionEventListAsAString());
 				}
 			}
