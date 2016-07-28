@@ -17,8 +17,8 @@ public class ModelTest {
 	
 	@Test
 	public void TestHashMapsofTaskPairs(){
-		Task t1 = new Task(1,"test", "potential and actual score map");
-		Task t2 = new Task(2, "test", "potential and actual score map");
+		Task t1 = new Task(1,"test", "potential and actual score map", "OS", "Platform", "Component");
+		Task t2 = new Task(2, "test", "potential and actual score map", "OS", "Platform", "Component");
 		
 		Context_Structure c1 = new Context_Structure("1", true, true);
 		Context_Structure c2 = new Context_Structure("2", true, false);
