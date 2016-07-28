@@ -103,7 +103,7 @@ public class TaskPair {
 	 * @param files1
 	 * @param files2
 	 */
-	public void calcProximityScore(){
+	private void calcProximityScore(){
 
 		//calculate the actual and potential scores
 		this.calcPotentialScore();

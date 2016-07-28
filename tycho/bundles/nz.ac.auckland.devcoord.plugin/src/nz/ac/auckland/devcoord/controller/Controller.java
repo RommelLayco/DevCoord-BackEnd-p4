@@ -80,12 +80,15 @@ public class Controller {
 	}
 	
 
+	/* no longer needed as method to getTask pairs as update
+	 * of proximity score done with a differnet method.
+	 
 	/**
 	 * Get all the other that contains one of the context structures
 	 * this task has. and creates the task pair
 	 * @param task
 	 * @return
-	 */
+	 *
 	public List<TaskPair> getTaskPairs(Task task){
 		List<TaskPair> taskpairs = new ArrayList<TaskPair>();
 		
@@ -101,13 +104,13 @@ public class Controller {
 				
 			}
 			
-			tp.calcProximityScore();
+			//tp.calcProximityScore();
 			taskpairs.add(tp);
 		}
 		
 		
 		return taskpairs;
-	}
+	}*/
 	
 	/**
 	 * Gets all the task except for the one with the given task id that 

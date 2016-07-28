@@ -69,7 +69,7 @@ public class TestCriticalUtility {
 		taskPairThree.setCritical(false);
 		
 		//Proximity scores are calculated for each pair
-		taskPairOne.calcProximityScore();taskPairTwo.calcProximityScore();taskPairThree.calcProximityScore();
+		//taskPairOne.calcProximityScore();taskPairTwo.calcProximityScore();taskPairThree.calcProximityScore();
 
 		//Task pairs should not be critical prior to the classification
 		assertFalse(taskPairOne.isCritical());
