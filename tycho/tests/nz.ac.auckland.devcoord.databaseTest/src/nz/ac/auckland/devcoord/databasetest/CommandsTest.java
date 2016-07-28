@@ -195,6 +195,10 @@ public class CommandsTest {
 
 		assertEquals(tp.getTask1().getLabel(), tp2.getTask1().getLabel());
 		assertEquals(tp.getTask2().getLabel(), tp2.getTask2().getLabel());
+		
+		assertTrue(tp.isSameOS()); assertTrue(tp2.isSameOS());
+		assertTrue(tp.isSamePlatform()); assertTrue(tp2.isSamePlatform());
+		assertTrue(tp.isSameComponent()); assertTrue(tp2.isSameComponent());
 	}
 
 	/**
@@ -206,7 +210,7 @@ public class CommandsTest {
 	@Test
 	public void testPersistTaskPairThatUsesExistingTask(){
 		Task t1 = new Task(-13,"test", "add taskPair using persisted task", "OS", "Platform", "Component");
-		Task t2 = new Task(-14,"test", "add taskPair using persisted task", "OS", "Platform", "Component");
+		Task t2 = new Task(-14,"test", "add taskPair using persisted task", "OS", "Platform", "Component is diff for -13");
 
 		service.addTask(t1);
 		service.addTask(t2);
@@ -223,6 +227,10 @@ public class CommandsTest {
 
 		assertEquals(tp.getTask1().getLabel(), tp2.getTask1().getLabel());
 		assertEquals(tp.getTask2().getLabel(), tp2.getTask2().getLabel());
+		
+		assertTrue(tp.isSameOS()); assertTrue(tp2.isSameOS());
+		assertTrue(tp.isSamePlatform()); assertTrue(tp2.isSamePlatform());
+		assertFalse(tp.isSameComponent()); assertFalse(tp2.isSameComponent());
 
 	}
 
@@ -237,7 +245,7 @@ public class CommandsTest {
 	@Test
 	public void testPersistTaskPairThatUsesExistingTaskWithController(){
 		Task t1 = new Task(-15,"test using controller", "add taskPair using persisted task", "OS", "Platform", "Component");
-		Task t2 = new Task(-16,"test using controller", "add taskPair using persisted task", "OS", "Platform", "Component");
+		Task t2 = new Task(-16,"test using controller", "add taskPair using persisted task", "OS diff for task -15", "Platform", "Component");
 
 		service.addTask(t1);
 		service.addTask(t2);
@@ -257,6 +265,10 @@ public class CommandsTest {
 
 		assertEquals(tp.getTask1().getLabel(), tp2.getTask1().getLabel());
 		assertEquals(tp.getTask2().getLabel(), tp2.getTask2().getLabel());
+		
+		assertFalse(tp.isSameOS()); assertFalse(tp2.isSameOS());
+		assertTrue(tp.isSamePlatform()); assertTrue(tp2.isSamePlatform());
+		assertTrue(tp.isSameComponent()); assertTrue(tp2.isSameComponent());
 
 	}
 
