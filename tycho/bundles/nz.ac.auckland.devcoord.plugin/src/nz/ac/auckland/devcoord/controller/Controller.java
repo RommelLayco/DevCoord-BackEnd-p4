@@ -29,11 +29,11 @@ public class Controller {
 		boolean exist = service.taskExist(wrapper.getTaskID());
 		
 		if(exist){
-			task = service.getTask(wrapper.getTaskID());
+			task = service.getTaskAndAddContext(wrapper.getTaskID(), wrapper.getContextStructure());
 			task.updateTaskID(wrapper.getTaskID());
 			task.updateHandle(wrapper.getTaskHandle());
 			task.updateLablel(wrapper.getTaskLabel());
-			task.addContextStructure(wrapper.getStructureHandle(), wrapper.getContextStructure());
+			
 			
 			service.updateTask(task);
 		} else{

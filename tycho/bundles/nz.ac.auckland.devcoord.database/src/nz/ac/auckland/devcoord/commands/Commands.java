@@ -273,6 +273,26 @@ public class Commands {
 		return taskPair;
 	}
 	
+	/**
+	 * Method to add context_structure while getting the task. Needs an entity manager
+	 * as the persistence context has not yet add the context structures
+	 * field. 
+	 * @param task
+	 * @return
+	 */
+	public Task getTaskAndAddContext(Integer ID, Context_Structure context){
+		EntityManager em = hibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		
+		Task task = em.find( Task.class, ID );
+		task.addContextStructure(context.getName(), context);
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return task;
+	}
+	
 	
 	
 }
