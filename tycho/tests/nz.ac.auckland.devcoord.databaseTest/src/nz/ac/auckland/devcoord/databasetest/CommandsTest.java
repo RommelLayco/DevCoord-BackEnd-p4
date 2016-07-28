@@ -319,5 +319,28 @@ public class CommandsTest {
 
 		
 	}
+	
+	/**
+	 * Method test lazy loading when updating the context structure of
+	 * a task
+	 * 
+	 * i.e. the task already exist in the database. 
+	 * 
+	 * The task is fetch in the updateInfoOfActiveTask method
+	 * 
+	 * should throw no exception 
+	 */
+	@Test
+	public void testLazyLoadOfTaskUpdate(){
+		Context_Structure c1 = new Context_Structure("lazy load when adding", true, true);
+		
+		Task t1 = new Task(-21, "lazy load", "adding context structure");
+		service.addTask(t1);
+		
+		TaskWrapper wrapper = TaskWrapper.
+				getTestWrappper(-21, "lazy load", "adding context structure", c1);
+		
+		controller.updateInfoOfActiveTask(wrapper);
+	}
 
 }
