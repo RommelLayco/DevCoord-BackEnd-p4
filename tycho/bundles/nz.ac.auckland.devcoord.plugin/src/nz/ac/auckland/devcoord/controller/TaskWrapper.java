@@ -98,17 +98,25 @@ public class TaskWrapper {
 	}
 
 	//constuctor to test
-	private TaskWrapper(int taskID, String handle, String label, Context_Structure context){
+	private TaskWrapper(int taskID, String handle, String label, 
+			String OS, String platform, String component, Context_Structure context){
 		this.taskID = taskID;
 		taskHandle = handle;
 		taskLabel = label;
+		this.OS = OS;
+		this.platform = platform;
+		this.component = component;
+		
 		this.context = context;
 		this.structureHandle = context.getName();
 	}
 
 
-	public static TaskWrapper getTestWrappper(int taskID, String handle, String label, Context_Structure context){
-		return new TaskWrapper(taskID, handle, label, context);
+	public static TaskWrapper getTestWrappper(int taskID, String handle,
+			String label, String OS, String platform,
+			String component, Context_Structure context){
+		return new TaskWrapper(taskID, handle, label, OS,
+				platform, component, context);
 	}
 
 	/**Returns currently active task*/

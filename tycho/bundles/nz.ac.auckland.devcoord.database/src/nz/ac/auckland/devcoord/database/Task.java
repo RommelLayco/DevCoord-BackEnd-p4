@@ -70,11 +70,18 @@ public class Task {
 
 	}
 
-	public Task(int taskID, String handle, String label){
+	public Task(int taskID, String handle, String label, String OS, 
+			String platform, String component){
+		
 		this.taskID = taskID;
 		this.handle = handle;
 		this.label = label;
+		this.OS = OS;
+		this.platform = platform;
+		this.component = component;
+		
 		this.contextStructure = new HashMap<String, Context_Structure>();
+		
 	}
 
 
