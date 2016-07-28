@@ -142,6 +142,7 @@ public class Controller {
 				
 			} else { //update the value of the proximity score
 				tp = service.updateProximityScore(file, t2, tp);
+				tp.setTaskProperties();
 			}
 			
 			

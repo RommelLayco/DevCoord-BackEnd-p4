@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Type;
+
 
 
 
@@ -43,6 +46,7 @@ public class TaskPair {
 
 	private double proximityScore;
 
+	private double actualScore;
 
 	private double potentialScore;
 
@@ -57,7 +61,18 @@ public class TaskPair {
 	private Map<String, Double> actualScores;
 
 
-	private double actualScore;
+	@Column(name = "SAME_OS")
+	@Type(type="yes_no")
+	private boolean sameOS;
+	
+	@Column(name = "SAME_PLATFORM")
+	@Type(type="yes_no")
+	private boolean samePlatform;
+	
+	@Column(name = "SAME_COMPONENT")
+	@Type(type="yes_no")
+	private boolean sameComponent;
+	
 
 	private boolean isCritical;
 
@@ -90,6 +105,8 @@ public class TaskPair {
 		} else {
 			this.proximityScore = 0;
 		}
+		
+		setTaskProperties();
 	}
 
 	/**
@@ -317,6 +334,16 @@ public class TaskPair {
 		return this.task2;
 	}
 
+	public boolean isSameOS(){
+		return this.sameOS;
+	}
+	public boolean isSamePlatform(){
+		return this.samePlatform;
+	}
+	
+	public boolean isSameComponent(){
+		return this.sameComponent;
+	}
 	/**
 	 * Resets the potential value for the
 	 * associated context_Struture
@@ -400,6 +427,32 @@ public class TaskPair {
 
 	public void setCritical(boolean isCritical) {
 		this.isCritical = isCritical;
+	}
+	
+	/**
+	 * Method to set the other task properties
+	 * 
+	 * i.e. if the the two task have the same OS, Component and Platform
+	 */
+	public void setTaskProperties(){
+		
+		if(task1.getOS().equals(task2.getOS())){
+			this.sameOS = true;
+		} else {
+			this.sameOS = false;
+		}
+		
+		if(task1.getPlatform().equals(task2.getPlatform())){
+			this.samePlatform = true;
+		} else {
+			this.samePlatform = false;
+		}
+		
+		if(task1.getComponent().equals(task2.getComponent())){
+			this.sameComponent = true;
+		} else {
+			this.sameComponent = false;
+		}
 	}
 }
 
