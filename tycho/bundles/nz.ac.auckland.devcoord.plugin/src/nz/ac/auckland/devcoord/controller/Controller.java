@@ -41,7 +41,8 @@ public class Controller {
 			service.updateTask(task);
 		} else{
 			task = new Task(wrapper.getTaskID(),wrapper.getTaskHandle(), 
-					wrapper.getTaskLabel());
+					wrapper.getTaskLabel(), wrapper.getOS(),
+					wrapper.getPlatform(), wrapper.getComponent());
 			
 			task.addContextStructure(wrapper.getStructureHandle(), wrapper.getContextStructure());
 			
@@ -72,7 +73,8 @@ public class Controller {
 			service.updateTask(task);
 		} else{
 			task = new Task(wrapper.getTaskID(),wrapper.getTaskHandle(), 
-					wrapper.getTaskLabel());
+					wrapper.getTaskLabel(), wrapper.getOS(),
+					wrapper.getPlatform(), wrapper.getComponent());
 			
 			task.addContextStructure(wrapper.getStructureHandle(), wrapper.getContextStructure());
 			
