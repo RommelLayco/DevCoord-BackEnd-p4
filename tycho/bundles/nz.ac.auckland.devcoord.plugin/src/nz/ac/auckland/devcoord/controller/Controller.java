@@ -33,6 +33,9 @@ public class Controller {
 			task.updateTaskID(wrapper.getTaskID());
 			task.updateHandle(wrapper.getTaskHandle());
 			task.updateLablel(wrapper.getTaskLabel());
+			task.updateOS(wrapper.getOS());
+			task.updatePlatform(wrapper.getPlatform());
+			task.updateComponent(wrapper.getComponent());
 			
 			
 			service.updateTask(task);

@@ -44,6 +44,12 @@ public class Task {
 	 * Named when creating a task
 	 */
 	private String label;
+	
+	private String OS;
+	
+	private String platform;
+	
+	private String component;
 
 	/**
 	 * The java files that are associated with the task
@@ -94,6 +100,30 @@ public class Task {
 	
 	public void updateLablel(String label){
 		this.label = label;
+	}
+	
+	public String getOS(){
+		return this.OS;
+	}
+	
+	public void updateOS(String OS){
+		this.OS = OS;
+	}
+	
+	public String getPlatform(){
+		return this.platform;
+	}
+	
+	public void updatePlatform(String platform){
+		this.platform = platform;
+	}
+	
+	public String getComponent(){
+		return this.component;
+	}
+	
+	public void updateComponent(String component){
+		this.component = component;
 	}
 
 	public void addContextStructure(String filepath, Context_Structure structure){
