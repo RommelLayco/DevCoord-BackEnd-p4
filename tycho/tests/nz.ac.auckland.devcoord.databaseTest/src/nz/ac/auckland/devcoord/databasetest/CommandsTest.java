@@ -376,5 +376,30 @@ public class CommandsTest {
 		
 		controller.updateInfoOfActiveTask(wrapper);
 	}
+	
+	/**
+	 * Method to test that only task that have the same context and have been
+	 * updated in the last x amount of days are pulled from the database
+	 * 
+	 * a negative number should make the query go into the future
+	 */
+	@Test
+	public void testDateQuery(){
+		Task t1 = new Task(-22, "query date test", "query date test", "query date test", "query date test", "query date test", "query date test", "query date test");
+		Task t2 = new Task(-23, "query date test", "query date test", "query date test", "query date test", "query date test", "query date test", "query date test");
+		
+		Context_Structure c1 = new Context_Structure("query date test", true, true);
+		t1.addContextStructure(c1.getName(), c1);
+		t2.addContextStructure(c1.getName(), c1);	
+		
+		service.addTask(t1);
+		service.addTask(t2);
+		
+		List<TaskPair> pairs = controller.getTaskPairs(c1, -22, -1);
+		
+		assertEquals(0, pairs.size());
+		
+				
+	}
 
 }
