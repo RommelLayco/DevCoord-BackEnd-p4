@@ -43,7 +43,7 @@ public class CommandsTest {
 
 	@Test
 	public void addNewTask(){
-		Task t1 = new Task(-1, "comp-key1", "testing Composite Key", "OS", "Platform", "Component");
+		Task t1 = new Task(-1, "comp-key1", "testing Composite Key", "OS", "Platform", "Component", "Owner", "Description");
 
 		service.addTask(t1);
 
@@ -54,6 +54,9 @@ public class CommandsTest {
 		assertEquals(t1.getOS(), t2.getOS());
 		assertEquals(t1.getPlatform(), t2.getPlatform());
 		assertEquals(t1.getComponent(), t2.getComponent());
+		assertEquals(t1.getOwner(), t2.getOwner());
+		assertEquals(t1.getDescription(), t2.getDescription());
+		assertEquals(t1.getDate(), t2.getDate());
 	}
 
 	/**
@@ -62,7 +65,7 @@ public class CommandsTest {
 
 	@Test
 	public void updateTask(){
-		Task t1 = new Task(-2, "update value", "testing update existing", "OS", "Platform", "Component");
+		Task t1 = new Task(-2, "update value", "testing update existing", "OS", "Platform", "Component", "Owner", "Description");
 
 		service.addTask(t1);
 
@@ -77,6 +80,9 @@ public class CommandsTest {
 		assertEquals(t1.getOS(), t2.getOS());
 		assertEquals(t1.getPlatform(), t2.getPlatform());
 		assertEquals(t1.getComponent(), t2.getComponent());
+		assertEquals(t1.getOwner(), t2.getOwner());
+		assertEquals(t1.getDescription(), t2.getDescription());
+		assertEquals(t1.getDate(), t2.getDate());
 
 	}
 
@@ -118,7 +124,9 @@ public class CommandsTest {
 		assertEquals(t1.getOS(), t2.getOS());
 		assertEquals(t1.getPlatform(), t2.getPlatform());
 		assertEquals(t1.getComponent(), t2.getComponent());
-		
+		assertEquals(t1.getOwner(), t2.getOwner());
+		assertEquals(t1.getDescription(), t2.getDescription());
+		assertEquals(t1.getDate(), t2.getDate());
 
 
 		Context_Structure c2 = t2.getContextStructures().get("wrapperTest");
@@ -150,8 +158,8 @@ public class CommandsTest {
 	 */
 	@Test
 	public void addTaskPair(){
-		Task t1 = new Task(-7,"test", "add taskPair", "OS", "Platform", "Component");
-		Task t2 = new Task(-8,"test", "add taskPair", "OS", "Platform", "Component");
+		Task t1 = new Task(-7,"test", "add taskPair", "OS", "Platform", "Component", "Owner", "Description");
+		Task t2 = new Task(-8,"test", "add taskPair", "OS", "Platform", "Component", "Owner", "Description");
 
 		TaskPair tp = new TaskPair(t1,t2);
 		service.addTaskPair(tp);
@@ -159,8 +167,8 @@ public class CommandsTest {
 
 	@Test
 	public void updateTaskPair(){
-		Task t1 = new Task(-9,"test", "add taskPair", "OS", "Platform", "Component");
-		Task t2 = new Task(-10,"test", "add taskPair", "OS", "Platform", "Component");
+		Task t1 = new Task(-9,"test", "add taskPair", "OS", "Platform", "Component", "Owner", "Description");
+		Task t2 = new Task(-10,"test", "add taskPair", "OS", "Platform", "Component", "Owner", "Description");
 
 		TaskPair tp = new TaskPair(t1,t2);
 		service.addTaskPair(tp);
@@ -178,8 +186,8 @@ public class CommandsTest {
 
 	@Test
 	public void getTaskPair(){
-		Task t1 = new Task(-11,"test", "get Task pair from task id", "OS", "Platform", "Component");
-		Task t2 = new Task(-12,"test", "get Task pair from task id", "OS", "Platform", "Component");
+		Task t1 = new Task(-11,"test", "get Task pair from task id", "OS", "Platform", "Component", "Owner", "Description");
+		Task t2 = new Task(-12,"test", "get Task pair from task id", "OS", "Platform", "Component", "Owner", "Description");
 
 		TaskPair tp = new TaskPair(t1,t2);
 		service.addTaskPair(tp);
@@ -209,8 +217,8 @@ public class CommandsTest {
 	 */
 	@Test
 	public void testPersistTaskPairThatUsesExistingTask(){
-		Task t1 = new Task(-13,"test", "add taskPair using persisted task", "OS", "Platform", "Component");
-		Task t2 = new Task(-14,"test", "add taskPair using persisted task", "OS", "Platform", "Component is diff for -13");
+		Task t1 = new Task(-13,"test", "add taskPair using persisted task", "OS", "Platform", "Component", "Owner", "Description");
+		Task t2 = new Task(-14,"test", "add taskPair using persisted task", "OS", "Platform", "Component is diff for -13", "Owner", "Description");
 
 		service.addTask(t1);
 		service.addTask(t2);
@@ -244,8 +252,8 @@ public class CommandsTest {
 	 */
 	@Test
 	public void testPersistTaskPairThatUsesExistingTaskWithController(){
-		Task t1 = new Task(-15,"test using controller", "add taskPair using persisted task", "OS", "Platform", "Component");
-		Task t2 = new Task(-16,"test using controller", "add taskPair using persisted task", "OS diff for task -15", "Platform", "Component");
+		Task t1 = new Task(-15,"test using controller", "add taskPair using persisted task", "OS", "Platform", "Component", "Owner", "Description");
+		Task t2 = new Task(-16,"test using controller", "add taskPair using persisted task", "OS diff for task -15", "Platform", "Component", "Owner", "Description");
 
 		service.addTask(t1);
 		service.addTask(t2);
@@ -279,8 +287,8 @@ public class CommandsTest {
 
 	@Test
 	public void updateProximityScore(){
-		Task t1 = new Task(-17,"test using controller", "add taskPair using persisted task", "OS", "Platform", "Component");
-		Task t2 = new Task(-18,"test using controller", "add taskPair using persisted task", "OS", "Platform", "Component");
+		Task t1 = new Task(-17,"test using controller", "add taskPair using persisted task", "OS", "Platform", "Component", "Owner", "Description");
+		Task t2 = new Task(-18,"test using controller", "add taskPair using persisted task", "OS", "Platform", "Component", "Owner", "Description");
 
 		Context_Structure c1 = new Context_Structure("update proximity score test", true, true);
 		t1.addContextStructure(c1.getName(), c1);
@@ -318,8 +326,8 @@ public class CommandsTest {
 	 */
 	@Test
 	public void testLazyLoadGetTaskPair(){
-		Task t1 = new Task(-19,"test creation of tp", "test of lazy loading", "OS", "Platform", "Component");
-		Task t2 = new Task(-20,"test creation of tp", "test of lazy loading", "OS", "Platform", "Component");
+		Task t1 = new Task(-19,"test creation of tp", "test of lazy loading", "OS", "Platform", "Component", "Owner", "Description");
+		Task t2 = new Task(-20,"test creation of tp", "test of lazy loading", "OS", "Platform", "Component", "Owner", "Description");
 		
 		Context_Structure c1 = new Context_Structure("lazy loading", true, true);
 		
@@ -355,7 +363,7 @@ public class CommandsTest {
 	public void testLazyLoadOfTaskUpdate(){
 		Context_Structure c1 = new Context_Structure("lazy load when adding", true, true);
 		
-		Task t1 = new Task(-21, "lazy load", "adding context structure", "OS", "Platform", "Component");
+		Task t1 = new Task(-21, "lazy load", "adding context structure", "OS", "Platform", "Component", "Owner", "Description");
 		service.addTask(t1);
 		
 		TaskWrapper wrapper = TaskWrapper.
