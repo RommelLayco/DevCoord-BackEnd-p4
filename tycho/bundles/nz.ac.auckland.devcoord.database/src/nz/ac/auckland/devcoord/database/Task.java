@@ -4,6 +4,8 @@ package nz.ac.auckland.devcoord.database;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.time.ZonedDateTime;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -49,6 +51,17 @@ public class Task {
 	private String platform;
 	
 	private String component;
+	
+	/**
+	 * Info to provide to users when a task pair is critical
+	 */
+	private String owner;
+	
+	private String short_description;
+	
+	private ZonedDateTime time;
+	
+	
 
 	/**
 	 * The java files that are associated with the task
@@ -70,14 +83,21 @@ public class Task {
 	}
 
 	public Task(int taskID, String handle, String label, String OS, 
-			String platform, String component){
+			String platform, String component,
+			String owner, String short_description){
 		
 		this.taskID = taskID;
 		this.handle = handle;
 		this.label = label;
+		
 		this.OS = OS;
 		this.platform = platform;
 		this.component = component;
+		
+		this.owner = owner;
+		this.short_description = short_description;
+		this.time = ZonedDateTime.now();
+		
 		
 		this.contextStructure = new HashMap<String, Context_Structure>();
 		
@@ -131,7 +151,32 @@ public class Task {
 	public void updateComponent(String component){
 		this.component = component;
 	}
+	
+	
+	public void updateOwner(String owner){
+		this.owner = owner;
+	}
+	
+	public String getOwner(){
+		return this.owner;
+	}
+	
+	public void updateShortDescription(String desc){
+		this.short_description = desc;
+	}
+	
+	public String getShortDescription(){
+		return this.short_description;
+	}
 
+	public void updateTime(){
+		this.time = ZonedDateTime.now();
+	}
+	
+	public ZonedDateTime getTime(){
+		return this.time;
+	}
+	
 	public void addContextStructure(String filepath, Context_Structure structure){
 		this.contextStructure.put(filepath, structure);
 	}
