@@ -52,8 +52,7 @@ public class TaskWrapper {
 	
 	private String owner;
 	private String description;
-	private LocalDateTime time;
-
+	
 	private boolean isEdit;
 	private boolean isSelect;
 	private Context_Structure context;
@@ -93,9 +92,9 @@ public class TaskWrapper {
 			attribute = map.get("component");
 			this.component = attribute.getValue();
 			
+			//owner and description should be displayed to the 
+			//user when a task pair is critical
 			this.owner = activeTask.getOwner();
-			this.time = LocalDateTime.now();
-			
 			attribute = map.get("long_desc");
 			this.description = attribute.getValue();
 
@@ -187,9 +186,7 @@ public class TaskWrapper {
 		return this.description;
 	}
 	
-	public LocalDateTime getTime(){
-		return this.time;
-	}
+	
 
 	@Override
 	public String toString() {	

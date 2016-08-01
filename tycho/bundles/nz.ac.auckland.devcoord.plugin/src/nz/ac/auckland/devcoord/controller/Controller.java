@@ -38,7 +38,7 @@ public class Controller {
 			task.updateComponent(wrapper.getComponent());
 			task.updateOwner(wrapper.getOwner());
 			task.updateDescription(wrapper.getDescription());
-			task.updateTime();
+			task.updateDate();
 			
 			service.updateTask(task);
 		} else{
@@ -67,11 +67,16 @@ public class Controller {
 		boolean exist = service.taskExist(wrapper.getTaskID());
 		
 		if(exist){
-			task = service.getTask(wrapper.getTaskID());
+			task = service.getTaskAndAddContext(wrapper.getTaskID(), wrapper.getContextStructure());
 			task.updateTaskID(wrapper.getTaskID());
 			task.updateHandle(wrapper.getTaskHandle());
 			task.updateLablel(wrapper.getTaskLabel());
-			task.addContextStructure(wrapper.getStructureHandle(), wrapper.getContextStructure());
+			task.updateOS(wrapper.getOS());
+			task.updatePlatform(wrapper.getPlatform());
+			task.updateComponent(wrapper.getComponent());
+			task.updateOwner(wrapper.getOwner());
+			task.updateDescription(wrapper.getDescription());
+			task.updateDate();
 			
 			service.updateTask(task);
 		} else{

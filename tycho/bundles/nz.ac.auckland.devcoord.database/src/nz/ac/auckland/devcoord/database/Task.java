@@ -59,7 +59,7 @@ public class Task {
 	
 	private String description;
 	
-	private LocalDate time;
+	private LocalDate date;
 	
 	
 
@@ -96,7 +96,7 @@ public class Task {
 		
 		this.owner = owner;
 		this.description = description;
-		this.time = LocalDate.now();
+		this.date = LocalDate.now();
 		
 		
 		this.contextStructure = new HashMap<String, Context_Structure>();
@@ -169,12 +169,12 @@ public class Task {
 		return this.description;
 	}
 
-	public void updateTime(){
-		this.time = LocalDate.now();
+	public void updateDate(){
+		this.date = LocalDate.now();
 	}
 	
-	public LocalDate getTime(){
-		return this.time;
+	public LocalDate getDate(){
+		return this.date;
 	}
 	
 	public void addContextStructure(String filepath, Context_Structure structure){
