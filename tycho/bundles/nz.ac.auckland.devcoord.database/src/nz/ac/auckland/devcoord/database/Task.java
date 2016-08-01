@@ -57,7 +57,7 @@ public class Task {
 	 */
 	private String owner;
 	
-	private String short_description;
+	private String description;
 	
 	private ZonedDateTime time;
 	
@@ -84,7 +84,7 @@ public class Task {
 
 	public Task(int taskID, String handle, String label, String OS, 
 			String platform, String component,
-			String owner, String short_description){
+			String owner, String description){
 		
 		this.taskID = taskID;
 		this.handle = handle;
@@ -95,7 +95,7 @@ public class Task {
 		this.component = component;
 		
 		this.owner = owner;
-		this.short_description = short_description;
+		this.description = description;
 		this.time = ZonedDateTime.now();
 		
 		
@@ -162,11 +162,11 @@ public class Task {
 	}
 	
 	public void updateShortDescription(String desc){
-		this.short_description = desc;
+		this.description = desc;
 	}
 	
 	public String getShortDescription(){
-		return this.short_description;
+		return this.description;
 	}
 
 	public void updateTime(){
