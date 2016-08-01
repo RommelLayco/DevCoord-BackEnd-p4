@@ -2,6 +2,7 @@ package nz.ac.auckland.devcoord.databasetest;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,8 @@ public class CommandsTest {
 		assertEquals(t1.getOwner(), t2.getOwner());
 		assertEquals(t1.getDescription(), t2.getDescription());
 		assertEquals(t1.getDate(), t2.getDate());
+		assertTrue(t2.getDate() instanceof LocalDate);
+		
 	}
 
 	/**
@@ -83,7 +86,8 @@ public class CommandsTest {
 		assertEquals(t1.getOwner(), t2.getOwner());
 		assertEquals(t1.getDescription(), t2.getDescription());
 		assertEquals(t1.getDate(), t2.getDate());
-
+		assertTrue(t2.getDate() instanceof LocalDate);
+		
 	}
 
 	/**
@@ -127,6 +131,7 @@ public class CommandsTest {
 		assertEquals(t1.getOwner(), t2.getOwner());
 		assertEquals(t1.getDescription(), t2.getDescription());
 		assertEquals(t1.getDate(), t2.getDate());
+		assertTrue(t2.getDate() instanceof LocalDate);
 
 
 		Context_Structure c2 = t2.getContextStructures().get("wrapperTest");
