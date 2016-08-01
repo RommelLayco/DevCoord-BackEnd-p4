@@ -312,7 +312,7 @@ public class CommandsTest {
 		c1.setEdit(false);
 		c1.setEdit(false);
 
-		List<TaskPair> pairs = controller.getTaskPairs(c1, -17);
+		List<TaskPair> pairs = controller.getTaskPairs(c1, -17, 14);
 		controller.saveTaskPairs(pairs);
 
 		TaskPair tp2 = service.getTaskPair(-17, -18);
@@ -342,7 +342,7 @@ public class CommandsTest {
 		service.addTask(t1);
 		service.addTask(t2);
 		
-		List<TaskPair> pairs = controller.getTaskPairs(c1, -19);
+		List<TaskPair> pairs = controller.getTaskPairs(c1, -19, 14);
 		TaskPair tp = pairs.get(0);
 		
 		controller.saveTaskPairs(pairs);

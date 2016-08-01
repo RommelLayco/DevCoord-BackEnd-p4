@@ -132,12 +132,17 @@ public class Controller {
 	 * 
 	 * @param file that a task working set may contain
 	 * @param task_id of the task we do not want
+	 * 
+	 * @param days is the numbers of day in the past. That is only get task that have been
+	 * updated in the database in the last x amount of days. Note if has been updated in 
+	 * the database it has been worked on.
+	 * 
 	 * @return
 	 */
-	public List<TaskPair> getTaskPairs(Context_Structure file, int task_id){
+	public List<TaskPair> getTaskPairs(Context_Structure file, int task_id, int days){
 		List<TaskPair> taskpairs = new ArrayList<TaskPair>();
 		
-		List<Integer> task_IDs = service.getTaskIDsWithSameContext(file, task_id);
+		List<Integer> task_IDs = service.getTaskIDsWithSameContext(file, task_id, days);
 		Iterator<Integer> it = task_IDs.iterator();
 		
 		
