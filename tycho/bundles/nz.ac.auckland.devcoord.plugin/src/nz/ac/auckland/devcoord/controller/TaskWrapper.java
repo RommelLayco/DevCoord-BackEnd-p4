@@ -1,5 +1,6 @@
 package nz.ac.auckland.devcoord.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,10 @@ public class TaskWrapper {
 	private String OS;
 	private String platform;
 	private String component;
+	
+	private String owner;
+	private String description;
+	private LocalDateTime time;
 
 	private boolean isEdit;
 	private boolean isSelect;
@@ -87,6 +92,12 @@ public class TaskWrapper {
 			
 			attribute = map.get("component");
 			this.component = attribute.getValue();
+			
+			this.owner = activeTask.getOwner();
+			this.time = LocalDateTime.now();
+			
+			attribute = map.get("long_desc");
+			this.description = attribute.getValue();
 
 			isActiveTask = true;
 		} else {
@@ -166,6 +177,18 @@ public class TaskWrapper {
 	
 	public String getComponent(){
 		return this.component;
+	}
+	
+	public String getOwner(){
+		return this.owner;
+	}
+	
+	public String getDescription(){
+		return this.description;
+	}
+	
+	public LocalDateTime getTime(){
+		return this.time;
 	}
 
 	@Override
