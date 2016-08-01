@@ -4,7 +4,7 @@ package nz.ac.auckland.devcoord.database;
 import java.util.HashMap;
 import java.util.Map;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -59,7 +59,7 @@ public class Task {
 	
 	private String description;
 	
-	private ZonedDateTime time;
+	private LocalDateTime time;
 	
 	
 
@@ -96,7 +96,7 @@ public class Task {
 		
 		this.owner = owner;
 		this.description = description;
-		this.time = ZonedDateTime.now();
+		this.time = LocalDateTime.now();
 		
 		
 		this.contextStructure = new HashMap<String, Context_Structure>();
@@ -161,19 +161,19 @@ public class Task {
 		return this.owner;
 	}
 	
-	public void updateShortDescription(String desc){
+	public void updateDescription(String desc){
 		this.description = desc;
 	}
 	
-	public String getShortDescription(){
+	public String getDescription(){
 		return this.description;
 	}
 
 	public void updateTime(){
-		this.time = ZonedDateTime.now();
+		this.time = LocalDateTime.now();
 	}
 	
-	public ZonedDateTime getTime(){
+	public LocalDateTime getTime(){
 		return this.time;
 	}
 	
