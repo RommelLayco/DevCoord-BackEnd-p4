@@ -1,5 +1,6 @@
 package nz.ac.auckland.devcoord.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -109,7 +110,8 @@ public class TaskWrapper {
 
 	//constuctor to test
 	private TaskWrapper(int taskID, String handle, String label, 
-			String OS, String platform, String component, Context_Structure context){
+			String OS, String platform, String component,
+			String owner, String description, Context_Structure context){
 		this.taskID = taskID;
 		taskHandle = handle;
 		taskLabel = label;
@@ -119,14 +121,20 @@ public class TaskWrapper {
 		
 		this.context = context;
 		this.structureHandle = context.getName();
+		
+		this.owner = owner;
+		this.description = description;
+		
 	}
 
 
 	public static TaskWrapper getTestWrappper(int taskID, String handle,
 			String label, String OS, String platform,
-			String component, Context_Structure context){
+			String component, String owner, String description,
+			Context_Structure context
+			){
 		return new TaskWrapper(taskID, handle, label, OS,
-				platform, component, context);
+				platform, component, owner, description, context);
 	}
 
 	/**Returns currently active task*/

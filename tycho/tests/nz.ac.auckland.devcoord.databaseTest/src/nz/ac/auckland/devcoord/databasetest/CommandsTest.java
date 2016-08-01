@@ -108,7 +108,7 @@ public class CommandsTest {
 	public void updateUsingController(){
 		Context_Structure c1 = new Context_Structure("wrapperTest", true, true);
 		TaskWrapper wrapper = TaskWrapper.
-				getTestWrappper(-4, "wrapper", "test", "OS", "Platform", "Component", c1);
+				getTestWrappper(-4, "wrapper", "test", "OS", "Platform", "Component", "Owner", "description", c1);
 
 		Task t1 = controller.updateTaskInfo(wrapper);
 
@@ -141,10 +141,10 @@ public class CommandsTest {
 	public void queryTaskTest(){
 		Context_Structure c1 = new Context_Structure("queryTest", true, true);
 		TaskWrapper wrapper = TaskWrapper.
-				getTestWrappper(-5, "query", "test","OS", "Platform", "Component", c1);
+				getTestWrappper(-5, "query", "test","OS", "Platform", "Component", "Owner", "Description", c1);
 
 		TaskWrapper wrapper2 = TaskWrapper.
-				getTestWrappper(-6, "query2", "test2", "OS", "Platform", "Component", c1);
+				getTestWrappper(-6, "query2", "test2", "OS", "Platform", "Component", "Owner", "Description", c1);
 
 		Task t1 = controller.updateTaskInfo(wrapper);
 		controller.updateTaskInfo(wrapper2);
@@ -367,7 +367,7 @@ public class CommandsTest {
 		service.addTask(t1);
 		
 		TaskWrapper wrapper = TaskWrapper.
-				getTestWrappper(-21, "lazy load", "adding context structure","OS", "Platform", "Component", c1);
+				getTestWrappper(-21, "lazy load", "adding context structure","OS2", "Platform2", "Component2", "Owner2", "Description2", c1);
 		
 		controller.updateInfoOfActiveTask(wrapper);
 	}
