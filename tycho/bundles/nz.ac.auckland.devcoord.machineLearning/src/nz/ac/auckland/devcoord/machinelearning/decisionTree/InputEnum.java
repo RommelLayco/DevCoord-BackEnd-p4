@@ -1,4 +1,7 @@
 package nz.ac.auckland.devcoord.machinelearning.decisionTree;
+
+import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
+
 /**
  * Enums to store the paths to various input and output files.
  * */
@@ -13,13 +16,14 @@ public enum InputEnum {
 	WEKA_DECISION_TREE_REPORT_NODRH_UNPRUNED,WEKA_DECISION_TREE_REPORT_NODRH_PRUNED,
 	TRAIN_OUTPUT_PATH,TEST_OUTPUT_PATH,
 	
-	UNIT_TEST_TRAIN_PATH
+	UNIT_TEST_TRAIN_PATH,WORKSPACE
 	;
 	
 	
 	
 	public static String toString(InputEnum inputEnum){
-		
+	
+
 		switch(inputEnum){
 		case ACCURACY_CODING:return "input/accuracy_coding.csv";
 		case PAIRS_3_2:return "input/pairs_3_2.csv";
@@ -37,7 +41,7 @@ public enum InputEnum {
 		case TRAIN_OUTPUT_PATH:return "output/train_NODRH.arff";
 		case TEST_OUTPUT_PATH:return "output/test_NODRH.arff";
 		case UNIT_TEST_TRAIN_PATH:return "output/UNIT_TEST.arff";
-		
+		case WORKSPACE:return CriticalityUtility.class.getProtectionDomain().getCodeSource().getLocation().getFile();
 		}
 			
 		return null;
@@ -67,6 +71,7 @@ public enum InputEnum {
 		case TRAIN_OUTPUT_PATH:return "output/train_NODRH.arff";
 		case TEST_OUTPUT_PATH:return "output/test_NODRH.arff";
 		case UNIT_TEST_TRAIN_PATH:return "output/UNIT_TEST.arff";
+		
 		}
 			
 		return null;
