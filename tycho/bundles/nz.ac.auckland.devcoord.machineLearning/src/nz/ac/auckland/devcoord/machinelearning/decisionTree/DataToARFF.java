@@ -1,5 +1,4 @@
 package nz.ac.auckland.devcoord.machinelearning.decisionTree;
-
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
-
 import nz.ac.auckland.devcoord.machinelearning.trainData.ProcessData;
 import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPair;
 import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPairKey;
@@ -18,42 +16,21 @@ import nz.ac.auckland.devcoord.machinelearning.trainData.TaskPairKey;
  * 
  * */
 public class DataToARFF {
-	
-	
 	/**
 	 * Used for making the arff file for the train data
 	 * to an arff file.
 	 * */
 	public static void convertProcessDataToArff(ProcessData data,InputEnum inputEnum){
-	
-		
-
-
 		Writer writer = null;
-
 		String inputString;
-
-
-
 		inputString=InputEnum.outputToString(inputEnum);
-
-
-
 		try {
 			FileOutputStream fileOutputStream=new FileOutputStream(inputString);
 			OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream, "utf-8"); 
-
-
-			
 			writer = new BufferedWriter(outputStreamWriter);
-			
-
 			writer.write(getLabels());
 			writer.write("@data"+"\n");
-
-
 			int countOfBadData=0;
-
 			List<TaskPairKey> keys;
 			if (true) {
 				keys=data.getTestKeys();//USING TEST KEYS HERE FOR TRAINING
@@ -62,27 +39,18 @@ public class DataToARFF {
 				try{
 					writer.write(getStringOfTheFollowingTaskPairKey(taskPairKey, data));
 					writer.write("\n");
-
 				}
 				catch(NullPointerException n){
-
 					countOfBadData+=1;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
-			
-
 			writer.close();
 			fileOutputStream.close();
-			
 			outputStreamWriter.close();
 			//System.out.println("number of bad entries:"+countOfBadData);
-
-			
-			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,40 +61,19 @@ public class DataToARFF {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-
-		
-		
-		
 	} 
-
-
-
-
-
 	/**
 	 * Helper method- creates a label which is written in the arff file,depending on the arguments,
 	 * it includes or excludes DRH attributes from the label.
 	 * **/
 	protected static String getLabels(){
 		String toReturn;
-
-
 		toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
 				"@attribute Proximity numeric"+"\n"+
-
 			"@attribute Critical {true,false}"+"\n"+""
-
 			+ "\n";
-
-
-
-
 		return toReturn;
-
-
 	}
-
 	/**
 	 * Helper method-creates a string that contains information about a pair of task.
 	 * this string is returned,which is then written directly into the arff file(not be this method). 
@@ -136,20 +83,7 @@ public class DataToARFF {
 		Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
 		float proximity=taskPairs.get(taskPairKey).getPscore();
 		String critical=""+taskPairs.get(taskPairKey).isCritical();
-
-
-
-
 		return proximity+","
 		+ critical;
-
-
-
-
-
-
-
 	}
-
-
 }
