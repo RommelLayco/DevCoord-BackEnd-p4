@@ -36,7 +36,7 @@ public class ReadFiles {
 		BufferedReader br = null;
 
 		try {
-
+			 System.out.println("--"+new File(".").getCanonicalPath());
 			String currentLine;
 			// get file
 			File pairs = new File(folder +System.getProperty("file.separator")
