@@ -169,7 +169,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 			int task_id = taskWrapper.getTaskID();
 
 			//getTask pairs
-			List<TaskPair> pairs = controller.getTaskPairs(file, task_id);
+			List<TaskPair> pairs = controller.getTaskPairs(file, task_id, 14);
 			
 
 			//machine learning 

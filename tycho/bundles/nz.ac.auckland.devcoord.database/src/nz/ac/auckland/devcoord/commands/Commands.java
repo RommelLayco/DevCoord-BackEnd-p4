@@ -1,5 +1,6 @@
 package nz.ac.auckland.devcoord.commands;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
@@ -203,19 +205,33 @@ public class Commands {
 	 * Ignore the task that has the task_ID value.
 	 * @param file1
 	 * @param task_ID
+	 * @param days is the numbers of day in the past. That is only get task that have been
+	 * updated in the database in the last x amount of days. Note if has been updated in 
+	 * the database it has been worked on.
 	 * @return
 	 */
-	public List<Integer> getTaskIDsWithSameContext(Context_Structure file1, int task_ID){
+	public List<Integer> getTaskIDsWithSameContext(Context_Structure file1, int task_ID, int days){
 		List<Integer> task_IDs = new ArrayList<Integer>(); 
 
 		//create query string
 		String jpql = "Select t.id from Task t, IN(t.contextStructure) c"
 				+ " where t.taskID != " + task_ID +
-				" AND c.name = '" + file1.getName() +"'";
+				" AND c.name = '" + file1.getName() +"'" +
+				" AND t.date > :date";
 
+		
 
 		EntityManager em = hibernateUtil.getEntityManager();
 		Query query = em.createQuery(jpql);
+		
+		
+		LocalDate date = LocalDate.now();
+		query.setParameter("date", date.minusDays(days));
+		
+		
+		
+		//query.setParameter("start", date.minusDays(days));
+		//query.setParameter("end", date);
 
 		task_IDs = query.getResultList();
 		em.close();
@@ -291,6 +307,13 @@ public class Commands {
 		em.close();
 		
 		return task;
+	}
+	
+	private static String getDateCondition(int days){
+		LocalDate date = LocalDate.now();
+		String line = "'" + date.minusDays(days);
+		line += "' AND '" + date +"'";
+		return line;
 	}
 	
 	

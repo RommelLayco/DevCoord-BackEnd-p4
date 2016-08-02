@@ -1,5 +1,7 @@
 package nz.ac.auckland.devcoord.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +50,10 @@ public class TaskWrapper {
 	private String OS;
 	private String platform;
 	private String component;
-
+	
+	private String owner;
+	private String description;
+	
 	private boolean isEdit;
 	private boolean isSelect;
 	private Context_Structure context;
@@ -87,6 +92,12 @@ public class TaskWrapper {
 			
 			attribute = map.get("component");
 			this.component = attribute.getValue();
+			
+			//owner and description should be displayed to the 
+			//user when a task pair is critical
+			this.owner = activeTask.getOwner();
+			attribute = map.get("long_desc");
+			this.description = attribute.getValue();
 
 			isActiveTask = true;
 		} else {
@@ -99,7 +110,8 @@ public class TaskWrapper {
 
 	//constuctor to test
 	private TaskWrapper(int taskID, String handle, String label, 
-			String OS, String platform, String component, Context_Structure context){
+			String OS, String platform, String component,
+			String owner, String description, Context_Structure context){
 		this.taskID = taskID;
 		taskHandle = handle;
 		taskLabel = label;
@@ -109,14 +121,20 @@ public class TaskWrapper {
 		
 		this.context = context;
 		this.structureHandle = context.getName();
+		
+		this.owner = owner;
+		this.description = description;
+		
 	}
 
 
 	public static TaskWrapper getTestWrappper(int taskID, String handle,
 			String label, String OS, String platform,
-			String component, Context_Structure context){
+			String component, String owner, String description,
+			Context_Structure context
+			){
 		return new TaskWrapper(taskID, handle, label, OS,
-				platform, component, context);
+				platform, component, owner, description, context);
 	}
 
 	/**Returns currently active task*/
@@ -167,6 +185,16 @@ public class TaskWrapper {
 	public String getComponent(){
 		return this.component;
 	}
+	
+	public String getOwner(){
+		return this.owner;
+	}
+	
+	public String getDescription(){
+		return this.description;
+	}
+	
+	
 
 	@Override
 	public String toString() {	
