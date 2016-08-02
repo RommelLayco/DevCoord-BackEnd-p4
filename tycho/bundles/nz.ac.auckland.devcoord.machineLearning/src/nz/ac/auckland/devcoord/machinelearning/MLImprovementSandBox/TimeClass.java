@@ -107,8 +107,8 @@ public class TimeClass {
 
 	private static TaskPair buildDummyTaskPairOne(){
 
-		Task one=new Task(1, "Dummy Handle one", "Dummy label one","OSOne", "Platform", "ComponentTwo");
-		Task two=new Task(2, "Dummy Handle two", "Dummy label two","OS", "Platform", "Component");
+		Task one=new Task(1, "Dummy Handle one", "Dummy label one","OSOne", "Platform", "ComponentTwo","Owner","DescriptionOne");
+		Task two=new Task(2, "Dummy Handle two", "Dummy label two","OS", "Platform", "Component","Owner","DescriptionOne");
 		Context_Structure context_StructureOne=new Context_Structure("ContextOne", false, true);
 		Context_Structure context_StructureTwo=new Context_Structure("ContextOne", true, false);
 		one.addContextStructure(context_StructureOne.getName(), context_StructureOne);
@@ -120,8 +120,8 @@ public class TimeClass {
 
 	private static TaskPair buildDummyTaskPairTwo(){
 
-		Task one=new Task(1, "Dummy Handle Three", "Dummy label Three","OS", "Platform", "Component");
-		Task two=new Task(2, "Dummy Handle four", "Dummy label four","OS", "Platform", "Component");
+		Task one=new Task(1, "Dummy Handle Three", "Dummy label Three","OS", "Platform", "Component","Owner","DescriptionOne");
+		Task two=new Task(2, "Dummy Handle four", "Dummy label four","OS", "Platform", "Component","Owner","DescriptionOne");
 		Context_Structure context_StructureOne=new Context_Structure("ContextThree", false, true);
 		Context_Structure context_StructureTwo=new Context_Structure("Contextfour", true, false);
 		one.addContextStructure(context_StructureOne.getName(), context_StructureOne);
