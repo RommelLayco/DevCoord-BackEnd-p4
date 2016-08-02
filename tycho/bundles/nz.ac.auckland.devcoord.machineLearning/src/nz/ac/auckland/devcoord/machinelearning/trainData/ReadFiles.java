@@ -2,12 +2,18 @@ package nz.ac.auckland.devcoord.machinelearning.trainData;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import nz.ac.auckland.devcoord.machinelearning.decisionTree.InputEnum;
+
+
+
 
 
 /**
@@ -34,33 +40,53 @@ public class ReadFiles {
 
 		//read in pairs files;
 		BufferedReader br = null;
-
+		String currentLine;
+		File pairs;
 		try {
-			 System.out.println("--"+new File(".").getCanonicalPath());
-			String currentLine;
+
 			// get file
-			File pairs = new File(folder +System.getProperty("file.separator")
+			pairs = new File(folder +System.getProperty("file.separator")
 			+ fileName);
-
 			br = new BufferedReader(new FileReader(pairs));
-			//read first line which is titles so we can ignore.
-			currentLine = br.readLine();
 
+		} catch (FileNotFoundException e) {
+			//e.printStackTrace();
+
+			pairs = new File(InputEnum.toString(InputEnum.WORKSPACE)+System.getProperty("file.separator")+folder +System.getProperty("file.separator")
+			+ fileName);
+			try {
+				br = new BufferedReader(new FileReader(pairs));
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} 
+
+
+		//read first line which is titles so we can ignore.
+		try {
+			currentLine = br.readLine();
 			while ((currentLine = br.readLine()) != null) {
 				String[] line = currentLine.split(",");
 				lines.add(line);
 			}
-br.close();
+			br.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
+		}
+
+
+		finally {
 			try {
 				if (br != null)br.close();
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
 		}
-		
+
+
+
 		return lines;
 	}
 
@@ -107,10 +133,10 @@ br.close();
 
 		return taskPairMap;
 	}
-	
+
 	public static Map<TaskPairKey, TaskPair> addTasksPairs(List<String[]> lines, List<TaskPairKey> keys,
 			Map<TaskPairKey, TaskPair> taskPairs){
-		
+
 		for(String[] line : lines){
 			TaskPair taskPair = TaskPair.createAll(line);
 
@@ -119,7 +145,7 @@ br.close();
 			keys.add(key);
 			taskPairs.put(key, taskPair);
 		}
-		
+
 		return taskPairs;
 	}
 

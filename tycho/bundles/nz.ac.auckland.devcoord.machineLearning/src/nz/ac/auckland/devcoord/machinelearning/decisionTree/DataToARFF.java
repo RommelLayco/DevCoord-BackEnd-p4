@@ -24,8 +24,20 @@ public class DataToARFF {
 		Writer writer = null;
 		String inputString;
 		inputString=InputEnum.outputToString(inputEnum);
+		FileOutputStream fileOutputStream = null;
 		try {
-			FileOutputStream fileOutputStream=new FileOutputStream(inputString);
+			 fileOutputStream=new FileOutputStream(inputString);
+		}
+		catch (FileNotFoundException e) {
+			
+			try {
+				fileOutputStream=new FileOutputStream(InputEnum.toString(InputEnum.WORKSPACE)+System.getProperty("file.separator")+inputString);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		try{
 			OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream, "utf-8"); 
 			writer = new BufferedWriter(outputStreamWriter);
 			writer.write(getLabels());
@@ -54,10 +66,7 @@ public class DataToARFF {
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e1) {
+		}  catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
