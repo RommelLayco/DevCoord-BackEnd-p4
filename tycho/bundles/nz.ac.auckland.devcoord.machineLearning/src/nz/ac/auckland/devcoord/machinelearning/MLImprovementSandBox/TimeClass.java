@@ -107,28 +107,26 @@ public class TimeClass {
 
 	private static TaskPair buildDummyTaskPairOne(){
 
-		Task one=new Task(1, "Dummy Handle one", "Dummy label one");
-		Task two=new Task(2, "Dummy Handle two", "Dummy label two");
+		Task one=new Task(1, "Dummy Handle one", "Dummy label one","OSOne", "Platform", "ComponentTwo");
+		Task two=new Task(2, "Dummy Handle two", "Dummy label two","OS", "Platform", "Component");
 		Context_Structure context_StructureOne=new Context_Structure("ContextOne", false, true);
 		Context_Structure context_StructureTwo=new Context_Structure("ContextOne", true, false);
 		one.addContextStructure(context_StructureOne.getName(), context_StructureOne);
 		two.addContextStructure(context_StructureTwo.getName(), context_StructureOne);
 		TaskPair taskPairOne=new TaskPair(one,two);
-		taskPairOne.calcProximityScore();
 		return taskPairOne;
 
 	}
 
 	private static TaskPair buildDummyTaskPairTwo(){
 
-		Task one=new Task(1, "Dummy Handle Three", "Dummy label Three");
-		Task two=new Task(2, "Dummy Handle four", "Dummy label four");
+		Task one=new Task(1, "Dummy Handle Three", "Dummy label Three","OS", "Platform", "Component");
+		Task two=new Task(2, "Dummy Handle four", "Dummy label four","OS", "Platform", "Component");
 		Context_Structure context_StructureOne=new Context_Structure("ContextThree", false, true);
 		Context_Structure context_StructureTwo=new Context_Structure("Contextfour", true, false);
 		one.addContextStructure(context_StructureOne.getName(), context_StructureOne);
 		two.addContextStructure(context_StructureTwo.getName(), context_StructureTwo);
 		TaskPair taskPairOne=new TaskPair(one,two);
-		taskPairOne.calcProximityScore();
 		return taskPairOne;
 
 	}
