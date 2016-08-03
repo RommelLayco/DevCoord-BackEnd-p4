@@ -241,11 +241,7 @@ private String getCriticalScoreString(){
 
 			RefreshDevCoord();
 		}
-		else{
-
-			RefreshDevCoord();	
-
-		}
+		RefreshDevCoord();
 	}
 
 	@Override
