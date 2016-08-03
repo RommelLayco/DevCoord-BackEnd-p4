@@ -2,13 +2,13 @@ package nz.ac.auckland.devcoord.commands;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
@@ -87,7 +87,8 @@ public class Commands {
 			EntityManager em = hibernateUtil.getEntityManager();
 			Query query = em.createQuery(jpql);
 
-			tasks = query.getResultList();
+			//ensure that cast is done correctly.
+			tasks = castList(Task.class, query.getResultList());
 			em.close();
 
 			return tasks;
@@ -233,7 +234,8 @@ public class Commands {
 		//query.setParameter("start", date.minusDays(days));
 		//query.setParameter("end", date);
 
-		task_IDs = query.getResultList();
+		//ensure that cast is done correctly.
+		task_IDs = castList(Integer.class, query.getResultList());
 		em.close();
 
 		return task_IDs;
@@ -309,13 +311,24 @@ public class Commands {
 		return task;
 	}
 	
-	private static String getDateCondition(int days){
-		LocalDate date = LocalDate.now();
-		String line = "'" + date.minusDays(days);
-		line += "' AND '" + date +"'";
-		return line;
+	/**
+	 * fixes the Type safety: The expression of type List needs 
+	 * unchecked conversion to conform to List<T>
+	 * 
+	 * i.e. when a list of results is queried
+	 * 
+	 * @param clazz
+	 * @param c
+	 * @return
+	 * 
+	 * taken from http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
+	 */
+	private static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+	    List<T> r = new ArrayList<T>(c.size());
+	    for(Object o: c)
+	      r.add(clazz.cast(o));
+	    return r;
 	}
-	
-	
+		
 	
 }
