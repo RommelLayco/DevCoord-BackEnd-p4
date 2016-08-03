@@ -8,10 +8,8 @@ import org.eclipse.ui.part.*;
 
 import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
-import nz.ac.auckland.devcoord.controller.TaskInfo;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
 import nz.ac.auckland.devcoord.database.Context_Structure;
-import nz.ac.auckland.devcoord.database.Task;
 import nz.ac.auckland.devcoord.database.TaskPair;
 import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
 import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
