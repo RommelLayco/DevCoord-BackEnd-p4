@@ -48,14 +48,30 @@ public class CriticalityUtility {
 	{
 		String trainString;
 
-		trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
+		
 
 		// train classifier
 		J48 cls = new J48();
 		Instances train;
 		Instances test;
+		FileReader trainFileReader=null;
 		try {
-			FileReader trainFileReader=new FileReader(trainString);
+			trainString=InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
+			trainFileReader = new FileReader(trainString);
+			
+		} catch (FileNotFoundException e) {
+			trainString=InputEnum.toString(InputEnum.WORKSPACE)+System.getProperty("file.separator")+InputEnum.toString(InputEnum.TRAIN_OUTPUT_PATH);
+			try {
+				trainFileReader = new FileReader(trainString);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+
+		}
+		try {
+			
 			BufferedReader trainBufferedReader=new BufferedReader(trainFileReader);
 			train = new Instances(trainBufferedReader);
 			train.setClassIndex(train.numAttributes() - 1);
