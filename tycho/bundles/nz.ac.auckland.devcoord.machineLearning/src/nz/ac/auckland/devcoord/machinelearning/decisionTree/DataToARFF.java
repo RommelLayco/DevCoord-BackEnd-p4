@@ -79,7 +79,11 @@ public class DataToARFF {
 		String toReturn;
 		toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
 				"@attribute Proximity numeric"+"\n"+
-			"@attribute Critical {true,false}"+"\n"+""
+				"@attribute SameComponent {true,false}"+"\n"+
+				"@attribute SamePlatform {true,false}"+"\n"+
+				"@attribute SameOS {true,false}"+"\n"+
+
+				"@attribute Critical {true,false}"+"\n"+""
 			+ "\n";
 		return toReturn;
 	}
@@ -92,7 +96,14 @@ public class DataToARFF {
 		Map<TaskPairKey, TaskPair> taskPairs=processData.getTaskPairs();
 		float proximity=taskPairs.get(taskPairKey).getPscore();
 		String critical=""+taskPairs.get(taskPairKey).isCritical();
+		String component=""+taskPairs.get(taskPairKey).isSameComponent();
+		String platform=""+taskPairs.get(taskPairKey).isSamePlatform();
+		String os=""+taskPairs.get(taskPairKey).isSameOS();
+		
 		return proximity+","
+		+component+","
+		+platform+","
+		+os+","
 		+ critical;
 	}
 }
