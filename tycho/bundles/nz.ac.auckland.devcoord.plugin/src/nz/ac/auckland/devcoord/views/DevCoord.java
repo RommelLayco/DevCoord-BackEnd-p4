@@ -27,7 +27,7 @@ import org.eclipse.mylyn.internal.tasks.ui.ITaskListNotificationProvider;
 import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -89,6 +89,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * This method places that event in the static handle {@link #taskWrapper} to be used by
 	 * other classes.
 	 * */
+	
 	private void RefreshDevCoord(){
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
@@ -99,7 +100,70 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 			}
 		});
 	}
+	
+	private void RefreshDevCoord(List<TaskPair> pairs){
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				if (taskWrapper!=null) {
+					//TaskInfo.printTaskInfoForAllTasks();
+					text.setText(taskWrapper.toString()+criticalString(pairs));
+				}
+			}
+		});
+	}
+	private String criticalString(List<TaskPair> pairs){
+		String separator=System.getProperty("line.separator");
+		String toReturn="----------------------------"+separator;
+		toReturn+="For Task "+taskWrapper.getTaskID()+",the following tasks are critical-"+separator;
+		ArrayList<Integer> criticalIDs=returnIDsThatAreCritical(pairs);
+		
+		
+		
+		for (Integer integer : criticalIDs) {
+			toReturn+="		Task "+integer+separator;
+				
+		}
+		
+		return toReturn;
+	}
+	
+	private ArrayList<Integer> returnIDsThatAreCritical(List<TaskPair> pairs){
+		
+		
+		ArrayList<Integer> toReturn=new ArrayList<Integer>();
+		
+		for (TaskPair taskPair : pairs) {
+			if(taskPair.isCritical()){
+				
+				toReturn.add(getOtherTaskID(taskWrapper.getTaskID(), taskPair));
+				
+			}
+			
+		}
+		
+		
+		return toReturn;
+		
+		
+		
+		
+	}
+	
+	private int getOtherTaskID(int ID,TaskPair pair){
+		
+		if (pair.getID1()==ID) {
+			return pair.getID2();
+		}
+		else if (pair.getID2()==ID) {
+			return pair.getID1();
+		}
+		else{
+			
+			return -1;
+		}
 
+	}
+	
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
 		fillLocalPullDown(bars.getMenuManager());
@@ -177,9 +241,14 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 			//persist taskpairs
 			controller.saveTaskPairs(pairs);
-		}
 
-		RefreshDevCoord();
+			RefreshDevCoord(pairs);
+		}
+		else{
+
+			RefreshDevCoord();	
+			
+		}
 	}
 
 	@Override
