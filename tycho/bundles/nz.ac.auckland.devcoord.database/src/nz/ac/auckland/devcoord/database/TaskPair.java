@@ -64,15 +64,15 @@ public class TaskPair {
 	@Column(name = "SAME_OS")
 	@Type(type="yes_no")
 	private boolean sameOS;
-	
+
 	@Column(name = "SAME_PLATFORM")
 	@Type(type="yes_no")
 	private boolean samePlatform;
-	
+
 	@Column(name = "SAME_COMPONENT")
 	@Type(type="yes_no")
 	private boolean sameComponent;
-	
+
 
 	private boolean isCritical;
 
@@ -105,7 +105,7 @@ public class TaskPair {
 		} else {
 			this.proximityScore = 0;
 		}
-		
+
 		setTaskProperties();
 	}
 
@@ -136,10 +136,15 @@ public class TaskPair {
 
 		String name = file1.getName();
 
-		this.potentialScore -= this.potentialScores.get(name);
-		this.actualScore -= this.actualScores.get(name);
+		if(this.potentialScores.containsKey(name)){ //i.e. if context already exist in task
+			
+			this.potentialScore -= this.potentialScores.get(name);
+			this.actualScore -= this.actualScores.get(name);
+		}
 
 		//set the update value for the file in the map
+		//or add the new context structure if it does not already exist in 
+		//the task
 		setPotentialValueForContext(name, potentialScore(file1, file2));
 		setActualValueForContext(name, actualScore(file1, file2));
 
@@ -231,9 +236,9 @@ public class TaskPair {
 				this.potentialScores.put(file2.getName(), 0.0);
 				return 0;
 			}
-			
+
 		} else if(file1 != null){ //file 2 is null
-			
+
 			if(file1.isEdited()){
 				this.potentialScores.put(file1.getName(), 1.0);
 				return 1;
@@ -244,7 +249,7 @@ public class TaskPair {
 				this.potentialScores.put(file1.getName(), 0.0);
 				return 0;
 			}
-			
+
 		} else {
 			throw new IllegalArgumentException("files for calculating potential values were both null");
 		}
@@ -340,7 +345,7 @@ public class TaskPair {
 	public boolean isSamePlatform(){
 		return this.samePlatform;
 	}
-	
+
 	public boolean isSameComponent(){
 		return this.sameComponent;
 	}
@@ -428,26 +433,26 @@ public class TaskPair {
 	public void setCritical(boolean isCritical) {
 		this.isCritical = isCritical;
 	}
-	
+
 	/**
 	 * Method to set the other task properties
 	 * 
 	 * i.e. if the the two task have the same OS, Component and Platform
 	 */
 	public void setTaskProperties(){
-		
+
 		if(task1.getOS().equals(task2.getOS())){
 			this.sameOS = true;
 		} else {
 			this.sameOS = false;
 		}
-		
+
 		if(task1.getPlatform().equals(task2.getPlatform())){
 			this.samePlatform = true;
 		} else {
 			this.samePlatform = false;
 		}
-		
+
 		if(task1.getComponent().equals(task2.getComponent())){
 			this.sameComponent = true;
 		} else {
