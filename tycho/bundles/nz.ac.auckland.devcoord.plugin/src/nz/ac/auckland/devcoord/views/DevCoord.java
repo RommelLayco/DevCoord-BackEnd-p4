@@ -25,7 +25,7 @@ import org.eclipse.mylyn.internal.tasks.ui.ITaskListNotificationProvider;
 import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -44,6 +44,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	/**This is static {@link #helper.TaskWrapper} object is used to store the latest
 	 * Wrapped {@link InteractionEvent} object. */
 	public static TaskWrapper taskWrapper;
+	public static List<TaskPair> pairs;
 	private Text text;
 	private Action action1;
 	private Controller controller;
@@ -87,16 +88,64 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * This method places that event in the static handle {@link #taskWrapper} to be used by
 	 * other classes.
 	 * */
+
 	private void RefreshDevCoord(){
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				if (taskWrapper!=null) {
 					//TaskInfo.printTaskInfoForAllTasks();
-					text.setText(taskWrapper.toString());
+					text.setText(taskWrapper.toString()+criticalString(pairs));
 				}
 			}
 		});
 	}
+
+	private String criticalString(List<TaskPair> pairs){
+		String separator=System.getProperty("line.separator");
+		String toReturn="----------------------------"+separator;
+		toReturn+="For Task "+taskWrapper.getTaskID()+",the following tasks are critical,Please consult the respective owner of the task-"+separator;
+		ArrayList<Task> criticalTasks=returnTasksThatAreCritical(pairs);
+
+
+
+		for (Task task : criticalTasks) {
+			toReturn+="		Task: "+task.getTaskID()+"   Owner: "+task.getOwner()+separator;
+
+		}
+
+		return toReturn;
+	}
+
+	private ArrayList<Task> returnTasksThatAreCritical(List<TaskPair> pairs){
+
+
+		ArrayList<Task> toReturn=new ArrayList<Task>();
+
+		for (TaskPair taskPair : pairs) {
+			if(taskPair.isCritical()){
+				if(taskPair.getTask1().getTaskID()==taskWrapper.getTaskID()){
+
+					toReturn.add(taskPair.getTask2());
+
+				}
+				else{
+
+					toReturn.add(taskPair.getTask1());
+
+				}
+
+
+
+			}
+
+		}
+
+
+		return toReturn;
+
+	}
+
+
 
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
@@ -167,17 +216,22 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 			int task_id = taskWrapper.getTaskID();
 
 			//getTask pairs
-			List<TaskPair> pairs = controller.getTaskPairs(file, task_id, 14);
-			
+			pairs = controller.getTaskPairs(file, task_id, 14);
+
 
 			//machine learning 
 			pairs = CriticalityUtility.fillInCriticality(pairs);
 
 			//persist taskpairs
 			controller.saveTaskPairs(pairs);
-		}
 
-		RefreshDevCoord();
+			RefreshDevCoord();
+		}
+		else{
+
+			RefreshDevCoord();	
+
+		}
 	}
 
 	@Override
