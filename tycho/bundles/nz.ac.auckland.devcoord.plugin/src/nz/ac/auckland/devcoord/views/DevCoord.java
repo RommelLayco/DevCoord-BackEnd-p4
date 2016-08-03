@@ -95,12 +95,25 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 			public void run() {
 				if (taskWrapper!=null) {
 					//TaskInfo.printTaskInfoForAllTasks();
-					text.setText(taskWrapper.toString()+criticalString(pairs));
+					text.setText(taskWrapper.toString()+criticalString(pairs)+getCriticalScoreString());
 				}
 			}
 		});
 	}
+private String getCriticalScoreString(){
+	
+	String separator=System.getProperty("line.separator");
+	String toReturn="----------------------------"+separator;
+	for (TaskPair  pair: pairs) {
+		toReturn+=" Tasks: "+pair.getID1()+"  "+pair.getID2()+separator+
+				"   CriticalSCrore: "+pair.getProximityScore()+separator+
+				"   IsCritical: "+pair.isCritical()+separator;
 
+	}
+
+	return toReturn;
+	
+}
 	private String criticalString(List<TaskPair> pairs){
 		String separator=System.getProperty("line.separator");
 		String toReturn="----------------------------"+separator;
