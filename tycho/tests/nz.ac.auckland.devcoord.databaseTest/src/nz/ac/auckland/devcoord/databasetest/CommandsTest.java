@@ -401,5 +401,39 @@ public class CommandsTest {
 		
 				
 	}
+	
+	/**
+	 * Method to test addition of new context structure to
+	 * existing task. Then calculation of that proximity score.
+	 * 
+	 * This should not throw a null error when updating the proximity 
+	 * score when a new context has been added
+	 */
+	public void addContextToTask(){
+		Task t1 = new Task(-24, "test adding new context", "test adding new context", "test adding new context", "test adding new context", "create task pair with 25", "create task pair with 25", "create task pair with 25");
+		Task t2 = new Task(-25, "test adding new context", "create task pair with 24", "create task pair with 24", "create task pair with 24", "create task pair with 24", "create task pair with 24", "create task pair with 24");
+	
+		Context_Structure c1 = new Context_Structure("matching context unique 898327493", true, true);
+		t1.addContextStructure(c1.getName(), c1);
+		t2.addContextStructure(c1.getName(), c1);
+		
+		service.addTask(t2);
+		service.addTask(t1);
+		
+		//getTask pairs
+		List<TaskPair> pairs = controller.getTaskPairs(c1, -24, 14);
+		TaskPair tp = pairs.get(0);
+		
+		Context_Structure c2 = new Context_Structure("new context unique 45u4398w998", true, true);
+		
+		pairs = controller.getTaskPairs(c2, -24, 14);
+		TaskPair tp2 = pairs.get(0);
+		
+		assertNotNull(tp2.getPotentialValueForContext(c2.getName()));
+		assertNull(tp.getPotentialValueForContext(c1.getName()));
+		
+
+		
+	}
 
 }
