@@ -104,6 +104,7 @@ private String getCriticalScoreString(){
 	
 	String separator=System.getProperty("line.separator");
 	String toReturn="----------------------------"+separator;
+	 toReturn+="Task pairs present in the TaskPairList:"+separator;
 	for (TaskPair  pair: pairs) {
 		toReturn+=" Tasks: "+pair.getID1()+"  "+pair.getID2()+separator+
 				"   CriticalSCrore: "+pair.getProximityScore()+separator+
