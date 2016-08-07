@@ -28,12 +28,12 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ILock;
 import org.eclipse.core.runtime.jobs.Job;
@@ -58,7 +58,23 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private Controller controller;
 	private LocalTime time;
 	
-	 private static ILock lock = Platform.getJobManager().newLock();
+	/**
+	 * Use to store the time the set checked
+	 * was last cleared
+	 */
+	private LocalTime flushTime;
+	
+	/**
+	 * 
+	 * Set of task id and context structure name concatenated
+	 * used to check if context from the task has been checked
+	 * since the last time the set was emptied.
+	 * 
+	 */
+	private Set<String> checked;
+	
+	// private static ILock lock = Platform.getJobManager().newLock();
+	 private static ILock lock = Job.getJobManager().newLock();
 
 	/**
 	 * Automated generation from the HelloWorld Example.*/
@@ -79,6 +95,9 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		controller = new Controller();
 		TrainDataGeneration.convertTrainCSVToArff();
 		time = LocalTime.now();
+		flushTime = LocalTime.now();
+		
+		checked = new HashSet<String>();
 
 	}
 
@@ -235,8 +254,9 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 						lock.acquire();
 						System.err.println("after lock time start:"+ LocalTime.now());
 						taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
-
-						if(taskWrapper != null){
+						
+					
+						if(taskWrapper != null && ! (checked.contains(taskWrapper.getTaskID() + taskWrapper.getContextStructure().getName()))){
 							//update interaction event here
 							Context_Structure file = controller.updateInfoOfActiveTask(taskWrapper);
 							int task_id = taskWrapper.getTaskID();
@@ -250,6 +270,9 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 							//persist taskpairs
 							controller.saveTaskPairs(pairs);
+							
+							//add to set of checked
+							checked.add(taskWrapper.getTaskID() + taskWrapper.getContextStructure().getName());
 
 
 						}
@@ -258,6 +281,11 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 						lock.release();
 						time = LocalTime.now();
 						RefreshDevCoord();
+						
+						//empty set
+						if(LocalTime.now().isAfter(flushTime.plusMinutes(2))){
+							checked.clear();
+						}
 						//schedule(600); // 60000 = 1hr therefore 600 = 36sec
 					}
 				}
