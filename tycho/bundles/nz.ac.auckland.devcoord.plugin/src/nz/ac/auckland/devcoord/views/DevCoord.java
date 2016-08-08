@@ -1,27 +1,13 @@
 package nz.ac.auckland.devcoord.views;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.graphics.GCData;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.*;
-import org.eclipse.ui.views.contentoutline.ContentOutline;
-import org.eclipse.ui.views.properties.PropertySheet;
-
 import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
@@ -32,7 +18,6 @@ import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
 import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
 
 import org.eclipse.jface.viewers.*;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.mylyn.commons.notifications.ui.AbstractUiNotification;
 import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.IContextListener;
@@ -47,13 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.text.MaskFormatter;
-
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.ui.*;
 
 @SuppressWarnings("restriction")
@@ -68,10 +47,10 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * Wrapped {@link InteractionEvent} object. */
 	public static TaskWrapper taskWrapper;
 	public static List<TaskPair> pairs;
-	//private Text text;
-	private	Table table;
-	private ExpandBar bar;
 	
+	//private Text text;
+
+	private Composite composite;
 	 private Label label;
 	private Action action1;
 	private Controller controller;
@@ -110,59 +89,56 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		contributeToActionBars();
 		
 
-	Button	myButton = new Button(parent, SWT.PUSH);
+	//Button	myButton = new Button(parent, SWT.PUSH);
 		
-			//Shell shell=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-//		
-//			
-//		Display myDisplay=PlatformUI.getWorkbench().getDisplay();
-//			
-//		Shell shell=new Shell(myDisplay);
-//			
-//		 shell.setText("This is a label");
-//	      shell.setBounds(100, 100, 200, 50);
-//	      shell.setLayout(new FillLayout());
-//	       label = new Label(shell, SWT.CENTER);
-//	       label.setText("Hello World");
-//	     Color red = new Color(myDisplay, 255, 0, 0);
-//	     label.setForeground(red);
-//	     shell.open();
-//	     while (!shell.isDisposed()) {
-//	        if (!myDisplay.readAndDispatch()) myDisplay.sleep();
-//	     }
-//	     red.dispose();
-//	     myDisplay.dispose();
-			
-//			/**
-//			 * Reference:http://stackoverflow.com/questions/12197810/using-swt-inside-eclipse-plugin
-//			 * */
-//				MessageDialog dialog = new MessageDialog(new Shell(), "My Title", null,
-//				        "My message", MessageDialog.ERROR, new String[] { "First",
-//				      "Second", "Third" }, 0);
-//				int result = dialog.open();
-			
-//		/**http://www.vogella.com/tutorials/EclipseDialogs/article.html*/
-//		
-//		// create a dialog with ok and cancel buttons and a question icon
-//		MessageBox dialog = 
-//		  new MessageBox(shell, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
-//		dialog.setText("My info");
-//		dialog.setMessage("Do you really want to do this?");
-//
-//		// open dialog and await user selection
-////		returnCode = dialog.open(); 
-//
-//		dialog.open(); 
-
-//		ContentOutline contentOutline=new ContentOutline();
-//		contentOutline.createPartControl(shell);
+		
+//		Shell shell=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+//		shell.setLayout(new GridLayout());
+		GridLayout layout = new GridLayout ();
+		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
+		
+	//	parent.setLayout();
 	
 		
-		//	org.eclipse.jface.dialogs.MessageDialog messageDialog=new MessageDialog(shell, "dialogTitle", new org.eclipse.swt.graphics.Image(new Device, data), "dialogMessage", 1, null, 1);
-			
-		//	messageDialog.open();
-	//		new ErrorDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()	, "v", "message", IStatus.INFO, 1);
-	 
+		org.eclipse.swt.widgets.ExpandBar bar=new ExpandBar(parent, 1);
+
+		
+		
+		composite = new Composite (bar, SWT.NONE);
+		composite.setLayout(layout);
+//		Button	myButton = new Button(parent, SWT.PUSH);
+//		ExpandItem expandItem=new ExpandItem(bar, 1);
+//		expandItem.setText("expand Item");
+//		
+//		expandItem.setControl(composite);
+		
+		
+		
+		
+		
+		
+		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
+		layout.verticalSpacing = 10;
+		composite.setLayout(layout);
+		label=new Label(composite, 1);
+		label.setText("0000");
+		label.setEnabled(true);
+		
+//		Button button = new Button (composite, SWT.PUSH);
+//		button.setText("SWT.PUSH");
+//		button = new Button (composite, SWT.RADIO);
+//		button.setText("SWT.RADIO");
+//		button = new Button (composite, SWT.CHECK);
+//		button.setText("SWT.CHECK");
+//		button = new Button (composite, SWT.TOGGLE);
+//		button.setText("SWT.TOGGLE");
+		
+		
+		ExpandItem item0 = new ExpandItem (bar, SWT.NONE, 0);
+		item0.setText("Task Conflicts");
+		item0.setHeight(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		item0.setControl(composite);
+	
 		
 		
 	}
@@ -177,18 +153,22 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * */
 
 	private void RefreshDevCoord(){
-//		Display.getDefault().asyncExec(new Runnable() {
-//			public void run() {
-//				if (taskWrapper!=null) {
-//					//TaskInfo.printTaskInfoForAllTasks();
-//					
-//					
-//					//text.setText("TASKPAIRlistSIZE:"+pairs.size()+System.getProperty("line.separator")+taskWrapper.toString()+criticalString(pairs)+getCriticalScoreString());
-//				
-//				
-//				}
-//			}
-//		});
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				if (taskWrapper!=null) {
+					
+					label=new Label(composite, 1);
+					label.setText("TASKPAIRlistSIZE:"+pairs.size());
+					label.setEnabled(true);
+					//TaskInfo.printTaskInfoForAllTasks();
+					
+					
+					//text.setText("TASKPAIRlistSIZE:"+pairs.size()+System.getProperty("line.separator")+taskWrapper.toString()+criticalString(pairs)+getCriticalScoreString());
+				
+				
+				}
+			}
+		});
 	}
 private String getCriticalScoreString(){
 	
