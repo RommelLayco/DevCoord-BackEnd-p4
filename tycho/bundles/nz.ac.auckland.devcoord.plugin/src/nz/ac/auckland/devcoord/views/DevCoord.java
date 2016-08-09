@@ -47,13 +47,17 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * Wrapped {@link InteractionEvent} object. */
 	public static TaskWrapper taskWrapper;
 	public static List<TaskPair> pairs;
-	
+
 	//private Text text;
 
-	private Composite composite;
-	 private Label label;
-	 private ExpandItem item0 ;
-	 
+	private Composite compositeOne;
+	private Label labeOne;
+	private ExpandItem itemOne ;
+
+	private Composite compositeTwo;
+	private Label labeTwo;
+	private ExpandItem itemTwo ;
+	
 	private Action action1;
 	private Controller controller;
 	/**
@@ -83,43 +87,43 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 */
 	public void createPartControl(Composite parent) {
 		//text = new Text(parent, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		
-		
-		
+
+
+
 		RefreshDevCoord();
 		makeActions();
 		contributeToActionBars();
-		
+
 		GridLayout layout = new GridLayout ();
 		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
-		
-
-	
-		
+		layout.verticalSpacing = 10;
 		org.eclipse.swt.widgets.ExpandBar bar=new ExpandBar(parent, 1);
 
-		
-		
-		composite = new Composite (bar, SWT.NONE);
-		composite.setLayout(layout);
-		
-		
-		
-		item0 = new ExpandItem (bar, SWT.NONE, 0);
-		item0.setText("Overlapping Tasks");
-		item0.setHeight(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-		item0.setControl(composite);
-	
-		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
-		layout.verticalSpacing = 10;
-		composite.setLayout(layout);
-		label=new Label(composite, 1);
-		label.setText("0000");
-		label.setEnabled(true);
-		
 
-		
-		
+
+		compositeOne = new Composite (bar, SWT.NONE);
+		compositeOne.setLayout(layout);
+		itemOne = new ExpandItem (bar, SWT.NONE, 0);
+		itemOne.setText("Overlapping Tasks");
+		itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		itemOne.setControl(compositeOne);
+		compositeOne.setLayout(layout);
+		labeOne=new Label(compositeOne, 1);
+		labeOne.setText("0000");
+		labeOne.setEnabled(true);
+
+		compositeTwo = new Composite (bar, SWT.None);
+		compositeTwo.setLayout(layout);
+		itemTwo = new ExpandItem (bar, SWT.None, 0);
+		itemTwo.setText("Conflicting Tasks");
+		itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		itemTwo.setControl(compositeTwo);
+		compositeTwo.setLayout(layout);
+		labeTwo=new Label(compositeTwo, 1);
+		labeTwo.setText("0000");
+		labeTwo.setEnabled(true);
+
+
 	}
 
 	/**
@@ -135,43 +139,46 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				if (taskWrapper!=null) {
+
+					labeOne.setText(getOverlappingTaskPairs());
+					itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+					labeOne.getParent().layout();
+
+					labeTwo.setText(criticalString());
+					itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+					labeTwo.getParent().layout();
 					
-					
-					label.setText(getOverlappingTaskPairs());
-				
-					//TaskInfo.printTaskInfoForAllTasks();
-					item0.setHeight(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-					
-					label.getParent().layout();
 					System.out.println("REFERESH CALLED9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
 					System.out.println(getOverlappingTaskPairs());
-
+					System.out.println("Critical:"+criticalString());
 					
+					//TaskInfo.printTaskInfoForAllTasks();
+
 					//text.setText("TASKPAIRlistSIZE:"+pairs.size()+System.getProperty("line.separator")+taskWrapper.toString()+criticalString(pairs)+getCriticalScoreString());
-				
-				
+
+
 				}
 			}
 		});
 	}
-	
-	
-	
-private String getOverlappingTaskPairs(){
-	
-	String separator=System.getProperty("line.separator");
-	String toReturn="";
-	for (TaskPair  pair: pairs) {
-		toReturn+=" Task: "+getOtherTaskID(taskWrapper.getTaskID(), pair)+separator;
 
+
+
+	private String getOverlappingTaskPairs(){
+
+		String separator=System.getProperty("line.separator");
+		String toReturn="";
+		for (TaskPair  pair: pairs) {
+			toReturn+=" Task: "+getOtherTaskID(taskWrapper.getTaskID(), pair)+separator;
+
+
+		}
+
+		return toReturn;
 
 	}
+	private int getOtherTaskID(int ID,TaskPair pair){		
 
-	return toReturn;
-	
-}
-private int getOtherTaskID(int ID,TaskPair pair){		
-		
 		if (pair.getID1()==ID) {		
 			return pair.getID2();		
 		}		
@@ -179,29 +186,30 @@ private int getOtherTaskID(int ID,TaskPair pair){
 			return pair.getID1();		
 		}		
 		else{		
-					
+
 			return -1;		
 		}		
-		  
+
 	}
 
-	private String criticalString(List<TaskPair> pairs){
+	private String criticalString(){
 		String separator=System.getProperty("line.separator");
-		String toReturn="----------------------------"+separator;
-		toReturn+="For Task "+taskWrapper.getTaskID()+",the following tasks are critical,Please consult the respective owner of the task-"+separator;
-		ArrayList<Task> criticalTasks=returnTasksThatAreCritical(pairs);
+		String toReturn="";
+		ArrayList<Task> criticalTasks=returnTasksThatAreCritical();
 
 
 
 		for (Task task : criticalTasks) {
-			toReturn+="		Task: "+task.getTaskID()+"   Owner: "+task.getOwner()+separator;
+			toReturn+="Task: "+task.getTaskID()+"   Owner: "+task.getOwner()+separator;
+			toReturn+="	Description: "+task.getDescription()+separator;
+			
 
 		}
 
 		return toReturn;
 	}
 
-	private ArrayList<Task> returnTasksThatAreCritical(List<TaskPair> pairs){
+	private ArrayList<Task> returnTasksThatAreCritical(){
 
 
 		ArrayList<Task> toReturn=new ArrayList<Task>();
@@ -266,9 +274,9 @@ private int getOtherTaskID(int ID,TaskPair pair){
 	 */
 	public void setFocus() {
 		//text.setFocus();
-		
-	//	table.setFocus();
-	//	label.setFocus();
+
+		//	table.setFocus();
+		//	label.setFocus();
 	}
 	/**{@inheritDoc}*/
 	@Override
@@ -313,7 +321,7 @@ private int getOtherTaskID(int ID,TaskPair pair){
 			//persist taskpairs
 			controller.saveTaskPairs(pairs);
 
-			
+
 		}
 		RefreshDevCoord();
 	}
