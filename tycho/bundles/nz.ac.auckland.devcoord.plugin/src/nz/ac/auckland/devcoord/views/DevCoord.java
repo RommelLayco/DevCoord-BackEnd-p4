@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.part.*;
 import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
@@ -47,6 +48,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * Wrapped {@link InteractionEvent} object. */
 	public static TaskWrapper taskWrapper;
 	public static List<TaskPair> pairs;
+	private static String  previousCriticalString="";
 
 	//private Text text;
 
@@ -57,7 +59,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private Composite compositeTwo;
 	private Label labeTwo;
 	private ExpandItem itemTwo ;
-	
+
 	private Action action1;
 	private Controller controller;
 	/**
@@ -144,14 +146,38 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeOne.getParent().layout();
 
-					labeTwo.setText(criticalString());
+					String nextCriticalString=criticalString();
+
+					if (!previousCriticalString.equals(nextCriticalString)&& !nextCriticalString.equals("")) {
+						System.out.println("previousCriticalString.equals(nextCriticalString):"+previousCriticalString.equals(nextCriticalString));
+						System.out.println("previousCriticalString:"+previousCriticalString);
+						System.out.println("previousCriticalString.length():"+previousCriticalString.length());
+						System.out.println("nextCriticalString:"+nextCriticalString);
+						System.out.println("nextCriticalString.length():"+nextCriticalString.length());
+						
+						String separator=System.getProperty("line.separator");
+						ArrayList<Task> criticalTasks=returnTasksThatAreCritical();
+
+						MessageBox dialog = 
+								new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.ICON_QUESTION | SWT.OK);
+						dialog.setText("Conflicting Tasks!");
+						String info="The following Task(s) are conflicting with your current task-"+separator;
+						for (Task task : criticalTasks) {
+							info+="Task "+task.getTaskID()+separator;
+						}
+						info+="Please refer to Conflictig Tasks tab for details.";
+						dialog.setMessage(info);
+						dialog.open();
+					}
+					previousCriticalString=nextCriticalString;
+					labeTwo.setText(nextCriticalString);
 					itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeTwo.getParent().layout();
-					
+
 					System.out.println("REFERESH CALLED9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
 					System.out.println(getOverlappingTaskPairs());
 					System.out.println("Critical:"+criticalString());
-					
+
 					//TaskInfo.printTaskInfoForAllTasks();
 
 					//text.setText("TASKPAIRlistSIZE:"+pairs.size()+System.getProperty("line.separator")+taskWrapper.toString()+criticalString(pairs)+getCriticalScoreString());
@@ -202,7 +228,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		for (Task task : criticalTasks) {
 			toReturn+="Task: "+task.getTaskID()+"   Owner: "+task.getOwner()+separator;
 			toReturn+="	Description: "+task.getDescription()+separator;
-			
+
 
 		}
 
