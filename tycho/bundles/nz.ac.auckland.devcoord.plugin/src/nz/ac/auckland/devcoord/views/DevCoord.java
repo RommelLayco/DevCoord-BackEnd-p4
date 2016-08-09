@@ -117,6 +117,16 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		
 		
 		
+
+		
+
+		
+		
+		ExpandItem item0 = new ExpandItem (bar, SWT.NONE, 0);
+		item0.setText("Overlapping Tasks");
+		item0.setHeight(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		item0.setControl(composite);
+	
 		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
 		layout.verticalSpacing = 10;
 		composite.setLayout(layout);
@@ -124,21 +134,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		label.setText("0000");
 		label.setEnabled(true);
 		
-//		Button button = new Button (composite, SWT.PUSH);
-//		button.setText("SWT.PUSH");
-//		button = new Button (composite, SWT.RADIO);
-//		button.setText("SWT.RADIO");
-//		button = new Button (composite, SWT.CHECK);
-//		button.setText("SWT.CHECK");
-//		button = new Button (composite, SWT.TOGGLE);
-//		button.setText("SWT.TOGGLE");
-		
-		
-		ExpandItem item0 = new ExpandItem (bar, SWT.NONE, 0);
-		item0.setText("Task Conflicts");
-		item0.setHeight(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-		item0.setControl(composite);
-	
+
 		
 		
 	}
@@ -157,11 +153,15 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 			public void run() {
 				if (taskWrapper!=null) {
 					
-					label=new Label(composite, 1);
-					label.setText("TASKPAIRlistSIZE:"+pairs.size());
-					label.setEnabled(true);
+					
+					label.setText(getOverlappingTaskPairs());
+				
 					//TaskInfo.printTaskInfoForAllTasks();
 					
+					label.getParent().layout();
+					System.out.println("REFERESH CALLED9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
+					System.out.println(getOverlappingTaskPairs());
+
 					
 					//text.setText("TASKPAIRlistSIZE:"+pairs.size()+System.getProperty("line.separator")+taskWrapper.toString()+criticalString(pairs)+getCriticalScoreString());
 				
@@ -170,21 +170,37 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 			}
 		});
 	}
-private String getCriticalScoreString(){
+	
+	
+	
+private String getOverlappingTaskPairs(){
 	
 	String separator=System.getProperty("line.separator");
-	String toReturn="----------------------------"+separator;
-	 toReturn+="Task pairs present in the TaskPairList:"+separator;
+	String toReturn="";
 	for (TaskPair  pair: pairs) {
-		toReturn+=" Tasks: "+pair.getID1()+"  "+pair.getID2()+separator+
-				"   CriticalSCrore: "+pair.getProximityScore()+separator+
-				"   IsCritical: "+pair.isCritical()+separator;
+		toReturn+=" Task: "+getOtherTaskID(taskWrapper.getTaskID(), pair)+separator;
+
 
 	}
 
 	return toReturn;
 	
 }
+private int getOtherTaskID(int ID,TaskPair pair){		
+		
+		if (pair.getID1()==ID) {		
+			return pair.getID2();		
+		}		
+		else if (pair.getID2()==ID) {		
+			return pair.getID1();		
+		}		
+		else{		
+					
+			return -1;		
+		}		
+		  
+	}
+
 	private String criticalString(List<TaskPair> pairs){
 		String separator=System.getProperty("line.separator");
 		String toReturn="----------------------------"+separator;
@@ -313,7 +329,7 @@ private String getCriticalScoreString(){
 			//persist taskpairs
 			controller.saveTaskPairs(pairs);
 
-			RefreshDevCoord();
+			
 		}
 		RefreshDevCoord();
 	}
