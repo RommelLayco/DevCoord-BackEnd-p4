@@ -88,16 +88,10 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		makeActions();
 		contributeToActionBars();
 		
-
-	//Button	myButton = new Button(parent, SWT.PUSH);
-		
-		
-//		Shell shell=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-//		shell.setLayout(new GridLayout());
 		GridLayout layout = new GridLayout ();
 		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
 		
-	//	parent.setLayout();
+
 	
 		
 		org.eclipse.swt.widgets.ExpandBar bar=new ExpandBar(parent, 1);
@@ -106,20 +100,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		
 		composite = new Composite (bar, SWT.NONE);
 		composite.setLayout(layout);
-//		Button	myButton = new Button(parent, SWT.PUSH);
-//		ExpandItem expandItem=new ExpandItem(bar, 1);
-//		expandItem.setText("expand Item");
-//		
-//		expandItem.setControl(composite);
 		
-		
-		
-		
-		
-		
-
-		
-
 		
 		
 		ExpandItem item0 = new ExpandItem (bar, SWT.NONE, 0);
