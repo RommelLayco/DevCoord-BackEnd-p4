@@ -52,6 +52,8 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 	private Composite composite;
 	 private Label label;
+	 private ExpandItem item0 ;
+	 
 	private Action action1;
 	private Controller controller;
 	/**
@@ -103,7 +105,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		
 		
 		
-		ExpandItem item0 = new ExpandItem (bar, SWT.NONE, 0);
+		item0 = new ExpandItem (bar, SWT.NONE, 0);
 		item0.setText("Overlapping Tasks");
 		item0.setHeight(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		item0.setControl(composite);
@@ -138,6 +140,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					label.setText(getOverlappingTaskPairs());
 				
 					//TaskInfo.printTaskInfoForAllTasks();
+					item0.setHeight(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					
 					label.getParent().layout();
 					System.out.println("REFERESH CALLED9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
