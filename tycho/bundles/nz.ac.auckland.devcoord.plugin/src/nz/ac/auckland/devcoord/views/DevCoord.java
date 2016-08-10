@@ -98,6 +98,13 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		makeActions();
 		contributeToActionBars();
 
+		initialiseGUI(parent);
+		
+
+
+	}
+	
+	private void initialiseGUI(Composite parent){
 		GridLayout layout = new GridLayout ();
 		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
 		layout.verticalSpacing = 10;
@@ -126,9 +133,9 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		labeTwo=new Label(compositeTwo, 1);
 		labeTwo.setText("0000");
 		labeTwo.setEnabled(true);
-
-
+		
 	}
+	
 
 	/**
 	 * This method is Refreshed when-
