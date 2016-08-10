@@ -60,6 +60,8 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private Label labeTwo;
 	private ExpandItem itemTwo ;
 
+	private MessageBox dialog ;
+	
 	private Action action1;
 	private Controller controller;
 	/**
@@ -147,19 +149,22 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					labeOne.getParent().layout();
 
 					String nextCriticalString=criticalString();
+					
+					if (dialog==null) {
+						System.out.println("DIALOGUE WAS NULL!");
+						dialog = 
+								new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.ICON_QUESTION | SWT.OK);
+						
+					}
 
+					
+					
 					if (!previousCriticalString.equals(nextCriticalString)&& !nextCriticalString.equals("")) {
-						System.out.println("previousCriticalString.equals(nextCriticalString):"+previousCriticalString.equals(nextCriticalString));
-						System.out.println("previousCriticalString:"+previousCriticalString);
-						System.out.println("previousCriticalString.length():"+previousCriticalString.length());
-						System.out.println("nextCriticalString:"+nextCriticalString);
-						System.out.println("nextCriticalString.length():"+nextCriticalString.length());
+
 						
 						String separator=System.getProperty("line.separator");
 						ArrayList<Task> criticalTasks=returnTasksThatAreCritical();
 
-						MessageBox dialog = 
-								new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.ICON_QUESTION | SWT.OK);
 						dialog.setText("Conflicting Tasks!");
 						String info="The following Task(s) are conflicting with your current task-"+separator;
 						for (Task task : criticalTasks) {
@@ -174,9 +179,6 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeTwo.getParent().layout();
 
-					System.out.println("REFERESH CALLED9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
-					System.out.println(getOverlappingTaskPairs());
-					System.out.println("Critical:"+criticalString());
 
 					//TaskInfo.printTaskInfoForAllTasks();
 
