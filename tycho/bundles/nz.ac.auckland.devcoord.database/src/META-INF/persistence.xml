@@ -20,6 +20,7 @@
 			<property name="hibernate.connection.password" value="" />
 			
 			
+			
 			<!-- The below three our for database hosted on a server
 			<property name="hibernate.connection.url" value="jdbc:mysql://sql6.freemysqlhosting.net:3306/sql6128847" />
 			<property name="hibernate.connection.username" value="sql6128847" />

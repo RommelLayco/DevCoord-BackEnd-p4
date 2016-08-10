@@ -28,7 +28,6 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -56,25 +55,12 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private Text text;
 	private Action action1;
 	private Controller controller;
-	private LocalTime time;
 	
-	/**
-	 * Use to store the time the set checked
-	 * was last cleared
-	 */
-	private LocalTime flushTime;
-	
-	/**
-	 * 
-	 * Set of task id and context structure name concatenated
-	 * used to check if context from the task has been checked
-	 * since the last time the set was emptied.
-	 * 
-	 */
-	private Set<String> checked;
-	
+
+
+
 	// private static ILock lock = Platform.getJobManager().newLock();
-	 private static ILock lock = Job.getJobManager().newLock();
+	private static ILock lock = Job.getJobManager().newLock();
 
 	/**
 	 * Automated generation from the HelloWorld Example.*/
@@ -92,12 +78,16 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().addChangeListener(this);
 		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
-		controller = new Controller();
-		TrainDataGeneration.convertTrainCSVToArff();
-		time = LocalTime.now();
-		flushTime = LocalTime.now();
 		
-		checked = new HashSet<String>();
+		try{
+			lock.acquire();
+			controller = new Controller();
+		} finally {
+			lock.release();
+		}
+		
+		TrainDataGeneration.convertTrainCSVToArff();
+		
 
 	}
 
@@ -124,7 +114,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private void RefreshDevCoord(){
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				if (pairs!=null) {
+				if (taskWrapper!=null) {
 					//TaskInfo.printTaskInfoForAllTasks();
 					text.setText(taskWrapper.toString()+criticalString(pairs));
 				}
@@ -246,83 +236,49 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	public void interactionObserved(InteractionEvent arg0) {
 
 		System.err.println("EVENT TIME:"+ LocalTime.now());
-		if(LocalTime.now().isAfter(time.plusSeconds(10))){
-
-			final Job job = new Job("Database calls") {
-				protected IStatus run(IProgressMonitor monitor) {
-					try {
-						lock.acquire();
-						System.err.println("after lock time start:"+ LocalTime.now());
-						taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
-						
-					
-						if(taskWrapper != null && ! (checked.contains(taskWrapper.getTaskID() + taskWrapper.getContextStructure().getName()))){
-							//update interaction event here
-							Context_Structure file = controller.updateInfoOfActiveTask(taskWrapper);
-							int task_id = taskWrapper.getTaskID();
-
-							//getTask pairs
-							pairs = controller.getTaskPairs(file, task_id, 14);
 
 
-							//machine learning 
-							pairs = CriticalityUtility.fillInCriticality(pairs);
-
-							//persist taskpairs
-							controller.saveTaskPairs(pairs);
-							
-							//add to set of checked
-							checked.add(taskWrapper.getTaskID() + taskWrapper.getContextStructure().getName());
+		final Job job = new Job("Database calls") {
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					lock.acquire();
+					System.err.println("after lock time start:"+ LocalTime.now());
+					taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
 
 
-						}
-						return Status.OK_STATUS;
-					} finally {
-						lock.release();
-						time = LocalTime.now();
-						RefreshDevCoord();
-						
-						//empty set
-						if(LocalTime.now().isAfter(flushTime.plusMinutes(2))){
-							checked.clear();
-						}
-						//schedule(600); // 60000 = 1hr therefore 600 = 36sec
+					if(taskWrapper != null ){
+						//update interaction event here
+						Context_Structure file = controller.updateInfoOfActiveTask(taskWrapper);
+						int task_id = taskWrapper.getTaskID();
+
+						//getTask pairs
+						pairs = controller.getTaskPairs(file, task_id, 14);
+
+
+						//machine learning 
+						pairs = CriticalityUtility.fillInCriticality(pairs);
+
+						//persist taskpairs
+						controller.saveTaskPairs(pairs);
+
+
+
 					}
+					return Status.OK_STATUS;
+				} finally {
+					lock.release();
+					RefreshDevCoord();
+
+
 				}
-			};
-			job.schedule();
-			
-		}
-		
+			}
+		};
+		job.schedule();
 
-		/*
-		System.out.println("EVENT TIME:"+ LocalTime.now());
-		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
-
-		if(taskWrapper != null){
-			//update interaction event here
-			Context_Structure file = controller.updateInfoOfActiveTask(taskWrapper);
-			int task_id = taskWrapper.getTaskID();
-
-			//getTask pairs
-			pairs = controller.getTaskPairs(file, task_id, 14);
-
-
-			//machine learning 
-			pairs = CriticalityUtility.fillInCriticality(pairs);
-
-			//persist taskpairs
-			controller.saveTaskPairs(pairs);
-
-			RefreshDevCoord();
-		}
-		else{
-
-			RefreshDevCoord();	
-
-		}
-		 */
 	}
+
+
+
 
 	@Override
 	public void startMonitoring() {
