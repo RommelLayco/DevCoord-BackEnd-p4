@@ -167,7 +167,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		compositeOne = new Composite (bar, SWT.NONE);
 		compositeOne.setLayout(layout);
 		itemOne = new ExpandItem (bar, SWT.NONE, 0);
-		itemOne.setText("Overlapping Tasks");
+		itemOne.setText("As Tasks");
 		itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		itemOne.setControl(compositeOne);
 		compositeOne.setLayout(layout);
@@ -178,7 +178,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		compositeTwo = new Composite (bar, SWT.None);
 		compositeTwo.setLayout(layout);
 		itemTwo = new ExpandItem (bar, SWT.None, 0);
-		itemTwo.setText("Conflicting Tasks");
+		itemTwo.setText("Critical Tasks");
 		itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		itemTwo.setControl(compositeTwo);
 		compositeTwo.setLayout(layout);
