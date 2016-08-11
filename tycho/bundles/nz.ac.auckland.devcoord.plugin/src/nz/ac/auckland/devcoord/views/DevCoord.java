@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.part.*;
 import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
+import nz.ac.auckland.devcoord.controller.TaskInfo;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
 import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
@@ -55,7 +56,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * Wrapped {@link InteractionEvent} object. */
 	public static TaskWrapper taskWrapper;
 	public static List<TaskPair> pairs;
-	private static String  previousCriticalString="";
+	
 
 	//private Text text;
 
@@ -67,7 +68,9 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private Label labeTwo;
 	private ExpandItem itemTwo ;
 
-
+	private Composite compositeThree;
+	private Label labeThree;
+	private ExpandItem itemThree ;
 
 	private Action action1;
 	private Action action2;
@@ -186,6 +189,19 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		labeTwo=new Label(compositeTwo, 1);
 		labeTwo.setText("0000");
 		labeTwo.setEnabled(true);
+		
+		
+		compositeThree = new Composite (bar, SWT.None);
+		compositeThree.setLayout(layout);
+		itemThree = new ExpandItem (bar, SWT.None, 0);
+		itemThree.setText("Current Task Log");
+		itemThree.setHeight(compositeThree.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		itemThree.setControl(compositeThree);
+		compositeThree.setLayout(layout);
+		labeThree=new Label(compositeThree, 1);
+		labeThree.setText("0000");
+		labeThree.setEnabled(true);
+		
 
 	}
 
@@ -238,7 +254,11 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					//TaskInfo.printTaskInfoForAllTasks();
 
 					//text.setText("TASKPAIRlistSIZE:"+pairs.size()+System.getProperty("line.separator")+taskWrapper.toString()+criticalString(pairs)+getCriticalScoreString());
-
+					
+					labeThree.setText(TaskInfo.getTasksInfoAsAString());
+					itemThree.setHeight(compositeThree.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+					labeThree.getParent().layout();
+					
 
 				}
 			}
