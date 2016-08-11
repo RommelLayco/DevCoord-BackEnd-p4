@@ -252,12 +252,12 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					
 					action1.setChecked(true);
 
-					labeOne.setText(getOverlappingTaskPairs());
+					labeOne.setText(DevCoordUtility.getOverlappingTaskPairs(pairs,taskWrapper));
 					itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeOne.getParent().layout();
 
 					
-					String nextCriticalString=criticalString();
+					String nextCriticalString=DevCoordUtility.criticalString(pairs,taskWrapper);
 					String previousCriticalString=labeTwo.getText();
 					labeTwo.setText(nextCriticalString);
 					if (!previousCriticalString.equals(nextCriticalString)&& !nextCriticalString.equals("")) {
@@ -281,11 +281,6 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeTwo.getParent().layout();
 
-
-					//TaskInfo.printTaskInfoForAllTasks();
-
-					//text.setText("TASKPAIRlistSIZE:"+pairs.size()+System.getProperty("line.separator")+taskWrapper.toString()+criticalString(pairs)+getCriticalScoreString());
-					
 					labeThree.setText(TaskInfo.getTasksInfoAsAString());
 					itemThree.setHeight(compositeThree.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeThree.getParent().layout();
@@ -298,79 +293,12 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 
 
-	private String getOverlappingTaskPairs(){
-
-		String separator=System.getProperty("line.separator");
-		String toReturn="";
-		for (TaskPair  pair: pairs) {
-			toReturn+=" Task: "+getOtherTaskID(taskWrapper.getTaskID(), pair)+separator;
-
-
-		}
-
-		return toReturn;
-
-	}
-	private int getOtherTaskID(int ID,TaskPair pair){		
-
-		if (pair.getID1()==ID) {		
-			return pair.getID2();		
-		}		
-		else if (pair.getID2()==ID) {		
-			return pair.getID1();		
-		}		
-		else{		
-
-			return -1;		
-		}		
-
-	}
-
-	private String criticalString(){
-		String separator=System.getProperty("line.separator");
-		String toReturn="";
-		ArrayList<Task> criticalTasks=returnTasksThatAreCritical();
+	
 
 
 
-		for (Task task : criticalTasks) {
-			toReturn+="Task: "+task.getTaskID()+"   Owner: "+task.getOwner()+separator;
-			toReturn+="	Description: "+task.getDescription()+separator;
 
 
-		}
-
-		return toReturn;
-	}
-
-	private ArrayList<Task> returnTasksThatAreCritical(){
-
-
-		ArrayList<Task> toReturn=new ArrayList<Task>();
-
-		for (TaskPair taskPair : pairs) {
-			if(taskPair.isCritical()){
-				if(taskPair.getTask1().getTaskID()==taskWrapper.getTaskID()){
-
-					toReturn.add(taskPair.getTask2());
-
-				}
-				else{
-
-					toReturn.add(taskPair.getTask1());
-
-				}
-
-
-
-			}
-
-		}
-
-
-		return toReturn;
-
-	}
 
 
 
@@ -427,10 +355,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * Passing the focus request to the viewer's control.
 	 */
 	public void setFocus() {
-		//text.setFocus();
 
-		//	table.setFocus();
-		//	label.setFocus();
 	}
 	/**{@inheritDoc}*/
 	@Override
