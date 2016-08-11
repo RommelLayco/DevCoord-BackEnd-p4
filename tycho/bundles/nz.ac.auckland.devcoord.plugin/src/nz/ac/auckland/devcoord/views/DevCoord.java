@@ -1,14 +1,17 @@
 package nz.ac.auckland.devcoord.views;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
@@ -119,7 +122,9 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		GridLayout layout = new GridLayout ();
 		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
 		layout.verticalSpacing = 10;
-		org.eclipse.swt.widgets.ExpandBar bar=new ExpandBar(parent, 1);
+		
+		ScrolledComposite scroll=new ScrolledComposite(parent, SWT.V_SCROLL);
+		org.eclipse.swt.widgets.ExpandBar bar=new ExpandBar(scroll, 1);
 
 
 
@@ -202,7 +207,32 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		labeThree.setText("0000");
 		labeThree.setEnabled(true);
 		
+		/*Reference scroll stuff:http://stackoverflow.com/questions/22964093/programmatically-scroll-expandbar*/
+;
 
+		
+		Listener updateScrolledSize = new Listener()
+	    {
+	        @Override
+	        public void handleEvent(Event arg0)
+	        {
+	        	Display.getDefault().asyncExec(new Runnable()
+	            {
+	                @Override
+	                public void run()
+	                {
+	                    scroll.setMinSize(bar.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	                }
+	            });
+	        }
+	    };
+	    bar.addListener(SWT.Expand, updateScrolledSize);
+	    bar.addListener(SWT.Collapse, updateScrolledSize);
+		scroll.setContent(bar);
+		scroll.setExpandHorizontal(true);
+		scroll.setExpandVertical(true);
+		scroll.setMinSize(bar.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
 	}
 
 
