@@ -31,9 +31,16 @@ import org.eclipse.mylyn.internal.tasks.ui.ITaskListNotificationProvider;
 import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ILock;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.*;
 import org.eclipse.ui.*;
 
@@ -61,6 +68,13 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private Action action1;
 	private Action action2;
 	private Controller controller;
+	
+
+
+
+	// private static ILock lock = Platform.getJobManager().newLock();
+	private static ILock lock = Job.getJobManager().newLock();
+
 	/**
 	 * Automated generation from the HelloWorld Example.*/
 	class NameSorter extends ViewerSorter {
@@ -77,8 +91,16 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().addChangeListener(this);
 		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
-		controller = new Controller();
+		
+		try{
+			lock.acquire();
+			controller = new Controller();
+		} finally {
+			lock.release();
+		}
+		
 		TrainDataGeneration.convertTrainCSVToArff();
+		
 
 	}
 
@@ -290,31 +312,60 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	/**{@inheritDoc}
 	 * 
 	 * It creates a new {@link TaskWrapper} object and stores it in {@link #taskWrapper}
+	 * 
+	 * code to run database processing in background taken from
+	 * 
+	 * https://www.eclipse.org/articles/Article-Concurrency/jobs-api.html
+	 * 
 	 * */
 	@Override
 	public void interactionObserved(InteractionEvent arg0) {
-		System.out.println("EVENT TIME:"+arg0.getDate().getTime());
-		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
 
-		if(taskWrapper != null){
-			//update interaction event here
-			Context_Structure file = controller.updateInfoOfActiveTask(taskWrapper);
-			int task_id = taskWrapper.getTaskID();
-
-			//getTask pairs
-			pairs = controller.getTaskPairs(file, task_id, 14);
+		System.err.println("EVENT TIME:"+ LocalTime.now());
 
 
-			//machine learning 
-			pairs = CriticalityUtility.fillInCriticality(pairs);
+		final Job job = new Job("Database calls") {
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					lock.acquire();
+					System.err.println("after lock time start:"+ LocalTime.now());
+					taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
 
-			//persist taskpairs
-			controller.saveTaskPairs(pairs);
+
+					if(taskWrapper != null ){
+						//update interaction event here
+						Context_Structure file = controller.updateInfoOfActiveTask(taskWrapper);
+						int task_id = taskWrapper.getTaskID();
+
+						//getTask pairs
+						pairs = controller.getTaskPairs(file, task_id, 14);
 
 
-		}
-		RefreshDevCoord();
+						//machine learning 
+						pairs = CriticalityUtility.fillInCriticality(pairs);
+
+						//persist taskpairs
+						controller.saveTaskPairs(pairs);
+
+
+
+					}
+					return Status.OK_STATUS;
+				} finally {
+					lock.release();
+					RefreshDevCoord();
+
+
+				}
+			}
+		};
+		job.schedule();
+
+
 	}
+
+
+
 
 	@Override
 	public void startMonitoring() {
