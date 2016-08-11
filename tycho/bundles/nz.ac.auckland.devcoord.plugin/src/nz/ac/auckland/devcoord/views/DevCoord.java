@@ -176,7 +176,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		compositeOne = new Composite (bar, SWT.NONE);
 		compositeOne.setLayout(layout);
 		itemOne = new ExpandItem (bar, SWT.NONE, 0);
-		itemOne.setText("All Tasks");
+		itemOne.setText("Non-Critical Tasks");
 		itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		itemOne.setControl(compositeOne);
 		compositeOne.setLayout(layout);
@@ -199,7 +199,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		compositeThree = new Composite (bar, SWT.None);
 		compositeThree.setLayout(layout);
 		itemThree = new ExpandItem (bar, SWT.None, 0);
-		itemThree.setText("Current Task Log");
+		itemThree.setText("All Tasks");
 		itemThree.setHeight(compositeThree.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		itemThree.setControl(compositeThree);
 		compositeThree.setLayout(layout);
