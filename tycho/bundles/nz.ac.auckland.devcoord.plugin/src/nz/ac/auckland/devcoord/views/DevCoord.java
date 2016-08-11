@@ -263,6 +263,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					if (!previousCriticalString.equals(nextCriticalString)&& !nextCriticalString.equals("")) {
 						
 						action2.setEnabled(true);
+						itemTwo.setExpanded(true);
 						
 					}
 					else if(nextCriticalString.equals("")){
@@ -408,13 +409,14 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		
 		action2 = new Action() {
 			public void run() {
+				itemTwo.setExpanded(false);
 				action2.setEnabled(false);
-
+				
 
 			}
 		};
 		action2.setText("");
-		action2.setToolTipText("Click To Show Critical Tasks");
+		action2.setToolTipText("Click To collapse Critical Tasks");
 		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_DEC_FIELD_ERROR));
 		action2.setEnabled(true);
