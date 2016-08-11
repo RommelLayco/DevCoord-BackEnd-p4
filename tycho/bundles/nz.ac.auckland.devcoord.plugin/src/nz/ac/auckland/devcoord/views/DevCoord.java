@@ -1,13 +1,20 @@
 package nz.ac.auckland.devcoord.views;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tray;
+import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.part.*;
 import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
@@ -61,7 +68,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private ExpandItem itemTwo ;
 
 	private MessageBox dialog ;
-	
+
 	private Action action1;
 	private Controller controller;
 	/**
@@ -99,11 +106,11 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		contributeToActionBars();
 
 		initialiseGUI(parent);
-		
+
 
 
 	}
-	
+
 	private void initialiseGUI(Composite parent){
 		GridLayout layout = new GridLayout ();
 		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
@@ -112,6 +119,51 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 
 
+		//=====================================
+//		Display display = Display.getDefault();
+//	
+//		Shell shell=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+//		
+//		
+//		Image image = new Image (display, 16, 16);
+//		Image image2 = new Image (display, 16, 16);
+//		GC gc = new GC(image2);
+//		gc.setBackground(display.getSystemColor(SWT.COLOR_BLACK));
+//		gc.fillRectangle(image2.getBounds());
+//		gc.dispose();
+//		final Tray tray = display.getSystemTray ();
+//		if (tray == null) {
+//			System.out.println ("The system tray is not available");
+//		} else {
+//			final TrayItem item = new TrayItem (tray, SWT.NONE);
+//			item.setToolTipText("SWT TrayItem");
+//			item.addListener (SWT.Show, event -> System.out.println("show"));
+//			item.addListener (SWT.Hide, event -> System.out.println("hide"));
+//			item.addListener (SWT.Selection, event -> System.out.println("selection"));
+//			item.addListener (SWT.DefaultSelection, event -> System.out.println("default selection"));
+//			final Menu menu = new Menu (shell, SWT.POP_UP);
+//			for (int i = 0; i < 8; i++) {
+//				MenuItem mi = new MenuItem (menu, SWT.PUSH);
+//				mi.setText ("Item" + i);
+//				mi.addListener (SWT.Selection, event -> System.out.println("selection " + event.widget));
+//				if (i == 0) menu.setDefaultItem(mi);
+//			}
+//			item.addListener (SWT.MenuDetect, event -> menu.setVisible (true));
+//			item.setImage (image2);
+//			item.setHighlightImage (image);
+//		}
+//		shell.setBounds(50, 50, 300, 200);
+//		shell.open ();
+//		while (!shell.isDisposed ()) {
+//			if (!display.readAndDispatch ()) display.sleep ();
+//		}
+//		
+		//===================================
+		
+		
+		
+		
+		
 		compositeOne = new Composite (bar, SWT.NONE);
 		compositeOne.setLayout(layout);
 		itemOne = new ExpandItem (bar, SWT.NONE, 0);
@@ -133,9 +185,9 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		labeTwo=new Label(compositeTwo, 1);
 		labeTwo.setText("0000");
 		labeTwo.setEnabled(true);
-		
+
 	}
-	
+
 
 	/**
 	 * This method is Refreshed when-
@@ -150,25 +202,27 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				if (taskWrapper!=null) {
+					
+					action1.setChecked(true);
 
 					labeOne.setText(getOverlappingTaskPairs());
 					itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeOne.getParent().layout();
 
 					String nextCriticalString=criticalString();
-					
+
 					if (dialog==null) {
 						System.out.println("DIALOGUE WAS NULL!");
 						dialog = 
 								new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.ICON_QUESTION | SWT.OK);
-						
+
 					}
 
-					
-					
+
+
 					if (!previousCriticalString.equals(nextCriticalString)&& !nextCriticalString.equals("")) {
 
-						
+
 						String separator=System.getProperty("line.separator");
 						ArrayList<Task> criticalTasks=returnTasksThatAreCritical();
 
