@@ -210,10 +210,27 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 					itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeOne.getParent().layout();
 
+					
 					String nextCriticalString=criticalString();
-
-
+					String previousCriticalString=labeTwo.getText();
 					labeTwo.setText(nextCriticalString);
+					if (!previousCriticalString.equals(nextCriticalString)&& !nextCriticalString.equals("")) {
+						
+						action2.setEnabled(true);
+						
+					}
+					else if(nextCriticalString.equals("")){
+						action2.setEnabled(false);
+						
+						
+						
+					}
+					
+					
+					
+
+
+					
 					itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeTwo.getParent().layout();
 
@@ -341,15 +358,17 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		
 		action2 = new Action() {
 			public void run() {
-				//Need to add some action
+				action2.setEnabled(false);
+
 
 			}
 		};
 		action2.setText("");
 		action2.setToolTipText("Click To Show Critical Tasks");
 		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OPEN_MARKER));
-		
+				getImageDescriptor(ISharedImages.IMG_DEC_FIELD_ERROR));
+		action2.setEnabled(true);
+	
 	}
 
 	/**
