@@ -70,6 +70,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 
 	private Action action1;
+	private Action action2;
 	private Controller controller;
 	/**
 	 * Automated generation from the HelloWorld Example.*/
@@ -314,11 +315,15 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(action1);
 		manager.add(new Separator());
+		manager.add(action2);
+		manager.add(new Separator());
+
 	}
 
 
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(action1);
+		manager.add(action2);
 
 	}
 
@@ -332,6 +337,19 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		action1.setToolTipText("Press to Referesh DevCoord");
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_ELCL_SYNCED));
+		
+		
+		action2 = new Action() {
+			public void run() {
+				//Need to add some action
+
+			}
+		};
+		action2.setText("");
+		action2.setToolTipText("Click To Show Critical Tasks");
+		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+				getImageDescriptor(ISharedImages.IMG_OPEN_MARKER));
+		
 	}
 
 	/**
