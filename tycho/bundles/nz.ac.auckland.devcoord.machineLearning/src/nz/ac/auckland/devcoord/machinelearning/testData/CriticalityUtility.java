@@ -172,6 +172,10 @@ public class CriticalityUtility {
 		String toReturn;
 		toReturn="@relation pairsTask"+"\n"+"\n"+"\n"+
 				"@attribute Proximity numeric"+"\n"+
+				"@attribute SameComponent {true,false}"+"\n"+
+				"@attribute SamePlatform {true,false}"+"\n"+
+				"@attribute SameOS {true,false}"+"\n"+
+
 				"@attribute Critical {true,false}"+"\n"+""
 				+ "\n"+"@data"+"\n";
 		return toReturn;
@@ -184,7 +188,14 @@ public class CriticalityUtility {
 	public static String getStringOfTheTestTaskPair(TaskPair taskPair){
 		double proximity=taskPair.getProximityScore();
 		String critical=""+taskPair.isCritical();
+		String component=""+taskPair.isSameComponent();
+		String platform=""+taskPair.isSamePlatform();
+		String os=""+taskPair.isSameOS();
+		
 		return proximity+","
-		+ critical+"\n";
+		+component+","
+		+platform+","
+		+os+","
+		+ critical;
 	}
 }
