@@ -67,7 +67,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private Label labeTwo;
 	private ExpandItem itemTwo ;
 
-	private MessageBox dialog ;
+
 
 	private Action action1;
 	private Controller controller;
@@ -167,7 +167,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		compositeOne = new Composite (bar, SWT.NONE);
 		compositeOne.setLayout(layout);
 		itemOne = new ExpandItem (bar, SWT.NONE, 0);
-		itemOne.setText("As Tasks");
+		itemOne.setText("All Tasks");
 		itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		itemOne.setControl(compositeOne);
 		compositeOne.setLayout(layout);
@@ -211,31 +211,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 
 					String nextCriticalString=criticalString();
 
-					if (dialog==null) {
-						System.out.println("DIALOGUE WAS NULL!");
-						dialog = 
-								new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.ICON_QUESTION | SWT.OK);
 
-					}
-
-
-
-					if (!previousCriticalString.equals(nextCriticalString)&& !nextCriticalString.equals("")) {
-
-
-						String separator=System.getProperty("line.separator");
-						ArrayList<Task> criticalTasks=returnTasksThatAreCritical();
-
-						dialog.setText("Conflicting Tasks!");
-						String info="The following Task(s) are conflicting with your current task-"+separator;
-						for (Task task : criticalTasks) {
-							info+="Task "+task.getTaskID()+separator;
-						}
-						info+="Please refer to Conflictig Tasks tab for details.";
-						dialog.setMessage(info);
-						dialog.open();
-					}
-					previousCriticalString=nextCriticalString;
 					labeTwo.setText(nextCriticalString);
 					itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 					labeTwo.getParent().layout();
