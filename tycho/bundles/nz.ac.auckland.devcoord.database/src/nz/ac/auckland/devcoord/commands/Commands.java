@@ -1,6 +1,8 @@
 package nz.ac.auckland.devcoord.commands;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +10,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
 import nz.ac.auckland.devcoord.database.TaskPair;
 
@@ -84,7 +87,8 @@ public class Commands {
 			EntityManager em = hibernateUtil.getEntityManager();
 			Query query = em.createQuery(jpql);
 
-			tasks = query.getResultList();
+			//ensure that cast is done correctly.
+			tasks = castList(Task.class, query.getResultList());
 			em.close();
 
 			return tasks;
@@ -130,10 +134,10 @@ public class Commands {
 		/*} catch (javax.persistence.PersistenceException ex){
 			//this happens cause i am trying to persist two task
 			//objects that may have already been persisted
-			
+
 			//code still works error you get is: 
 			//org.hibernate.PersistentObjectException: detached entity passed to persist: nz.ac.auckland.devcoord.database.TaskPair
-		
+
 			System.err.println("detach entity error code still works");
 		}*/
 		em.getTransaction().commit();
@@ -192,7 +196,139 @@ public class Commands {
 			//return null
 			System.err.println("ensure that tp is null");
 		}
+
+		return tp;
+	}
+
+	/**
+	 * get list of task id that  from database that contains the context structure file1.
+	 * 
+	 * Ignore the task that has the task_ID value.
+	 * @param file1
+	 * @param task_ID
+	 * @param days is the numbers of day in the past. That is only get task that have been
+	 * updated in the database in the last x amount of days. Note if has been updated in 
+	 * the database it has been worked on.
+	 * @return
+	 */
+	public List<Integer> getTaskIDsWithSameContext(Context_Structure file1, int task_ID, int days){
+		List<Integer> task_IDs = new ArrayList<Integer>(); 
+
+		//create query string
+		String jpql = "Select t.id from Task t, IN(t.contextStructure) c"
+				+ " where t.taskID != " + task_ID +
+				" AND c.name = '" + file1.getName() +"'" +
+				" AND t.date > :date";
+
+		
+
+		EntityManager em = hibernateUtil.getEntityManager();
+		Query query = em.createQuery(jpql);
+		
+		
+		LocalDate date = LocalDate.now();
+		query.setParameter("date", date.minusDays(days));
+		
+		
+		
+		//query.setParameter("start", date.minusDays(days));
+		//query.setParameter("end", date);
+
+		//ensure that cast is done correctly.
+		task_IDs = castList(Integer.class, query.getResultList());
+		em.close();
+
+		return task_IDs;
+
+	}
+	
+	/**
+	 * Method to update proximity score
+	 * 
+	 * needs to fetch context structure of task which use lazy loaded
+	 * 
+	 * i.e. need to load persistence context, this done by using the entity manager
+	 * @param c2
+	 * @param task
+	 * @param tp
+	 * @return
+	 */
+	public TaskPair updateProximityScore(Context_Structure c2, int ID, TaskPair tp){
+		EntityManager em = hibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		Task task = em.find( Task.class, ID );
+				
+		tp.updateProximityScore(c2, task.getContextStructures().get(c2.getName()));
+		
+		em.getTransaction().commit();
+		em.close();
 		
 		return tp;
 	}
+	
+	/**
+	 * Method to create TaskPair
+	 * 
+	 * needs to fetch context structure of task which use lazy loaded
+	 * 
+	 * i.e. need to load persistence context, this done by using the entity manager
+	 * @param c2
+	 * @param task
+	 * @param tp
+	 * @return
+	 */
+	public TaskPair createTaskPair(int id1, int id2){
+		EntityManager em = hibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		Task t1 = em.find( Task.class, id1 );
+		Task t2 = em.find( Task.class, id2 );
+				
+		TaskPair taskPair = new TaskPair(t1, t2);
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return taskPair;
+	}
+	
+	/**
+	 * Method to add context_structure while getting the task. Needs an entity manager
+	 * as the persistence context has not yet add the context structures
+	 * field. 
+	 * @param task
+	 * @return
+	 */
+	public Task getTaskAndAddContext(Integer ID, Context_Structure context){
+		EntityManager em = hibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		
+		Task task = em.find( Task.class, ID );
+		task.addContextStructure(context.getName(), context);
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		return task;
+	}
+	
+	/**
+	 * fixes the Type safety: The expression of type List needs 
+	 * unchecked conversion to conform to List<T>
+	 * 
+	 * i.e. when a list of results is queried
+	 * 
+	 * @param clazz
+	 * @param c
+	 * @return
+	 * 
+	 * taken from http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
+	 */
+	private static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+	    List<T> r = new ArrayList<T>(c.size());
+	    for(Object o: c)
+	      r.add(clazz.cast(o));
+	    return r;
+	}
+		
+	
 }

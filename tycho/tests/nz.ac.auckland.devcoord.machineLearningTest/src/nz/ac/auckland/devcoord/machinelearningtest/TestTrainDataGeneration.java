@@ -19,8 +19,6 @@ public class TestTrainDataGeneration {
 	public static void setUpBeforeClass() throws Exception {
 		trainFile= InputEnum.outputToString(InputEnum.TRAIN_OUTPUT_PATH);
 		
-		System.err.println("======================================");
-		
 		  
 		
 		FileUtility.deleteFile(trainFile);

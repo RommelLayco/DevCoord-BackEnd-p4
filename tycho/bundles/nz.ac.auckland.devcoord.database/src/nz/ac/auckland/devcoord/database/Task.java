@@ -4,11 +4,12 @@ package nz.ac.auckland.devcoord.database;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.time.LocalDate;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
@@ -44,6 +45,23 @@ public class Task {
 	 * Named when creating a task
 	 */
 	private String label;
+	
+	private String OS;
+	
+	private String platform;
+	
+	private String component;
+	
+	/**
+	 * Info to provide to users when a task pair is critical
+	 */
+	private String owner;
+	
+	private String description;
+	
+	private LocalDate date;
+	
+	
 
 	/**
 	 * The java files that are associated with the task
@@ -52,7 +70,7 @@ public class Task {
 	 * Java file is a value type as each file is context asscoaited with
 	 * a specific task
 	 */
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection//(fetch = FetchType.EAGER)
 	@CollectionTable(name="CONTEXT_STRUCTURES")
 	@MapKeyColumn(name="HASHMAP_KEY")
 	private Map<String, Context_Structure> contextStructure;
@@ -64,11 +82,25 @@ public class Task {
 
 	}
 
-	public Task(int taskID, String handle, String label){
+	public Task(int taskID, String handle, String label, String OS, 
+			String platform, String component,
+			String owner, String description){
+		
 		this.taskID = taskID;
 		this.handle = handle;
 		this.label = label;
+		
+		this.OS = OS;
+		this.platform = platform;
+		this.component = component;
+		
+		this.owner = owner;
+		this.description = description;
+		this.date = LocalDate.now();
+		
+		
 		this.contextStructure = new HashMap<String, Context_Structure>();
+		
 	}
 
 
@@ -95,7 +127,56 @@ public class Task {
 	public void updateLablel(String label){
 		this.label = label;
 	}
+	
+	public String getOS(){
+		return this.OS;
+	}
+	
+	public void updateOS(String OS){
+		this.OS = OS;
+	}
+	
+	public String getPlatform(){
+		return this.platform;
+	}
+	
+	public void updatePlatform(String platform){
+		this.platform = platform;
+	}
+	
+	public String getComponent(){
+		return this.component;
+	}
+	
+	public void updateComponent(String component){
+		this.component = component;
+	}
+	
+	
+	public void updateOwner(String owner){
+		this.owner = owner;
+	}
+	
+	public String getOwner(){
+		return this.owner;
+	}
+	
+	public void updateDescription(String desc){
+		this.description = desc;
+	}
+	
+	public String getDescription(){
+		return this.description;
+	}
 
+	public void updateDate(){
+		this.date = LocalDate.now();
+	}
+	
+	public LocalDate getDate(){
+		return this.date;
+	}
+	
 	public void addContextStructure(String filepath, Context_Structure structure){
 		this.contextStructure.put(filepath, structure);
 	}

@@ -44,9 +44,9 @@ public class TestCriticalUtility {
 	public void testFillInCriticality() {
 
 
-		Task one=new Task(1, "Dummy Handle one", "Dummy label one");
-		Task two=new Task(2, "Dummy Handle two", "Dummy label two");
-		Task three=new Task(3, "Dummy Handle one", "Dummy label three");
+		Task one=new Task(1, "Dummy Handle one", "Dummy label one", "OS", "Platform", "Component", "Owner", "Description");
+		Task two=new Task(2, "Dummy Handle two", "Dummy label two", "OS", "Platform", "Component", "Owner", "Description");
+		Task three=new Task(3, "Dummy Handle one", "Dummy label three", "OS", "Platform", "Component", "Owner", "Description");
 
 		//context_StructureOne and context_StructureTwo have the same handle
 		Context_Structure context_StructureOne=new Context_Structure("ContextOne", false, true);
@@ -69,7 +69,7 @@ public class TestCriticalUtility {
 		taskPairThree.setCritical(false);
 		
 		//Proximity scores are calculated for each pair
-		taskPairOne.calcProximityScore();taskPairTwo.calcProximityScore();taskPairThree.calcProximityScore();
+		//taskPairOne.calcProximityScore();taskPairTwo.calcProximityScore();taskPairThree.calcProximityScore();
 
 		//Task pairs should not be critical prior to the classification
 		assertFalse(taskPairOne.isCritical());

@@ -1,16 +1,21 @@
 package nz.ac.auckland.devcoord.views;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.part.*;
-
 import nz.ac.auckland.devcoord.controller.Controller;
 import nz.ac.auckland.devcoord.controller.InteractionEventHelper;
 import nz.ac.auckland.devcoord.controller.TaskInfo;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
-import nz.ac.auckland.devcoord.database.Task;
+import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.TaskPair;
 import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
 import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
@@ -26,12 +31,17 @@ import org.eclipse.mylyn.internal.tasks.ui.ITaskListNotificationProvider;
 import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
-
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ILock;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.*;
-
 import org.eclipse.ui.*;
 
 @SuppressWarnings("restriction")
@@ -45,9 +55,26 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	/**This is static {@link #helper.TaskWrapper} object is used to store the latest
 	 * Wrapped {@link InteractionEvent} object. */
 	public static TaskWrapper taskWrapper;
-	private Text text;
+	public static List<TaskPair> pairs;
+	private Composite compositeOne;
+	private Label labeOne;
+	private ExpandItem itemOne ;
+	private Composite compositeTwo;
+	private Label labeTwo;
+	private ExpandItem itemTwo ;
+	private Composite compositeThree;
+	private Label labeThree;
+	private ExpandItem itemThree ;
 	private Action action1;
+	private Action action2;
 	private Controller controller;
+	
+
+
+
+	// private static ILock lock = Platform.getJobManager().newLock();
+	private static ILock lock = Job.getJobManager().newLock();
+
 	/**
 	 * Automated generation from the HelloWorld Example.*/
 	class NameSorter extends ViewerSorter {
@@ -64,8 +91,16 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList().addChangeListener(this);
 		org.eclipse.mylyn.context.core.ContextCore.getContextManager().addListener(this);
 		MonitorUiPlugin.getDefault().addInteractionListener(this);
-		controller = new Controller();
+		
+		try{
+			lock.acquire();
+			controller = new Controller();
+		} finally {
+			lock.release();
+		}
+		
 		TrainDataGeneration.convertTrainCSVToArff();
+		
 
 	}
 
@@ -74,11 +109,81 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
-		text = new Text(parent, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
 		RefreshDevCoord();
 		makeActions();
 		contributeToActionBars();
+
+		initialiseGUI(parent);
 	}
+
+	private void initialiseGUI(Composite parent){
+		GridLayout layout = new GridLayout ();
+		layout.marginLeft = layout.marginTop = layout.marginRight = layout.marginBottom = 10;
+		layout.verticalSpacing = 10;
+
+		ScrolledComposite scroll=new ScrolledComposite(parent, SWT.V_SCROLL);
+		org.eclipse.swt.widgets.ExpandBar bar=new ExpandBar(scroll, 1);
+
+
+		compositeOne = new Composite (bar, SWT.NONE);
+		compositeOne.setLayout(layout);
+		itemOne = new ExpandItem (bar, SWT.NONE, 0);
+		itemOne.setText("Non-Critical Tasks");
+		itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		itemOne.setControl(compositeOne);
+		compositeOne.setLayout(layout);
+		labeOne=new Label(compositeOne, 1);
+		labeOne.setText("0000");
+		labeOne.setEnabled(true);
+
+		compositeTwo = new Composite (bar, SWT.None);
+		compositeTwo.setLayout(layout);
+		itemTwo = new ExpandItem (bar, SWT.None, 0);
+		itemTwo.setText("Critical Tasks");
+		itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		itemTwo.setControl(compositeTwo);
+		compositeTwo.setLayout(layout);
+		labeTwo=new Label(compositeTwo, 1);
+		labeTwo.setText("0000");
+		labeTwo.setEnabled(true);
+
+
+		compositeThree = new Composite (bar, SWT.None);
+		compositeThree.setLayout(layout);
+		itemThree = new ExpandItem (bar, SWT.None, 0);
+		itemThree.setText("All Tasks");
+		itemThree.setHeight(compositeThree.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		itemThree.setControl(compositeThree);
+		compositeThree.setLayout(layout);
+		labeThree=new Label(compositeThree, 1);
+		labeThree.setText("0000");
+		labeThree.setEnabled(true);
+
+		/*Reference scroll stuff:http://stackoverflow.com/questions/22964093/programmatically-scroll-expandbar*/
+		Listener updateScrolledSize = new Listener()
+		{
+			@Override
+			public void handleEvent(Event arg0)
+			{
+				Display.getDefault().asyncExec(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						scroll.setMinSize(bar.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					}
+				});
+			}
+		};
+		bar.addListener(SWT.Expand, updateScrolledSize);
+		bar.addListener(SWT.Collapse, updateScrolledSize);
+		scroll.setContent(bar);
+		scroll.setExpandHorizontal(true);
+		scroll.setExpandVertical(true);
+		scroll.setMinSize(bar.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+	}
+
 
 	/**
 	 * This method is Refreshed when-
@@ -88,11 +193,43 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	 * This method places that event in the static handle {@link #taskWrapper} to be used by
 	 * other classes.
 	 * */
+
 	private void RefreshDevCoord(){
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				if (taskWrapper!=null) {
-					text.setText(taskWrapper.toString()+TaskInfo.getInteractionEventListAsAString());
+
+					action1.setChecked(true);
+
+					labeOne.setText(DevCoordUtility.getOverlappingTaskPairs(pairs,taskWrapper));
+					itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+					labeOne.getParent().layout();
+
+
+					String nextCriticalString=DevCoordUtility.criticalString(pairs,taskWrapper);
+					String previousCriticalString=labeTwo.getText();
+					labeTwo.setText(nextCriticalString);
+					if (!previousCriticalString.equals(nextCriticalString)&& !nextCriticalString.equals("")) {
+
+						action2.setEnabled(true);
+						itemTwo.setExpanded(true);
+
+					}
+					else if(nextCriticalString.equals("")){
+						action2.setEnabled(false);
+
+
+
+					}
+
+					itemTwo.setHeight(compositeTwo.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+					labeTwo.getParent().layout();
+
+					labeThree.setText(TaskInfo.getTasksInfoAsAString());
+					itemThree.setHeight(compositeThree.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+					labeThree.getParent().layout();
+
+
 				}
 			}
 		});
@@ -107,11 +244,15 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(action1);
 		manager.add(new Separator());
+		manager.add(action2);
+		manager.add(new Separator());
+
 	}
 
 
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(action1);
+		manager.add(action2);
 
 	}
 
@@ -125,13 +266,29 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		action1.setToolTipText("Press to Referesh DevCoord");
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_ELCL_SYNCED));
+
+
+		action2 = new Action() {
+			public void run() {
+				itemTwo.setExpanded(false);
+				action2.setEnabled(false);
+
+
+			}
+		};
+		action2.setText("");
+		action2.setToolTipText("Click To collapse Critical Tasks");
+		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+				getImageDescriptor(ISharedImages.IMG_DEC_FIELD_ERROR));
+		action2.setEnabled(true);
+
 	}
 
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
 	public void setFocus() {
-		text.setFocus();
+
 	}
 	/**{@inheritDoc}*/
 	@Override
@@ -155,30 +312,60 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	/**{@inheritDoc}
 	 * 
 	 * It creates a new {@link TaskWrapper} object and stores it in {@link #taskWrapper}
+	 * 
+	 * code to run database processing in background taken from
+	 * 
+	 * https://www.eclipse.org/articles/Article-Concurrency/jobs-api.html
+	 * 
 	 * */
 	@Override
 	public void interactionObserved(InteractionEvent arg0) {
-		System.out.println("EVENT TIME:"+arg0.getDate().getTime());
-		taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
 
-		if(taskWrapper != null){
-			//update interaction event here
-			Task task = controller.updateTaskInfo(taskWrapper);
+		System.err.println("EVENT TIME:"+ LocalTime.now());
 
 
-			//getTask pairs
-			List<TaskPair> pairs = controller.getTaskPairs(task);
-			
+		final Job job = new Job("Database calls") {
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					lock.acquire();
+					System.err.println("after lock time start:"+ LocalTime.now());
+					taskWrapper=InteractionEventHelper.getTaskWrapperObject(arg0);
 
-			//machine learning 
-			pairs = CriticalityUtility.fillInCriticality(pairs);
 
-			//persist taskpairs
-			controller.saveTaskPairs(pairs);
-		}
+					if(taskWrapper != null ){
+						//update interaction event here
+						Context_Structure file = controller.updateInfoOfActiveTask(taskWrapper);
+						int task_id = taskWrapper.getTaskID();
 
-		RefreshDevCoord();
+						//getTask pairs
+						pairs = controller.getTaskPairs(file, task_id, 14);
+
+
+						//machine learning 
+						pairs = CriticalityUtility.fillInCriticality(pairs);
+
+						//persist taskpairs
+						controller.saveTaskPairs(pairs);
+
+
+
+					}
+					return Status.OK_STATUS;
+				} finally {
+					lock.release();
+					RefreshDevCoord();
+
+
+				}
+			}
+		};
+		job.schedule();
+
+
 	}
+
+
+
 
 	@Override
 	public void startMonitoring() {
