@@ -14,11 +14,11 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 
-			<!--  The below three our for local database-->
+			<!--  The below three our for local database
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/devcoord_1.0" />
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="" />
-			
+			-->
 			
 			
 			<!-- The below three our for database hosted on a server
@@ -26,6 +26,12 @@
 			<property name="hibernate.connection.username" value="sql6128847" />
 			<property name="hibernate.connection.password" value="1eZUY3amwk" />
 			-->
+			
+			<!-- The below three our for database hosted on a server -->
+			<property name="hibernate.connection.url" value="jdbc:mysql://db4free.net:3306/devcoord" />
+			<property name="hibernate.connection.username" value="devcoordpart4" />
+			<property name="hibernate.connection.password" value="softeng700" />
+			
 			
 			<property name="hibernate.hbm2ddl.auto" value="create" />
 			<property name="hibernate.show_sql" value="true"/>
