@@ -128,7 +128,7 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 		compositeOne = new Composite (bar, SWT.NONE);
 		compositeOne.setLayout(layout);
 		itemOne = new ExpandItem (bar, SWT.NONE, 0);
-		itemOne.setText("Non-Critical Tasks");
+		itemOne.setText("Tasks sharing same context structure");
 		itemOne.setHeight(compositeOne.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		itemOne.setControl(compositeOne);
 		compositeOne.setLayout(layout);
