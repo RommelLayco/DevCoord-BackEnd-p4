@@ -27,13 +27,17 @@
 			<property name="hibernate.connection.password" value="1eZUY3amwk" />
 			-->
 			
-			<!-- The below three our for database hosted on a server -->
+			<!-- The below three our for database hosted on a test server -->
 			<property name="hibernate.connection.url" value="jdbc:mysql://db4free.net:3306/devcoord" />
 			<property name="hibernate.connection.username" value="devcoordpart4" />
 			<property name="hibernate.connection.password" value="softeng700" />
 			
-			
+			<!-- For Testing 
 			<property name="hibernate.hbm2ddl.auto" value="create" />
+			-->
+			
+			<!-- stop dropping tables -->
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
 			<property name="hibernate.show_sql" value="true"/>
 			
 		</properties>
