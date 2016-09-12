@@ -38,7 +38,9 @@ USING TYCHO TO BUILD DEVCOORD AND TEST
 To run the test first ensure that database has no information stored. This is because some of the test cases, test the persist method.
 This test case will fail if the item that is being persisted already exist in the database.
 
-To empty the database use the SQL commands Drop table [name of all the database tables comma seperated].
+To empty the database use the following SQL commands.
+
+		drop table ACTUAL_SCORES, CONTEXT_STRUCTURES, POTENTIAL_SCORES, hibernate_sequence, TASKS, TASK_PAIRS
 
 If running test repeatedly change
 
