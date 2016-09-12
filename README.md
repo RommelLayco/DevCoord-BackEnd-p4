@@ -44,7 +44,7 @@ To empty the database use the following SQL commands.
 
 If running test repeatedly and have the tables drop automatically change
 
-		<property name="hibernate.hbm2ddl.auto" value="validate"/>. To
+		<property name="hibernate.hbm2ddl.auto" value="validate"/>.
 
 TO
 
@@ -107,7 +107,7 @@ Run as Eclipse application, if not available run by following these steps"
 
 	open the file: DevCoord-Backend-\tycho\bundles\nz.ac.auckland.devcoord.plugin\src\nz\ac\auckland\devcoord\views\DevCoord.java in eclipse
 	
-	hit the run button
+hit the run button
 
 Wait for a new eclipse project to load.
 
