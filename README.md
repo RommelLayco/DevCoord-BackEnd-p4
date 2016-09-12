@@ -42,18 +42,21 @@ To empty the database use the following SQL commands.
 
 		drop table ACTUAL_SCORES, CONTEXT_STRUCTURES, POTENTIAL_SCORES, hibernate_sequence, TASKS, TASK_PAIRS
 
-If running test repeatedly change
+If running test repeatedly and have the tables drop automatically change
 
-<property name="hibernate.hbm2ddl.auto" value="validate"/>. To
+		<property name="hibernate.hbm2ddl.auto" value="validate"/>. To
 
 TO
 
-<property name="hibernate.hbm2ddl.auto" value="create"/>.
+		<property name="hibernate.hbm2ddl.auto" value="create"/>.
 
 To run test and build project open the command prompt and navigate to the following directory:
-\DevCoord-Backend-\tycho\
+		
+		\DevCoord-Backend-\tycho\
 
-enter the command mvn clean verify.
+enter the command 
+		
+		mvn clean verify.
 
 
 
