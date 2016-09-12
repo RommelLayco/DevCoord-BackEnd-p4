@@ -65,15 +65,33 @@ All the test should pass, the build must be sucessful
 ========================================================================================================
 IMPORT PROJECT INTO ECLIPSE
 ======================================================================================================
+Import the devcoord project into eclipse by:
+
+Navigate to file > import.
+
+Select existing projects into workspace
 
 Select the root directory to be:
 
-	\DevCoord-Backend-\tycho
+	LocationOfTheDevCoordProject\DevCoord-Backend-\tycho
 
 import the project nz.ac.auckland.devcoord. This project should be ticked by eclipse.
 
+In the project explorer, change project presentation to heirarchical
+
 In eclipse open the bundles folder. Import the following folders as project.
 (Right click folder, select import as project)
+
+	nz.ac.auckland.devcoord.database
+	nz.ac.auckland.devcoord.hibernate2
+	nz.ac.auckland.devcoord.machineLearning
+	nz.ac.auckland.devcoord.plugin
+	
+In eclipse open the tests folder. Import the following folders as project.
+
+	nz.ac.auckland.devcoord.databaseTest
+	nz.ac.auckland.devcoord.machineLearningTest
+	
 
 
 ==========================================================================================================
@@ -85,9 +103,13 @@ Ensure that devcoord is connected to a database
 Open the tycho project. 
 
 
-Run as Eclipse application
+Run as Eclipse application, if not available run by following these steps"
 
-DevCoord should be running
+	open the file: DevCoord-Backend-\tycho\bundles\nz.ac.auckland.devcoord.plugin\src\nz\ac\auckland\devcoord\views\DevCoord.java in eclipse
+	
+	hit the run button
+
+Wait for a new eclipse project to load.
 
 to test create task from a remote repository
 This is because a remote repositiory is able to create additional information such as the OS, Platform  and Component Attributes
