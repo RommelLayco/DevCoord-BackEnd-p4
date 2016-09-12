@@ -59,6 +59,22 @@ enter the command
 		mvn clean verify.
 
 
+		
+All the test should pass, the build must be sucessful
+
+========================================================================================================
+IMPORT PROJECT INTO ECLIPSE
+======================================================================================================
+
+Select the root directory to be:
+
+	\DevCoord-Backend-\tycho
+
+import the project nz.ac.auckland.devcoord. This project should be ticked by eclipse.
+
+In eclipse open the bundles folder. Import the following folders as project.
+(Right click folder, select import as project)
+
 
 ==========================================================================================================
 RUN PLUGIN FROM ECLIPSE
