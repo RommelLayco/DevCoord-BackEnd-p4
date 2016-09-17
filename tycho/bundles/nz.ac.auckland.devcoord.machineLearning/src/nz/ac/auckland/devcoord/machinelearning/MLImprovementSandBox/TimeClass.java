@@ -27,7 +27,9 @@ import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
-
+/**
+ * Used for comparison of the effeciency of the Machine learning implementation.
+ * */
 public class TimeClass {
 
 

@@ -24,16 +24,12 @@ import weka.core.Instances;
  * Utility class which will be used to fill in the criticality of the task pairs
  * */
 public class CriticalityUtility {
-	public static void main(String[] args) {
-	}
+
 	public static List<TaskPair> fillInCriticality(List<TaskPair> taskPairsListArg){
 		for (TaskPair taskPair : taskPairsListArg) {
-			//this loop will contain the machine learning code
+
 			taskPair.setCritical(false);
-//			convertTestDataToArff(taskPair);
-//			if (!wasClassificationCorrect()) {
-//				taskPair.setCritical(!taskPair.isCritical());
-//			}
+
 			if (!wasClassificationCorrectNoFile(taskPair)) {
 				taskPair.setCritical(!taskPair.isCritical());
 			}
@@ -42,13 +38,12 @@ public class CriticalityUtility {
 	}
 	
 	/**
-	 * No new files created when classifying whether critical or not.
+	 * No new files created when classifying whether critical or not,ie,the
+	 * more efficient method.
 	 * */
 	public static boolean wasClassificationCorrectNoFile(TaskPair taskPair)
 	{
 		String trainString;
-
-		
 
 		// train classifier
 		J48 cls = new J48();
