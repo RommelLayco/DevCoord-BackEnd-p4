@@ -119,35 +119,7 @@ public class TaskInfo {
 			}
 			System.out.println(mapT.size());
 			
-//			TaskRepository repository=new TaskRepository("bugzilla", "https://app.devzing.com/devcoordp4/bugzilla");
-//			
-//			TaskAttributeMapper mapper=new TaskAttributeMapper(repository);
-//			TaskData data=new  TaskData(mapper, "bugzilla",  "https://app.devzing.com/devcoordp4/bugzilla", "1");
-//			
-//			
-//			RepositoryConfiguration configuration=new  RepositoryConfiguration();
-//			configuration.setRepositoryUrl("https://app.devzing.com/devcoordp4/bugzilla");
-//			
-//			BugzillaRepositoryConnector connector=new BugzillaRepositoryConnector();
-//			connector.addRepositoryConfiguration(configuration);
-//			connector.get
-//			//connector.
-//			
-//			
-//			Set<ITask> tasksBUG= list.getTasks("https://app.devzing.com/devcoordp4/bugzilla");
-//			System.out.println("0000000000000000000000000000000");
-//			for (ITask iTask : tasks) {
-//				System.out.println(iTask.getTaskId());
-//				for (Map.Entry<String, String> s : iTask.getAttributes().entrySet()) {
-//					System.out.println("		"+s);
-//				}
-//				
-//			}
-//			System.out.println("0000000000000000000000000000000");
-//			
-//			System.out.println("	TASK Child Tasks-");
-//		//	org.eclipse.mylyn.internal.tasks.ui.
-			
+
 			for (ITask child : task.getChildren()) {
 				System.out.println("		Child  TASK :"+child.toString());
 			}
