@@ -115,3 +115,37 @@ to test create task from a remote repository
 This is because a remote repositiory is able to create additional information such as the OS, Platform  and Component Attributes
 The task created needed these attributes as the database rejects null values for theses attributes.
 
+================================================================================================
+CONNECT TO REMOTE TASK REPO - BUGZILLA
+==============================================================================================
+
+Bugzilla can be installed on a server using the instructions stated here-
+[The Bugzilla Guide](https://www.bugzilla.org/docs/2.18/html/installation.html).
+
+
+For an easier alternative, setup an account on an internet service that provides a free/paid bugzilla repo to play with,such as [Devzing](http://devzing.com/).
+
+once the devzing account is setup,take note of the following-
+* URL of the bugizlla repositoy
+* USERNAME of the administrator of the bugizlla repositoy
+* PASSWORD of the administrator of the bugzilla repository
+
+The above information is provided by Devzing thru automated email,upon account activation.
+Logging in thru browser,using the information above,provides a view of the repository for the admin, thru which bugs and additional users can be created.
+
+To connect the repository to Mylyn plugin-
+
+1. Click Run->Run As->Eclipse Application
+2. Once the application is running
+3. Click Window->Show view->Other->Task Repositories
+4. Right click,then click Add Task Repository
+5. Click on Bugzilla,then on next
+6. In the 'Server' field,write the URL of the bugzilla repository
+7. For the 'Label' field, chose an appropriate name
+8. In the 'User ID' field,write the USERNAME of the bugzilla repository(or user name of any other user created via browser)
+9. In the 'Password' field,write the PASSWORD of the bugzilla repository(or password of any other user created via browser)
+10. Check 'Save Password'
+11. Click Finish
+
+The above steps will synchronyze the Mylyn view with the remote Bugzilla repository.
+Mylyn can then be used to control the repository(e.g. Add/Delete tasks etc.)
