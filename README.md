@@ -87,6 +87,10 @@ In eclipse open the bundles folder. Import the following folders as project.
 	nz.ac.auckland.devcoord.machineLearning
 	nz.ac.auckland.devcoord.plugin
 	
+In eclipse open the releng folder. Import the following folders as project.
+	
+	nz.ac.auckland.devcoord.configuration
+	
 In eclipse open the tests folder. Import the following folders as project.
 
 	nz.ac.auckland.devcoord.databaseTest
@@ -100,10 +104,11 @@ RUN PLUGIN FROM ECLIPSE
 Ensure that devcoord is connected to a database
 
 
-Open the tycho project. 
+Open the tycho project in eclipse.. 
 
 
-Run as Eclipse application, if not available run by following these steps"
+Run as Eclipse application, by clicking the green play button. 
+If run as a new eclipe application is not shown in the play button follow these steps.
 
 	open the file: DevCoord-Backend-\tycho\bundles\nz.ac.auckland.devcoord.plugin\src\nz\ac\auckland\devcoord\views\DevCoord.java in eclipse
 	
