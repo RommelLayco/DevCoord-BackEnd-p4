@@ -165,3 +165,33 @@ To connect the repository to Mylyn plugin-
 
 The above steps will synchronyze the Mylyn view with the remote Bugzilla repository.
 Mylyn can then be used to control the repository(e.g. Add/Delete tasks etc.)
+
+================================================================================================
+Bugs that may happen when eclipse tries to import tycho project
+==============================================================================================
+check if the src folder is indeed a source folder,if not(ie. if the package names look like src.nz.auckland...)-
+
+1. right click on the respective project
+2. Buiild path 
+3. configure built path
+4. click sourc tab
+5. click on the src folder and click remove
+6. right clcik on the folder labeled src 
+7. build path
+8. use as source folder
+
+
+If hibernate2 has an error check the manifest file located in metainf
+If the items in exported  package have an errordp the follwoing-
+
+1. open the runtime tab
+2. in the class path section remove all the jars
+3. add all the jars located in the jar folder
+
+See if the JRE system library is missing 
+If the jre system library s missing-
+
+1. right click on the respective project
+2. Buiild path 
+3. configure built path
+4. in the libraries tab,add library,select jre system library,next,finish(ensure workspace default jre is selecteed).
