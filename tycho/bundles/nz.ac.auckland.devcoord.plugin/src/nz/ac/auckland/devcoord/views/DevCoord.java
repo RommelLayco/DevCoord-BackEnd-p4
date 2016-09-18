@@ -32,7 +32,6 @@ import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -312,6 +311,8 @@ public class DevCoord extends ViewPart implements  ITaskListNotificationProvider
 	/**{@inheritDoc}
 	 * 
 	 * It creates a new {@link TaskWrapper} object and stores it in {@link #taskWrapper}
+	 * 
+	 * This is where the event is detected and processed to find task pairs
 	 * 
 	 * code to run database processing in background taken from
 	 * 

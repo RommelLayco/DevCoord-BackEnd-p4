@@ -22,7 +22,12 @@ public class Commands {
 		hibernateUtil = HibernateUtil.getInstance();
 	}
 
-
+	/**
+	 * Method to check if the task is already persisted in the
+	 * database
+	 * @param ID of the task you want to check
+	 * @return true if the task exist in the database, false otherwise
+	 */
 
 	public boolean taskExist(int ID){
 		boolean result = false;
@@ -39,6 +44,11 @@ public class Commands {
 	}
 
 
+	/**
+	 * Get the task from the database
+	 * @param ID of the task to fetch
+	 * @return the task
+	 */
 	public Task getTask(int ID){
 		EntityManager em = hibernateUtil.getEntityManager();
 		Task task = em.find( Task.class, ID );
@@ -47,6 +57,10 @@ public class Commands {
 		return task;
 	}
 
+	/**
+	 * Add a new task to the database
+	 * @param task
+	 */
 	public void addTask(Task task){
 		EntityManager em = hibernateUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -55,6 +69,10 @@ public class Commands {
 		em.close();
 	}
 
+	/**
+	 * Update an existing task in the database
+	 * @param task
+	 */
 	public void updateTask(Task task){
 		EntityManager em = hibernateUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -101,6 +119,7 @@ public class Commands {
 
 	/**
 	 * Formats the the "or's" of the context structures
+	 * this is no longer used in the program
 	 * @param name
 	 * @return
 	 */
@@ -126,6 +145,10 @@ public class Commands {
 		return line;
 	}
 
+	/**
+	 * Add a new task pair object to the database
+	 * @param taskPair
+	 */
 	public void addTaskPair(TaskPair taskPair){
 		EntityManager em = hibernateUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -144,6 +167,10 @@ public class Commands {
 		em.close();
 	}
 
+	/**
+	 * Update a task pair that is already in the database
+	 * @param taskPair
+	 */
 	public void updateTaskPair(TaskPair taskPair){
 		EntityManager em = hibernateUtil.getEntityManager();
 		em.getTransaction().begin();
@@ -152,6 +179,11 @@ public class Commands {
 		em.close();
 	}
 
+	/**
+	 * Check if the task pair is already in the database
+	 * @param ID
+	 * @return
+	 */
 	public boolean taskPairExist(int ID){
 		boolean result = false;
 		EntityManager em = hibernateUtil.getEntityManager();

@@ -130,6 +130,17 @@ public class TaskPair {
 		this.proximityScore = this.actualScore / this.potentialScore;
 	}
 
+	/**
+	 * Calculates the proximity score by changing the weighting appied to the
+	 * file that generated the event.
+	 * 
+	 * Minus the score stored for the file
+	 * Calculates the new score
+	 * Updates the  proximity score with the new score
+	 * 
+	 * @param file1
+	 * @param file2
+	 */
 	public void updateProximityScore(Context_Structure file1, Context_Structure file2){
 		//minus the old values of the file from the potential and 
 		//actual scores.
