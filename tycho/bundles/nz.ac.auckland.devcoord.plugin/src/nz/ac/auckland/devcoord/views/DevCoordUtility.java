@@ -1,5 +1,4 @@
 package nz.ac.auckland.devcoord.views;
-
 import java.util.ArrayList;
 import java.util.List;
 import nz.ac.auckland.devcoord.controller.TaskWrapper;
@@ -10,8 +9,6 @@ import nz.ac.auckland.devcoord.database.TaskPair;
  * Helper class for Devcoord
  * */
 public class DevCoordUtility {
-
-
 
 	static ArrayList<Task> returnTasksThatAreCritical(List<TaskPair> pairs,TaskWrapper taskWrapper){
 		ArrayList<Task> toReturn=new ArrayList<Task>();
@@ -27,7 +24,7 @@ public class DevCoordUtility {
 		}
 		return toReturn;
 	}
-
+	
 	static int getOtherTaskID(int ID,TaskPair pair){		
 		if (pair.getID1()==ID) {		
 			return pair.getID2();		
@@ -39,7 +36,7 @@ public class DevCoordUtility {
 			return -1;		
 		}		
 	}
-
+	
 	static String getOverlappingTaskPairs(List<TaskPair> pairs,TaskWrapper taskWrapper){
 		String separator=System.getProperty("line.separator");
 		String toReturn="";
