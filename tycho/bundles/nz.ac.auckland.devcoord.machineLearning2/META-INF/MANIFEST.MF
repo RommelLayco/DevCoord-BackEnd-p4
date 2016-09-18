@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: MachineLearning2
 Bundle-SymbolicName: nz.ac.auckland.devcoord.machineLearning2
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: nz.ac.auckland.devcoord.machinelearning2.Activator
+Bundle-Activator: nz.ac.auckland.devcoord.machineLearning.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui;bundle-version="3.107.0",
  nz.ac.auckland.devcoord.database;bundle-version="1.0.0"
