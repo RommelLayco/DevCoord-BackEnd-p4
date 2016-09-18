@@ -110,13 +110,24 @@ Open the tycho project in eclipse..
 Run as Eclipse application, by clicking the green play button. 
 If run as a new eclipe application is not shown in the play button follow these steps.
 
-	open the file: DevCoord-Backend-\tycho\bundles\nz.ac.auckland.devcoord.plugin\src\nz\ac\auckland\devcoord\views\DevCoord.java in eclipse
 	
-hit the run button
+	Click the down arrow next to the play button and select Run Configurations.
 
-Wait for a new eclipse project to load.
+	On the menu on the left of the window that pops up select eclipe application.
+	
+	Create a new configuration of the type you have selected (press the new button). The press run.
+	
 
-to test create task from a remote repository
+Wait for a new eclipse application to load.
+
+To view the DevCoord GUI goto
+
+	window > show view > other > DevCoord2
+	
+
+
+Create a dummyh project and tasks.
+To test create task from a remote repository
 This is because a remote repositiory is able to create additional information such as the OS, Platform  and Component Attributes
 The task created needed these attributes as the database rejects null values for theses attributes.
 
