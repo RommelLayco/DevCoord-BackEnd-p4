@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='1'>
+  <artifact classifier='osgi.bundle' id='nz.ac.auckland.devcoord.machineLearning2' version='1.0.0.201609181312'>
+    <properties size='5'>
+      <property name='artifact.size' value='5745725'/>
+      <property name='download.size' value='5745725'/>
+      <property name='maven-groupId' value='nz.ac.auckland.devcoord'/>
+      <property name='maven-artifactId' value='nz.ac.auckland.devcoord.machineLearning2'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+    </properties>
+  </artifact>
+</artifacts>

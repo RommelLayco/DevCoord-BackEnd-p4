@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: nz.ac.auckland.devcoord.machineLearning2
+Export-Package: nz.ac.auckland.devcoord.machineLearning.decisionTree,n
+ z.ac.auckland.devcoord.machineLearning.testData,nz.ac.auckland.devcoo
+ rd.machineLearning.trainData
+Bundle-Name: MachineLearning2
+Bundle-Version: 1.0.0.201609181312
+Bundle-ClassPath: jars/weka.jar,.
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.ui;bundle-version
+ ="3.107.0",nz.ac.auckland.devcoord.database;bundle-version="1.0.0"
+Bundle-ManifestVersion: 2
+Bundle-Activator: nz.ac.auckland.devcoord.machineLearning.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+
