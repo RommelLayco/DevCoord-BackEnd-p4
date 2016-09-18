@@ -9,10 +9,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import nz.ac.auckland.devcoord.machinelearning.decisionTree.DataToARFF;
-import nz.ac.auckland.devcoord.machinelearning.decisionTree.InputEnum;
-import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
-import nz.ac.auckland.devcoord.machinelearning.trainData.ProcessData;
+import nz.ac.auckland.devcoord.machineLearning.decisionTree.DataToARFF;
+import nz.ac.auckland.devcoord.machineLearning.decisionTree.InputEnum;
+import nz.ac.auckland.devcoord.machineLearning.decisionTree.TrainDataGeneration;
+import nz.ac.auckland.devcoord.machineLearning.trainData.ProcessData;
 import weka.core.Instances;
 /**
  * Tests conversion of train data to arff file

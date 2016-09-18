@@ -10,8 +10,8 @@ import org.junit.Test;
 import nz.ac.auckland.devcoord.database.Context_Structure;
 import nz.ac.auckland.devcoord.database.Task;
 import nz.ac.auckland.devcoord.database.TaskPair;
-import nz.ac.auckland.devcoord.machinelearning.decisionTree.*;
-import nz.ac.auckland.devcoord.machinelearning.testData.CriticalityUtility;
+import nz.ac.auckland.devcoord.machineLearning.decisionTree.*;
+import nz.ac.auckland.devcoord.machineLearning.testData.CriticalityUtility;
 /**
  * Tests whether criticality is being classified correctly
  * */

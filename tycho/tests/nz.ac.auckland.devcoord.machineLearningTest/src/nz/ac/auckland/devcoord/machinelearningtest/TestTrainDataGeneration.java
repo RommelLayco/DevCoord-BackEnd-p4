@@ -5,8 +5,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import nz.ac.auckland.devcoord.machinelearning.decisionTree.InputEnum;
-import nz.ac.auckland.devcoord.machinelearning.decisionTree.TrainDataGeneration;
+import nz.ac.auckland.devcoord.machineLearning.decisionTree.InputEnum;
+import nz.ac.auckland.devcoord.machineLearning.decisionTree.TrainDataGeneration;
 
 /**
  * Tests whether train data is being generated properly
